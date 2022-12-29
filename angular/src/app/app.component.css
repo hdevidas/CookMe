@@ -1,0 +1,8 @@
+.bodyWrapper{
+    min-height: 100vh;
+    display:flex; flex-direction:column;
+}
+.extensibleWrapper{
+    flex:1;
+    padding:  60px 120px 60px 120px ;
+}

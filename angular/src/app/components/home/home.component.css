@@ -1,0 +1,16 @@
+.homeWrapper {
+    margin: 2rem auto;
+    padding: 1rem 5rem;
+    display: flex;
+    gap: 2rem;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 25px;
+}
+
+button {
+    text-transform: uppercase;
+    font-size: 25px;
+}
+

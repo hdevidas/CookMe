@@ -1,0 +1,19 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    outline: none;
+    text-decoration: none;
+}
+
+button {
+    cursor: pointer;
+    display: block;
+    padding: 5px 15px;
+    font-weight: bold;
+    background: #2863bdd8;
+    border: 1px solid #00000044;
+    border-radius: 15px;
+}
