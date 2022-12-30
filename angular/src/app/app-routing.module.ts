@@ -10,12 +10,14 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { SearchComponent } from './components/search/search.component';
 import { RecipeComponent } from './components/recipe/recipe.component';
 import { RecipesComponent } from './components/recipes/recipes.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 const routes: Routes = [
   //{ path: '', redirectTo: 'users', pathMatch: 'full' },
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
+  { path: 'logout', component: LogoutComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'profile/add/:ingredient', component: ProfileComponent },
   { path: 'profile/remove/:ingredient', component: ProfileComponent },

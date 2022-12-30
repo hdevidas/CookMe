@@ -8,17 +8,26 @@ import { Component, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
 
   logged = false;
+  debug = false;
 
   ngOnInit(): void {
     
   }
 
-  logOn(): void {
-    this.logged = true;
+  swapLoggedMode(): void {
+    if (this.logged){
+      this.logged = false;
+    }else{
+      this.logged = true;
+    }
   }
 
-  logOff(): void {
-    this.logged = false;
+  swapDebugMode(): void {
+    if (this.debug){
+      this.debug = false;
+    }else{
+      this.debug = true;
+    }
   }
 
 }

@@ -1,26 +1,35 @@
-<nav class="headerWrapper">
-    <li>
-        <a routerLink="">Cook Me</a>
-    </li>
-    <li>
-        <a routerLink="users">Users list (dev)</a>
-    </li>
-    <li>
-        <a routerLink="adduser">Add User (dev)</a>
-    </li>
-    <li>
-        <a routerLink="recipe">Recipe (dev)</a>
-    </li>
-    <li>
-        <a routerLink="search">Search</a>
-    </li>
-    <li>
-        <a routerLink="profile">Profile</a>
-    </li>
-    <li>
-        <a routerLink="signup">Sign up</a>
-    </li>
-    <li>
-        <a routerLink="login">Log in</a>
-    </li>
-</nav>
+<div class="headerWrapper">
+    <nav>
+        <li>
+            <img src="../../../assets/cookmelogo.png">
+        </li>
+        <li>
+            <a routerLink="">Home</a>
+        </li>
+        <li *ngIf="debug">
+            <a routerLink="users">Users list (debug)</a>
+        </li>
+        <li *ngIf="debug">
+            <a routerLink="recipe">Recipe (debug)</a>
+        </li>
+        <li *ngIf="logged">
+            <a routerLink="search">Search</a>
+        </li>
+        <li *ngIf="logged">
+            <a routerLink="profile">Profile</a>
+        </li>
+        <li *ngIf="debug">
+            <a routerLink="signup">Sign up (debug)</a>
+        </li>
+        <li *ngIf="!logged">
+            <a routerLink="login">Log in</a>
+        </li>
+        <li *ngIf="logged">
+            <a routerLink="logout">Log out</a>
+        </li>
+        <li class="debugPannel">
+            <button (click)="swapLoggedMode()" [ngClass]="{'green' : logged}">Logged</button>
+            <button (click)="swapDebugMode()" [ngClass]="{'green' : debug}">Debug</button>
+        </li>
+    </nav>
+</div>

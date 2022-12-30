@@ -1,7 +1,9 @@
 .headerWrapper{
     background: linear-gradient(180deg, rgba(24, 141, 167, 0.2) 0%, rgba(114, 39, 149, 0.2) 96.35%);
-    height:80px;
-    padding:20px;
+    padding:30px;
+}
+
+nav{
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -9,4 +11,17 @@
 
 li {
     list-style-type: none;
-  }
+}
+
+.debugPannel button{
+    margin:4px;
+}
+
+.green{
+    background:rgb(55, 167, 11);
+    border: 2px solid rgba(0, 0, 0, 0.2666666667);
+}
+
+img{
+    height:50px;
+}
