@@ -2,8 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser'); 
 const mongoose = require('mongoose'); 
 
-const connectDb = require('./app/config/db.config'); 
-const userRoutes = require('./app/routes/cookme.routes'); 
+const connectDb = require('./app/config/db'); 
+const userRoutes = require('./app/routes/user'); 
+const recipeRoutes = require('./app/routes/recipe');
 
 
 connectDb(); /* Connexion à la BD */
@@ -23,6 +24,8 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
-app.use('/api/cookme', userRoutes); /* Utilisation des middlewares se trouvant dans le dossier routes */
+/* Utilisation des routes */
+app.use('/api/cookme', userRoutes); 
+app.use('/api/cookme', recipeRoutes); 
 
 module.exports = app;

@@ -2,7 +2,7 @@
 const bcrypt = require('bcrypt'); /* Importation du package pour le hashage du mot de passe */
 const jwt = require('jsonwebtoken'); /* Importation du package pour la gestion des tokens */
 
-const User = require('../models/user.model');
+const User = require('../models/User');
 
 
 // Create and Save a new User

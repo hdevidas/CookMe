@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const userCtrl = require("../controllers/user.controller.js");
-const recipeCtrl = require("../controllers/recipe.controller.js");
+const userCtrl = require("../controllers/user.js");
+
 
 // Create a new User
 router.post('/signup', userCtrl.signup);
@@ -23,10 +23,6 @@ router.delete("/login/:id", userCtrl.delete);
 
 // Create a new User
 router.delete("/users", userCtrl.deleteAll);
-
-// ------ Users ---------
-// Retrieve a sample recipe
-router.get("/recipe", recipeCtrl.getRandomRecipe);
 
 
 module.exports = router;
