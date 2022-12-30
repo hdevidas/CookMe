@@ -1,17 +1,15 @@
 <div *ngIf="viewMode; else editable">
-  <div *ngIf="currentUser.id">
-  <br>
+  <div *ngIf="currentUser._id">
     <div>
-      <label><strong>Name:</strong></label> {{ currentUser.name }}
+      <label><strong>Name:</strong></label> {{ currentUser.email }}
     </div>
+
     <div>
       <label><strong>Password:</strong></label>
       {{ currentUser.password }}
     </div>
 
-    <a
-      routerLink="/user/{{ currentUser.id }}"
-    >
+    <a routerLink="/user/{{ currentUser._id }}">
       Edit
     </a>
   </div>
@@ -23,15 +21,15 @@
 </div>
 
 <ng-template #editable>
-  <div *ngIf="currentUser.id">
+  <div *ngIf="currentUser._id">
     <h4>User</h4>
     <form>
       <div>
-        <label for="name">Name</label>
+        <label for="name">Email</label>
         <input
           type="text"
           id="name"
-          [(ngModel)]="currentUser.name"
+          [(ngModel)]="currentUser.email"
           name="name"
         />
       </div>
@@ -59,8 +57,8 @@
     <p>{{ message }}</p>
   </div>
 
-  <div *ngIf="!currentUser.id">
+  <div *ngIf="!currentUser.email">
     <br />
-    <p>Cannot access this User...</p>
+    <p>Cannot access this User... </p>
   </div>
 </ng-template>

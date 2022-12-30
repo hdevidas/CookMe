@@ -6,19 +6,18 @@ import { User } from 'src/app/models/user.model';
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
-  styleUrls: ['./user-details.component.css']
+  styleUrls: ['./user-details.component.scss']
 })
 export class UserDetailsComponent implements OnInit {
 
   @Input() viewMode = false;
 
   @Input() currentUser: User = {
-    name: '',
+    email: '',
     password: ''
   };
   
   message = '';
-
   varpublished = false;
 
   constructor(
@@ -29,6 +28,7 @@ export class UserDetailsComponent implements OnInit {
   ngOnInit(): void {
     if (!this.viewMode) {
       this.message = '';
+      console.log(this.route.snapshot.params["id"] + ' ici!')
       this.getUser(this.route.snapshot.params["id"]);
     }
   }
@@ -38,7 +38,7 @@ export class UserDetailsComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.currentUser = data;
-          console.log(data);
+          console.log('***************\n' +data);
         },
         error: (e) => console.error(e)
       });
@@ -46,14 +46,14 @@ export class UserDetailsComponent implements OnInit {
 
   updatePublished(status: boolean): void {
     const data = {
-      name: this.currentUser.name,
+      email: this.currentUser.email,
       password: this.currentUser.password,
       published: status
     };
 
     this.message = '';
 
-    this.CookmeService.update(this.currentUser.id, data)
+    this.CookmeService.update(this.currentUser._id, data)
       .subscribe({
         next: (res) => {
           console.log(res);
@@ -67,7 +67,7 @@ export class UserDetailsComponent implements OnInit {
   updateUser(): void {
     this.message = '';
 
-    this.CookmeService.update(this.currentUser.id, this.currentUser)
+    this.CookmeService.update(this.currentUser._id, this.currentUser)
       .subscribe({
         next: (res) => {
           console.log(res);
@@ -78,7 +78,7 @@ export class UserDetailsComponent implements OnInit {
   }
 
   deleteUser(): void {
-    this.CookmeService.delete(this.currentUser.id)
+    this.CookmeService.delete(this.currentUser._id)
       .subscribe({
         next: (res) => {
           console.log(res);

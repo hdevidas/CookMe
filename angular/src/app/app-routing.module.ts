@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'profile/remove/:ingredient', component: ProfileComponent },
   { path: 'search', component: SearchComponent },
   { path: 'search/:ingredient', component: SearchComponent },
-  { path: 'recipe', component: RecipesComponent },
+  { path: 'recipe', component: RecipeComponent },
   { path: 'recipes/:recipe', component: RecipeComponent},
   { path: 'users', component: UsersListComponent },
   { path: 'user/:id', component: UserDetailsComponent },

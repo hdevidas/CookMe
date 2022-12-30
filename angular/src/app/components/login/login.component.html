@@ -1,1 +1,23 @@
-<p>login works!</p>
+<div class="logInWrapper">
+    <img src="" alt="Cuisine&moi_logo">
+
+    <form [formGroup]="loginForm">
+        <p class="errorMessage">{{ errorMessage }}</p>
+
+        <div class="form-group">
+            <input type="email" id="email" placeholder="Email address" formControlName="email">
+        
+            <input type="password" id="password" placeholder="Password" formControlName="password">
+        </div>
+
+        <div class="btnSubmit">
+            <button type="button" (click)="onLogin()" [disabled]="loginForm.invalid">Log in</button>
+        </div>
+    </form>
+
+    <a href="">Forgot your password?</a>
+
+    <p>
+        Don't have an acount? <a routerLink="/signup" routerLinkActive="active">sign up</a>
+    </p>
+</div>

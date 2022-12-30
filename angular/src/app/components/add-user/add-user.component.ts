@@ -5,12 +5,12 @@ import { CookmeService } from 'src/app/services/cookme.service';
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
-  styleUrls: ['./add-user.component.css']
+  styleUrls: ['./add-user.component.scss']
 })
 export class AddUserComponent {
 
   user: User = {
-    name: '',
+    email: '',
     password: ''
   };
   submitted = false;
@@ -19,7 +19,7 @@ export class AddUserComponent {
 
   saveUser(): void {
     const data = {
-      title: this.user.name,
+      title: this.user.email,
       description: this.user.password
     };
 
@@ -36,7 +36,7 @@ export class AddUserComponent {
   newUser(): void {
     this.submitted = false;
     this.user = {
-      name: '',
+      email: '',
       password: ''
     };
   }

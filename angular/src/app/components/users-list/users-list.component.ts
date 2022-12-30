@@ -5,14 +5,14 @@ import { CookmeService } from 'src/app/services/cookme.service';
 @Component({
   selector: 'app-users-list',
   templateUrl: './users-list.component.html',
-  styleUrls: ['./users-list.component.css']
+  styleUrls: ['./users-list.component.scss']
 })
 export class UsersListComponent implements OnInit {
 
   users?: User[];
   currentUser: User = {};
   currentIndex = -1;
-  name = '';
+  email = '';
 
   constructor(private cookmeService: CookmeService) { }
 
@@ -57,7 +57,7 @@ export class UsersListComponent implements OnInit {
     this.currentUser = {};
     this.currentIndex = -1;
 
-    this.cookmeService.findByName(this.name)
+    this.cookmeService.findByName(this.email)
       .subscribe({
         next: (data) => {
           this.users = data;
