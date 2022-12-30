@@ -1,31 +1,32 @@
-module.exports = app => {
-  const users = require("../controllers/user.controller.js");
-  const recipe = require("../controllers/recipe.controller.js");
+const express = require('express');
+const router = express.Router();
 
-  var router = require("express").Router();
+const userCtrl = require("../controllers/user.controller.js");
+const recipeCtrl = require("../controllers/recipe.controller.js");
 
-  // ------ Users ---------
-  // Create a new User
-  router.post("/user", users.create);
+// Create a new User
+router.post('/signup', userCtrl.signup);
 
-  // Retrieve all Users
-  router.get("/users", users.findAll);
+router.post('/login', userCtrl.login);
 
-  // Retrieve a single User with id
-  router.get("/user/:id", users.findOne);
+// Retrieve all Users
+router.get("/users", userCtrl.findAll);
 
-  // Update an User with id
-  router.put("/user/:id", users.update);
+// Retrieve a single User with id
+router.get("/login/:id", userCtrl.findOne);
 
-  // Delete an User with id
-  router.delete("/user/:id", users.delete);
+// Update an User with id
+router.put("/login/:id", userCtrl.update);
 
-  // Create a new User
-  router.delete("/users", users.deleteAll);
-  
-  // ------ Users ---------
-  // Retrieve a sample recipe
-  router.get("/recipe", recipe.getRandomRecipe);
+// Delete an User with id
+router.delete("/login/:id", userCtrl.delete);
 
-  app.use("/api/cookme", router);
-};
+// Create a new User
+router.delete("/users", userCtrl.deleteAll);
+
+// ------ Users ---------
+// Retrieve a sample recipe
+router.get("/recipe", recipeCtrl.getRandomRecipe);
+
+
+module.exports = router;

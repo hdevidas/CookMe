@@ -1,18 +1,13 @@
-module.exports = mongoose => {
-  var schema = mongoose.Schema(
-    {
-      name: String,
-      password: String,
-    },
-    { timestamps: true }
-  );
+const mongoose = require('mongoose');
 
-  schema.method("toJSON", function() {
-    const { __v, _id, ...object } = this.toObject();
-    object.id = _id;
-    return object;
-  });
+const uniqueValidator = require('mongoose-unique-validator'); /* Package permettant de gerer l'unicité d'un champ donné(objet unique) */
 
-  const User = mongoose.model("user", schema);
-  return User;
-};
+/* Description des informations concernant un utilisateur(email, mdp...) */
+const userSchema = mongoose.Schema({
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true }
+});
+
+userSchema.plugin(uniqueValidator); /* Gestion de l'unicité du mail */
+
+module.exports = mongoose.model('User', userSchema);
