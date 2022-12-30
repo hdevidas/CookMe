@@ -83,7 +83,7 @@ export class CookmeService {
 
   //Service temporaire:
   getRandomMeal(): Observable<any> {
-    return this.http.get<String>(`${baseUrl}/recipe`);
+    return this.http.get<any>(`${baseUrl}/recipe`);
   }
 
 }
