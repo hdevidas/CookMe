@@ -10,17 +10,23 @@
             <a routerLink="search" routerLinkActive="active">Search</a>
         </li>
 
+        <li *ngIf="isAuth">
+            <a routerLink="recipe" routerLinkActive="active">Recipe</a>
+        </li>
+
         <div class="profileWrapper">
             <li *ngIf="!isAuth">
                 <a routerLink="login" routerLinkActive="active">Log in </a>
-            </li>
-            <li *ngIf="isAuth">
-                <a routerLink="users" routerLinkActive="active">Users list</a>
             </li>
 
             <li *ngIf="isAuth">
                 <a routerLink="profile" routerLinkActive="active">Profile</a>
             </li>
+
+            <li *ngIf="isAuth">
+                <a routerLink="users" routerLinkActive="active">Users list</a>
+            </li>
+
             <li *ngIf="isAuth">
                 <a style="cursor: pointer" routerLinkActive="active" (click)="onLogout()">Log out</a>
             </li>
