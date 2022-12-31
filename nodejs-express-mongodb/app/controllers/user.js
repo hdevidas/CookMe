@@ -14,8 +14,8 @@ exports.signup = (req, res) => {
                 password: hash
             });
             user.save()
-                .then(() => res.status(201).json({ message: 'Your account has been successfully created, you can now login using your email and password!'}))
-              .catch(error => { console.log('Bonjour!'); res.status(400).json({ message: 'Already exists' })});
+                .then( () => res.status(201).json({ message: 'Your account has been successfully created, you can now login using your email and password!'}) )
+              .catch( error => res.status(400).json({ message: 'Already exists' }) );
         })
     .catch(error => res.status(500).json({ message: error.message || "Some error occurred while creating the User."  }));
   };
