@@ -12,6 +12,11 @@
     border-radius: 10px;
 }
 
+img {
+    box-sizing: border-box;
+    width: 50px;
+}
+
 form {
     display: flex;
     gap: 1rem;

@@ -1,10 +1,11 @@
 .headerWrapper{
-    background: linear-gradient(180deg, rgba(24, 141, 167, 0.2) 0%, rgba(114, 39, 149, 0.2) 96.35%);
+    background: linear-gradient(180deg, #188da733 0%, #72279533 96.35%);
     padding:30px;
 }
 
-nav{
+ul{
     display: flex;
+    flex-flow: row nowrap;
     justify-content: space-around;
     align-items: center;
 }

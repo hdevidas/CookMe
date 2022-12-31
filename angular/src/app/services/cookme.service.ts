@@ -10,6 +10,7 @@ const baseUrl = 'http://localhost:8080/api/cookme';
 })
 export class CookmeService {
 
+  isAuth$ = new BehaviorSubject<boolean>(false);
   token!: any;
   userId!: string;
 
@@ -39,6 +40,7 @@ export class CookmeService {
                 (authData: any) => {
                     this.token = authData.token;
                     this.userId = authData.userId;
+                    this.isAuth$.next(true);
                     resolve(authData);
                 },
                 (error) => { reject(error); }
@@ -49,8 +51,9 @@ export class CookmeService {
 
   /* Méthode pour la déconnexion d'un utilisateur */
   logout() {
-    this.userId = '';
+    this.isAuth$.next(false);
     this.token = null;
+    this.userId = '';
   }
 
   getAll(): Observable<User[]> {
