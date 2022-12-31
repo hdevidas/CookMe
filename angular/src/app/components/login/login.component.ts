@@ -11,7 +11,6 @@ import { CookmeService } from '../../services/cookme.service';
 export class LoginComponent {
 
   loginForm!: FormGroup;
-  loading = false;
   errorMessage!: string;
 
   constructor(private formBuilder: FormBuilder,
@@ -27,17 +26,14 @@ export class LoginComponent {
 
   /* Méthode permettant de se connecter qui sera appeler au clic sur le bouton 'Log in' */
   onLogin() {
-    this.loading = true;
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
     this.auth.login(email, password)
       .then( (response: any) => {
-        this.loading = false;
-        console.log('Ça change' + response.token);
+        console.log('Connexion réussie avec succès');
         this.router.navigate(['/search']);
       })
       .catch( (error) => {
-        this.loading = false;
         this.errorMessage = error.error.message;
       });
   }

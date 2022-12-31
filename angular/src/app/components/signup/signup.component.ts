@@ -11,7 +11,6 @@ import { CookmeService } from '../../services/cookme.service';
 export class SignupComponent implements OnInit {
 
   signupForm!: FormGroup;
-  loading = false;
   errorMessage!: string;
 
   constructor(private formBuilder: FormBuilder,
@@ -25,18 +24,15 @@ export class SignupComponent implements OnInit {
     });
   }
 
-
   onSignup() {
-    this.loading = true;
     const email = this.signupForm.get('email')?.value;
     const password = this.signupForm.get('password')?.value;
     this.auth.createNewUser(email, password)
       .then(() => {
-        this.loading = false;
+        console.log('Inscription avec succès !')
         this.router.navigate(['/profile']);
       })
       .catch((error) => {
-        this.loading = false;
         this.errorMessage = error.message;
       }
     );

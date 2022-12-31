@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../models/user.model';
 
 const baseUrl = 'http://localhost:8080/api/cookme';
@@ -10,8 +10,8 @@ const baseUrl = 'http://localhost:8080/api/cookme';
 })
 export class CookmeService {
 
-  token!: string;
-  userEmail!: string;
+  token!: any;
+  userId!: string;
 
   constructor(private http: HttpClient) { }
 
@@ -38,7 +38,7 @@ export class CookmeService {
             .subscribe(
                 (authData: any) => {
                     this.token = authData.token;
-                    this.userEmail = authData.email;
+                    this.userId = authData.userId;
                     resolve(authData);
                 },
                 (error) => { reject(error); }
@@ -49,8 +49,8 @@ export class CookmeService {
 
   /* Méthode pour la déconnexion d'un utilisateur */
   logout() {
-    this.userEmail = '';
-    this.token = '';
+    this.userId = '';
+    this.token = null;
   }
 
   getAll(): Observable<User[]> {
