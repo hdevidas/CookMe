@@ -28,7 +28,7 @@ export class UserDetailsComponent implements OnInit {
   ngOnInit(): void {
     if (!this.viewMode) {
       this.message = '';
-      console.log(this.route.snapshot.params["id"] + ' ici!')
+      //console.log(this.route.snapshot.params["id"] + ' ici!')
       this.getUser(this.route.snapshot.params["id"]);
     }
   }

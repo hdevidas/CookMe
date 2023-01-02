@@ -1,1 +1,26 @@
-<p>search works!</p>
+<h3>Search a recipe with a specific ingredient</h3>
+<p>The application will check your profile and give you the best recipes</p>
+<div>
+    <input
+      type="text"
+      placeholder="Give main ingredient"
+    />
+      <button>
+        Search
+      </button>
+</div>
+
+
+
+<input 
+    #searchBox 
+    (keyup)="search(searchBox.value)" 
+    placeholder="Cuisiner avec quel ingrédient ?"
+/>
+    <a 
+        *ngFor="let ingredient of ingredients$ | async"
+        (click)="goToDetail(ingredient)"
+    >
+        {{ ingredient }}
+    </a>
+

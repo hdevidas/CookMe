@@ -10,8 +10,7 @@ import { CookmeService } from 'src/app/services/cookme.service';
 })
 export class HeaderComponent implements OnInit {
 
-  // logged = false;
-  // debug = false;
+  debug = false;
 
   isAuth: boolean = false;
   private isAuthSub!: Subscription;
@@ -42,12 +41,12 @@ export class HeaderComponent implements OnInit {
   //   }
   // }
 
-  // swapDebugMode(): void {
-  //   if (this.debug){
-  //     this.debug = false;
-  //   }else{
-  //     this.debug = true;
-  //   }
-  // }
+  swapDebugMode(): void {
+    if (this.debug){
+      this.debug = false;
+    }else{
+      this.debug = true;
+    }
+  }
 
 }

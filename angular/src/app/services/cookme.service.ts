@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of, tap } from 'rxjs';
 import { User } from '../models/user.model';
 
 const baseUrl = 'http://localhost:8080/api/cookme';
@@ -80,13 +80,27 @@ export class CookmeService {
     return this.http.delete(`${baseUrl}/users`);
   }
 
-  findByName(name: any): Observable<User[]> {
-    return this.http.get<User[]>(`${baseUrl}/users?name=${name}`);
-  }
+  // findByName(name: any): Observable<User[]> {
+  //   return this.http.get<User[]>(`${baseUrl}/users?email=${name}`);
+  // }
+  
 
-  //Service temporaire:
+   //TO MOVE SOMEWHERE ELSE LATER
   getRandomMeal(): Observable<any> {
     return this.http.get<any>(`${baseUrl}/recipe`);
+  }
+
+  //TO MOVE SOMEWHERE ELSE LATER
+  // searchIngredientList(term: string): Observable<string[]> {
+  //   return this.http.get<any>(`${baseUrl}/ingredients/${term}`);
+  // }
+
+  searchIngredientWithTerm(term: string): Observable<string[]> {
+    if(term.length <= 1) {
+      return of([]);
+    } 
+
+    return this.http.get<string[]>(`${baseUrl}/ingredients/${term}`);
   }
 
 }

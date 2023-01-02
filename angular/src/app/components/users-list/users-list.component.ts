@@ -53,18 +53,18 @@ export class UsersListComponent implements OnInit {
       });
   }
 
-  searchName(): void {
-    this.currentUser = {};
-    this.currentIndex = -1;
+  // searchName(): void {
+  //   this.currentUser = {};
+  //   this.currentIndex = -1;
 
-    this.cookmeService.findByName(this.email)
-      .subscribe({
-        next: (data) => {
-          this.users = data;
-          console.log(data);
-        },
-        error: (e) => console.error(e)
-      });
-  }
+  //   this.cookmeService.findByName(this.email)
+  //     .subscribe({
+  //       next: (data) => {
+  //         this.users = data;
+  //         console.log(data);
+  //       },
+  //       error: (e) => console.error(e)
+  //     });
+  // }
 
 }
