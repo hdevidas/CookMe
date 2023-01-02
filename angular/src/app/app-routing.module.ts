@@ -9,8 +9,8 @@ import { SignupComponent } from './components/signup/signup.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SearchComponent } from './components/search/search.component';
 import { RecipeComponent } from './components/recipe/recipe.component';
-import { RecipesComponent } from './components/recipes/recipes.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import { ListRecipesComponent } from './components/list-recipes/list-recipes.component';
 
 const routes: Routes = [
   //{ path: '', redirectTo: 'users', pathMatch: 'full' },
@@ -22,9 +22,8 @@ const routes: Routes = [
   { path: 'profile/add/:ingredient', component: ProfileComponent },
   { path: 'profile/remove/:ingredient', component: ProfileComponent },
   { path: 'search', component: SearchComponent },
-  { path: 'search/:ingredient', component: SearchComponent },
+  { path: 'search/:ingredient', component: ListRecipesComponent },
   { path: 'recipe', component: RecipeComponent },
-  { path: 'recipes/:recipe', component: RecipeComponent},
   { path: 'users', component: UsersListComponent },
   { path: 'user/:id', component: UserDetailsComponent },
   { path: 'adduser', component: AddUserComponent }

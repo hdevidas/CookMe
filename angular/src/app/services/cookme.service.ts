@@ -11,6 +11,7 @@ const baseUrl = 'http://localhost:8080/api/cookme';
 export class CookmeService {
 
   isAuth$ = new BehaviorSubject<boolean>(false);
+  isNewIngredient$ = new BehaviorSubject<boolean>(false);
   token!: any;
   userId!: string;
 
@@ -80,21 +81,20 @@ export class CookmeService {
     return this.http.delete(`${baseUrl}/users`);
   }
 
-  // findByName(name: any): Observable<User[]> {
-  //   return this.http.get<User[]>(`${baseUrl}/users?email=${name}`);
-  // }
-  
-
-   //TO MOVE SOMEWHERE ELSE LATER
+  //TO MOVE SOMEWHERE ELSE LATER
+  //GET A RANDOM MEAL (to test mealdbapi)
   getRandomMeal(): Observable<any> {
     return this.http.get<any>(`${baseUrl}/recipe`);
   }
 
   //TO MOVE SOMEWHERE ELSE LATER
-  // searchIngredientList(term: string): Observable<string[]> {
-  //   return this.http.get<any>(`${baseUrl}/ingredients/${term}`);
-  // }
+  //GET A LIST OF RECIPES WICH CONTAIN A SPECIFIC INGREDIENT
+  getRecipes(ingredient: string): Observable<any> {
+    return this.http.get<any>(`${baseUrl}/recipes/${ingredient}`);
+  }
 
+  //TO MOVE SOMEWHERE ELSE LATER
+  //GET A LIST OF INGREDIENTS WHICH CONTAIN A SPECIFIC TERM
   searchIngredientWithTerm(term: string): Observable<string[]> {
     if(term.length <= 1) {
       return of([]);

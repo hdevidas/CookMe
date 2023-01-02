@@ -1,0 +1,14 @@
+
+<div>
+    
+  <p>Best recipes with <strong>{{ currentIngredient }}</strong> :</p>
+  <div class="recipesWrapper">
+    <div
+    *ngFor="let recipe of recipes" 
+    class="recipeWrapper">
+      <img src="{{ recipe.strMealThumb }}">
+      <h3><a routerLink="/recipe">{{ recipe.strMeal }}</a></h3>
+    </div>
+  </div> 
+</div>
+

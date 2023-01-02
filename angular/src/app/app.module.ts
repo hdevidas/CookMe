@@ -16,10 +16,10 @@ import { RecipeComponent } from './components/recipe/recipe.component';
 import { HomeComponent } from './components/home/home.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { LoginComponent } from './components/login/login.component';
-import { RecipesComponent } from './components/recipes/recipes.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { JwtAuthInterceptor } from './interceptors/jwt-auth-interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ListRecipesComponent } from './components/list-recipes/list-recipes.component';
 
 @NgModule({
   declarations: [
@@ -35,8 +35,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HomeComponent,
     SignupComponent,
     LoginComponent,
-    RecipesComponent,
-    LogoutComponent
+    LogoutComponent,
+    ListRecipesComponent
   ],
   imports: [
     BrowserModule,

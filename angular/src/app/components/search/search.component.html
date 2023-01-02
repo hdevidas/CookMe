@@ -1,26 +1,39 @@
 <h3>Search a recipe with a specific ingredient</h3>
 <p>The application will check your profile and give you the best recipes</p>
 <div>
-    <input
-      type="text"
-      placeholder="Give main ingredient"
-    />
-      <button>
-        Search
-      </button>
-</div>
-
-
-
-<input 
+  <input 
     #searchBox 
     (keyup)="search(searchBox.value)" 
-    placeholder="Cuisiner avec quel ingrédient ?"
-/>
-    <a 
-        *ngFor="let ingredient of ingredients$ | async"
-        (click)="goToDetail(ingredient)"
-    >
-        {{ ingredient }}
-    </a>
+    placeholder="What ingredient do you want to prepare ?"
+  />
+  <a 
+    *ngFor="let ingredient of ingredients$ | async"
+    (click)="setCurrentIngredient(ingredient)"
+    class="collection-item"
+  >
+    {{ ingredient }}
+  </a>
+</div>
+
+<!--
+<div *ngIf="currentIngredient">
+  <app-list-recipes
+  [currentIngredient]="currentIngredient">
+  </app-list-recipes>
+</div>
+-->
+
+
+<div *ngIf="currentIngredient">
+    
+  <p>Best recipes with <strong>{{ currentIngredient }}</strong> :</p>
+  <div class="recipesWrapper">
+    <div
+    *ngFor="let recipe of recipes" 
+    class="recipeWrapper">
+      <img src="{{ recipe.strMealThumb }}">
+      <h3><a routerLink="/recipe">{{ recipe.strMeal }}</a></h3>
+    </div>
+  </div> 
+</div>
 

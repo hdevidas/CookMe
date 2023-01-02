@@ -2,10 +2,8 @@
     <ul>
         <li class="debugPannel">
             <button (click)="swapDebugMode()" [ngClass]="{'green' : debug}">Debug</button>
-        </li>
-        <li *ngIf="debug">
-            <a routerLink="recipe" routerLinkActive="active">Recipe</a>
-            <br><a routerLink="users" routerLinkActive="active">Users list</a>
+            <a *ngIf="debug" routerLink="recipe" routerLinkActive="active">Recipe</a>
+            <br><a *ngIf="debug" routerLink="users" routerLinkActive="active">Users list</a>
         </li>
         <li>
             <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><img src="../../../assets/cookmelogo.png"></a>

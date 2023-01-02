@@ -28,7 +28,7 @@ export class RecipeComponent implements OnInit{
     this.cookmeService.getRandomMeal()
       .subscribe({
         next: (data) => {
-          console.log(data.meals[0])
+          //console.log(data.meals[0])
           this.name = data.meals[0].strMeal;
           this.instructions = data.meals[0].strInstructions;
           this.img = data.meals[0].strMealThumb;

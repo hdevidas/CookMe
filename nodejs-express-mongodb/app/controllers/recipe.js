@@ -46,7 +46,7 @@ exports.getIngredientList = async (req, res) => {
   }
 };
 
-
+//Auxiliary function for "getIngredientList"
 function ingredientSortedWithTerm(term,ingredient) {
   const ingredientSorted = new Array();
   ingredient.forEach(element => {
@@ -55,4 +55,23 @@ function ingredientSortedWithTerm(term,ingredient) {
     }
   })
   return ingredientSorted;
+};
+
+//Retrieve all recipes with a specific ingredient from the external api
+exports.getRecipeList = async (req, res) => {
+  let url = "https://www.themealdb.com/api/json/v1/1/filter.php?i=";
+  let ingredient = req.params.ingredient;
+  const newUrl = url.concat('', ingredient)
+  try {
+      const response = await fetch(newUrl);
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error : ${response.status}`);
+      }
+      const data = await response.json();
+      //console.log(data);
+      res.send(data);
+  } catch (error) {
+      console.error(`Could not get data: ${error}`);
+  }
 };
