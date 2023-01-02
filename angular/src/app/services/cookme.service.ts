@@ -20,15 +20,10 @@ export class CookmeService {
   createNewUser(email: string, password: string) {
     return new Promise<void>((resolve, reject) => {
     this.http.post(baseUrl+'/signup',{ email: email, password: password , pentry: []})
-        .subscribe( () => {
-                this.login(email, password)
-                    .then(() => { resolve(); })
-                    .catch((error) => { reject(error); });
-        },
-            (error) => {
-            reject(error);
-        }
-        );
+      .subscribe(
+        (response: any) => { resolve(response) },
+        (error) => { reject(error); }
+      );
     });
   }
 
@@ -38,12 +33,11 @@ export class CookmeService {
         this.http.post(baseUrl+'/login', { email: email, password: password })
             .subscribe(
                 (authData: any) => {
-                    this.token = authData.token;
-                    this.userId = authData.userId;
-                    this.isAuth$.next(true);
-                    console.log(this.userId);
-
-                    resolve(authData);
+                  this.token = authData.token;
+                  this.userId = authData.userId;
+                  this.isAuth$.next(true);
+                
+                  resolve(authData);
                 },
                 (error) => { reject(error); }
             );

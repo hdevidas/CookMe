@@ -32,15 +32,6 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
-
-  // swapLoggedMode(): void {
-  //   if (this.logged){
-  //     this.logged = false;
-  //   }else{
-  //     this.logged = true;
-  //   }
-  // }
-
   swapDebugMode(): void {
     if (this.debug){
       this.debug = false;

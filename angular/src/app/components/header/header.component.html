@@ -10,58 +10,26 @@
         <li>
             <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><img src="../../../assets/cookmelogo.png"></a>
         </li>
-        <li>
+        <li *ngIf="isAuth">
             <a routerLink="search" routerLinkActive="active">Search</a>
         </li>
 
-        
-
         <div class="profileWrapper">
-            <li *ngIf="!isAuth">
+            <li *ngIf="!isAuth" class="content1">
+                <a routerLink="signup" routerLinkActive="active">Sign up </a>
                 <a routerLink="login" routerLinkActive="active">Log in </a>
             </li>
 
-            <li *ngIf="isAuth">
-                <a routerLink="profile" routerLinkActive="active">Profile</a>
-            </li>
-
-            <li *ngIf="isAuth">
-                <a style="cursor: pointer" routerLinkActive="active" (click)="onLogout()">Log out</a>
-            </li>
+            <div *ngIf="isAuth">
+                <button class="dropDownBtn" mat-button [matMenuTriggerFor]="menu">
+                    <span>User</span>
+                    <img src="../../../assets/expand_more.png">
+                </button>
+                <mat-menu #menu="matMenu">
+                    <a mat-menu-item routerLink="profile" *ngIf="isAuth">Profile</a>
+                    <a mat-menu-item (click)="onLogout()" *ngIf="isAuth">Log out</a>
+                </mat-menu>
+            </div>
         </div>
     </ul>
-
-    <!-- <nav>
-        <li>
-            <img src="../../../assets/cookmelogo.png">
-        </li>
-        <li>
-            <a routerLink="">Home</a>
-        </li>
-        <li *ngIf="debug">
-            <a routerLink="users">Users list (debug)</a>
-        </li>
-        <li *ngIf="debug">
-            <a routerLink="recipe">Recipe (debug)</a>
-        </li>
-        <li *ngIf="logged">
-            <a routerLink="search">Search</a>
-        </li>
-        <li *ngIf="logged">
-            <a routerLink="profile">Profile</a>
-        </li>
-        <li *ngIf="debug">
-            <a routerLink="signup">Sign up (debug)</a>
-        </li>
-        <li *ngIf="!logged">
-            <a routerLink="login">Log in</a>
-        </li>
-        <li *ngIf="logged">
-            <a routerLink="logout">Log out</a>
-        </li>
-        <li class="debugPannel">
-            <button (click)="swapLoggedMode()" [ngClass]="{'green' : logged}">Logged</button>
-            <button (click)="swapDebugMode()" [ngClass]="{'green' : debug}">Debug</button>
-        </li>
-    </nav> -->
 </nav>
