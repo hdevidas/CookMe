@@ -19,7 +19,6 @@ import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { JwtAuthInterceptor } from './interceptors/jwt-auth-interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ListRecipesComponent } from './components/list-recipes/list-recipes.component';
 
 @NgModule({
   declarations: [
@@ -35,8 +34,7 @@ import { ListRecipesComponent } from './components/list-recipes/list-recipes.com
     HomeComponent,
     SignupComponent,
     LoginComponent,
-    LogoutComponent,
-    ListRecipesComponent
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { debounceTime, distinctUntilChanged, filter, Observable, Subject, switchMap } from 'rxjs';
 import { CookmeService } from 'src/app/services/cookme.service';
-import { ListRecipesComponent } from '../list-recipes/list-recipes.component';
 
 @Component({
   selector: 'app-search',
@@ -55,7 +54,6 @@ export class SearchComponent implements OnInit {
         error: (e) => console.error(e)
       });
   }
-  
 
 }
 

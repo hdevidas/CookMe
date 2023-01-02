@@ -11,7 +11,6 @@ const baseUrl = 'http://localhost:8080/api/cookme';
 export class CookmeService {
 
   isAuth$ = new BehaviorSubject<boolean>(false);
-  isNewIngredient$ = new BehaviorSubject<boolean>(false);
   token!: any;
   userId!: string;
 
@@ -85,6 +84,12 @@ export class CookmeService {
   //GET A RANDOM MEAL (to test mealdbapi)
   getRandomMeal(): Observable<any> {
     return this.http.get<any>(`${baseUrl}/recipe`);
+  }
+
+  //TO MOVE SOMEWHERE ELSE LATER
+  //GET A SPECIFIC MEAL BY NAME
+  getRecipeByName(name: string): Observable<any> {
+    return this.http.get<any>(`${baseUrl}/recipe/${name}`);
   }
 
   //TO MOVE SOMEWHERE ELSE LATER

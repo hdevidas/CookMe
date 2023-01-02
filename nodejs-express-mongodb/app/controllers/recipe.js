@@ -75,3 +75,24 @@ exports.getRecipeList = async (req, res) => {
       console.error(`Could not get data: ${error}`);
   }
 };
+
+//Retrieve a recipe by his name from the external api
+exports.getRecipe = async (req, res) => {
+  //console.log("we are here");
+  let url = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
+  let name = req.params.name;
+  //let name = "Poutine";
+  const newUrl = url.concat('', name)
+  try {
+      const response = await fetch(newUrl);
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error : ${response.status}`);
+      }
+      const data = await response.json();
+      //console.log(data);
+      res.send(data);
+  } catch (error) {
+      console.error(`Could not get data: ${error}`);
+  }
+};

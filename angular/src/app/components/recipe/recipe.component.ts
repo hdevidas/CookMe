@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { CookmeService } from 'src/app/services/cookme.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { CookmeService } from 'src/app/services/cookme.service';
 })
 export class RecipeComponent implements OnInit{
 
-  name = '';
+  name: string = '';
   instructions = '';
   img = '';
 
@@ -18,14 +19,17 @@ export class RecipeComponent implements OnInit{
 
   sortedIngredients: String[] = [];
 
-  constructor(private cookmeService: CookmeService) { }
+  constructor(private cookmeService: CookmeService,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.name = this.route.snapshot.params["name"];
     this.getDatas();
   }
 
   getDatas(): void {
-    this.cookmeService.getRandomMeal()
+    //console.log(this.name);
+    this.cookmeService.getRecipeByName(this.name)
       .subscribe({
         next: (data) => {
           //console.log(data.meals[0])
