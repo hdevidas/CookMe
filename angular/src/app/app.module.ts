@@ -19,6 +19,9 @@ import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { JwtAuthInterceptor } from './interceptors/jwt-auth-interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
+// import { PopUpComponent } from './pop-up/pop-up.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HomeComponent,
     SignupComponent,
     LoginComponent,
-    LogoutComponent
+    LogoutComponent,
+    LogoutComponent,
+    // PopUpComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +47,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatDialogModule, 
+    MatMenuModule
   ],
   providers: [
     /* Utilisation des interceptors pour la gestion des tokens */

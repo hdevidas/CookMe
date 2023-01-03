@@ -19,16 +19,11 @@ export class CookmeService {
   /* Méthode permettant de lancer une requête sur le back pour la création d'un compte utilisateur  */
   createNewUser(email: string, password: string) {
     return new Promise<void>((resolve, reject) => {
-    this.http.post(baseUrl+'/signup',{ email: email, password: password })
-        .subscribe( () => {
-                this.login(email, password)
-                    .then(() => { resolve(); })
-                    .catch((error) => { reject(error); });
-        },
-            (error) => {
-            reject(error);
-        }
-        );
+    this.http.post(baseUrl+'/signup',{ email: email, password: password , pentry: []})
+      .subscribe(
+        (response: any) => { resolve(response) },
+        (error) => { reject(error); }
+      );
     });
   }
 
@@ -38,15 +33,30 @@ export class CookmeService {
         this.http.post(baseUrl+'/login', { email: email, password: password })
             .subscribe(
                 (authData: any) => {
-                    this.token = authData.token;
-                    this.userId = authData.userId;
-                    this.isAuth$.next(true);
-                    resolve(authData);
+                  this.token = authData.token;
+                  this.userId = authData.userId;
+                  this.isAuth$.next(true);
+                
+                  resolve(authData);
                 },
                 (error) => { reject(error); }
             );
         }
     );
+  }
+
+  addIngredient(id: any, ingredient : string) {
+    return new Promise((resolve,reject) => {
+      this.http.post(baseUrl+'/ingredients', {id : id, pentry: ingredient})
+        .subscribe( (data) => {
+          resolve(data);
+        },
+          (error) => { 
+            reject(error);
+
+          }
+        );
+    }) ;
   }
 
   /* Méthode pour la déconnexion d'un utilisateur */

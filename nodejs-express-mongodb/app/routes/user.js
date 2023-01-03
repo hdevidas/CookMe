@@ -24,5 +24,8 @@ router.delete("/login/:id", security, userCtrl.delete);
 // Create a new User
 router.delete("/users", security, userCtrl.deleteAll);
 
+//add an ingredient
+router.post('/ingredients/', userCtrl.addingredients);
+
 
 module.exports = router;
