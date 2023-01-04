@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { debounceTime, distinctUntilChanged, filter, Observable, Subject, switchMap } from 'rxjs';
-import { CookmeService } from 'src/app/services/cookme.service';
+import { RecipeService } from 'src/app/services/recipe.service';
 
 @Component({
   selector: 'app-search',
@@ -15,7 +15,7 @@ export class SearchComponent implements OnInit {
   recipes: any[] = [];
 
   constructor(
-    private cookmeService: CookmeService
+    private recipeService: RecipeService
     ) { }
 
   ngOnInit(): void {
@@ -33,7 +33,7 @@ export class SearchComponent implements OnInit {
       // {......"ab"...."ab"...."abc"......}
       distinctUntilChanged(),
       // {......"ab"..........."abc"......}
-      switchMap((term) => this.cookmeService.searchIngredientWithTerm(term))
+      switchMap((term) => this.recipeService.searchIngredientWithTerm(term))
       // {.....ingredientList(ab)............ingredientList(abc)......}
     );
   }
@@ -46,7 +46,7 @@ export class SearchComponent implements OnInit {
   }
 
   retrieveRecipes(): void {
-    this.cookmeService.getRecipes(this.currentIngredient)
+    this.recipeService.getRecipes(this.currentIngredient)
       .subscribe({
         next: (data) => {
           this.recipes = data.meals;

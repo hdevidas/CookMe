@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user.model';
-import { CookmeService } from 'src/app/services/cookme.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-users-list',
@@ -14,18 +14,17 @@ export class UsersListComponent implements OnInit {
   currentIndex = -1;
   email = '';
 
-  constructor(private cookmeService: CookmeService) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.retrieveUsers();
   }
 
   retrieveUsers(): void {
-    this.cookmeService.getAll()
+    this.userService.getUsers()
       .subscribe({
         next: (data) => {
           this.users = data;
-          console.log(data);
         },
         error: (e) => console.error(e)
       });
@@ -43,28 +42,13 @@ export class UsersListComponent implements OnInit {
   }
 
   removeAllUsers(): void {
-    this.cookmeService.deleteAll()
+    this.userService.deleteUsers()
       .subscribe({
         next: (res) => {
-          console.log(res);
           this.refreshList();
         },
         error: (e) => console.error(e)
       });
   }
-
-  // searchName(): void {
-  //   this.currentUser = {};
-  //   this.currentIndex = -1;
-
-  //   this.cookmeService.findByName(this.email)
-  //     .subscribe({
-  //       next: (data) => {
-  //         this.users = data;
-  //         console.log(data);
-  //       },
-  //       error: (e) => console.error(e)
-  //     });
-  // }
 
 }

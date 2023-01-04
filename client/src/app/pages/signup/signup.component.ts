@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { CookmeService } from '../../services/cookme.service';
-import { PopUpComponent } from '../pop-up/pop-up.component';
+import { UserService } from '../../services/user.service';
+import { PopUpComponent } from '../../components/pop-up/pop-up.component';
 
 @Component({
   selector: 'app-signup',
@@ -18,7 +18,7 @@ export class SignupComponent implements OnInit {
   constructor(private popUp: MatDialog,
               private formBuilder: FormBuilder,
               private router: Router,
-              private auth: CookmeService) {}
+              private userService: UserService) {}
 
   ngOnInit() {
     this.signupForm = this.formBuilder.group({
@@ -30,10 +30,9 @@ export class SignupComponent implements OnInit {
   onSignup() {
     const email = this.signupForm.get('email')?.value;
     const password = this.signupForm.get('password')?.value;
-    this.auth.createNewUser(email, password)
+    this.userService.signup(email, password)
       .then((response: any) => {
         this.openPopUp(response);
-        // this.router.navigate(['/profile']);
       })
       .catch((error) => {
         this.errorMessage = error.error.message;

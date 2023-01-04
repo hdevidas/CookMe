@@ -23,7 +23,7 @@ export class PopUpComponent implements OnInit {
   }
 
   onClose() {
-    this.router.navigate(['/login']);
+    this.router.navigateByUrl('login');
     this.popUp.closeAll();
   }
 

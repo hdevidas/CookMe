@@ -1,0 +1,22 @@
+<div class="profileWrapper">
+    <div class="profileContent1">
+        <h1>Informations</h1>
+        <button type="button" (click)="updateUser()"> Edit profile</button>
+        <p> User Name : {{name}} </p>
+        <p> Email adress : {{mail}} </p>
+    </div>
+
+    <div class="profileContent2">
+        <h1>My pantry</h1>
+        <form [formGroup]="ingredientform">
+            <input type="text" id="ingredient" placeholder="ingredient" formControlName="ingredient">
+            <button type="submit" (click)="addIngredient()"> add an ingredient</button>
+        </form>
+        
+        <ul> 
+            <li *ngFor="let ingredient of currentUser.pentry;">
+                {{ currentUser.pentry }}
+            </li>
+        </ul>
+    </div>    
+</div>
