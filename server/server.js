@@ -1,5 +1,7 @@
 const http = require('http');
 const app = require('./app');
+require('dotenv').config(); /* Pour l'utilisation des variables d'environnement */
+
 
 /* Cette fonction permet de renvoyer un port valide qu'il soit fournit en entier ou en chaine */
 const normalizePort = val => {
@@ -14,7 +16,7 @@ const normalizePort = val => {
     return false;
 };
 
-const port = normalizePort(process.env.PORT || 8080);
+const port = normalizePort(process.env.PORT || 3000);
 app.set('port', port);
 
 

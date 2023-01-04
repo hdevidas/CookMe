@@ -1,16 +1,13 @@
 /* Configuration pour la connexion à la base de données */
 const mongoose = require('mongoose'); 
+require('dotenv').config(); /* Pour l'utilisation des variables d'environnement */
 
-/* Variables pour la connexion à la BD */
-const DB_NAME = 'cookme_db'
-const MONGO_URL = 'mongodb://localhost:27017';
-
-
+/* Fonction pour la connexion à la base de données */
 async function connectDB() {
     try {
         console.log("Opening connection");
         mongoose.set('strictQuery', false);
-        const conn = await mongoose.connect(MONGO_URL + '/' + DB_NAME, {
+        const conn = await mongoose.connect(process.env.MONGO_URL + '/' + process.env.DB_NAME, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
