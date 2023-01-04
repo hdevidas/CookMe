@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken');
 module.exports = async (req, res, next) => {
     let token = req.headers.authorization || req.headers['x-access-token']; /* On recupère l'ens du token depuis l'entête de la requête */
 
-    console.log('---------------> ' + token);
     if(token && token.startsWith('Bearer '))
         token = token.split(' ')[1]; /* On extrait le token */
     

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { CookmeService } from 'src/app/services/cookme.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -15,11 +15,11 @@ export class HeaderComponent implements OnInit {
   isAuth: boolean = false;
   private isAuthSub!: Subscription;
 
-  constructor(private authService: CookmeService,
+  constructor(private userService: UserService,
               private router: Router) { }
 
   ngOnInit(): void {
-    this.isAuthSub = this.authService.isAuth$.subscribe(
+    this.isAuthSub = this.userService.isAuth$.subscribe(
       (auth) => {
         this.isAuth = auth;
       }
@@ -28,9 +28,10 @@ export class HeaderComponent implements OnInit {
 
   /* Méthode pour la déconnexion de l'utilisateur */
   onLogout() {
-    this.authService.logout();
+    this.userService.logout();
     this.router.navigateByUrl('/');
   }
+
 
   swapDebugMode(): void {
     if (this.debug){

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CookmeService } from '../../services/cookme.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +15,7 @@ export class LoginComponent {
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
-              private auth: CookmeService) { }
+              private userService: UserService) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -28,9 +28,9 @@ export class LoginComponent {
   onLogin() {
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
-    this.auth.login(email, password)
+    this.userService.login(email, password)
       .then( (response: any) => {
-        this.router.navigate(['/search']);
+        this.router.navigateByUrl('search');
       })
       .catch( (error) => {
         this.errorMessage = error.error.message;

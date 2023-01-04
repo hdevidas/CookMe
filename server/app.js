@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose'); 
 
 const connectDb = require('./app/config/db'); 
+const adminRoutes = require('./app/routes/admin');
 const userRoutes = require('./app/routes/user'); 
 const recipeRoutes = require('./app/routes/recipe');
 
@@ -25,6 +26,7 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 
 /* Utilisation des routes */
+app.use('/api/cookme', adminRoutes); 
 app.use('/api/cookme', userRoutes); 
 app.use('/api/cookme', recipeRoutes); 
 

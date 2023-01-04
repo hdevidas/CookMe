@@ -55,7 +55,6 @@ exports.addingredients = (req,res) => {
   const id = req.body.id;
   User.findOne({id: req.body._id})
     .then(user => {
-      console.log(user);
       if (user === null){
         res.status(401).json({ message: 'Incorrect information (email and password)' });
        }else {
@@ -69,7 +68,6 @@ exports.addingredients = (req,res) => {
           .catch( error => res.status(400).json({ message: 'Already exists' }) );
         })
         .catch(err => {
-          console.log("update impossible");
           res.status(500).send({
             message: "Error updating User with id=" + id
           });
@@ -77,8 +75,7 @@ exports.addingredients = (req,res) => {
       }
       
     }).catch(error => {
-      console.log ("user not found");
-      res.status(500).json({ error })});
+      res.status(500).json({ message: "user not found" })});
 }
 
 // Retrieve all Users from the database.
