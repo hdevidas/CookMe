@@ -30,7 +30,6 @@ export class LoginComponent {
     const password = this.loginForm.get('password')?.value;
     this.auth.login(email, password)
       .then( (response: any) => {
-        console.log('Connexion réussie avec succès');
         this.router.navigate(['/search']);
       })
       .catch( (error) => {
