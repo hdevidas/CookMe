@@ -34,7 +34,7 @@ import { PopUpComponent } from '../app/components/pop-up/pop-up.component';
     HomeComponent,
     SignupComponent,
     LoginComponent,
-    PopUpComponent
+    PopUpComponent,
   ],
   imports: [
     BrowserModule,
