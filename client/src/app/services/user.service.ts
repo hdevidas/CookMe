@@ -52,20 +52,6 @@ export class UserService {
         this.userId = '';
     }
 
-    /* Function to add an ingredient to the user's cupboard  */
-    addIngredient(id: any, ingredient : string) {
-        return new Promise((resolve,reject) => {
-          this.http.post(baseUrl+'/ingredients', {id : id, pentry: ingredient})
-            .subscribe( (data) => {
-              resolve(data);
-            },
-              (error) => { 
-                reject(error);
-              }
-            );
-        }) ;
-    }
-
     /* Retrieves all registered users */
     getUsers(): Observable<User[]> {
         return this.http.get<User[]>(`${baseUrl}/users`);

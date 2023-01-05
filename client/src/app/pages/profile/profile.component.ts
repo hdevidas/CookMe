@@ -4,6 +4,7 @@ import { UserService } from 'src/app/services/user.service';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { User } from 'src/app/models/user.model';
 import { ActivatedRoute } from '@angular/router';
+import { PentryService } from 'src/app/services/pentry.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,42 +12,62 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent {
-
-  @Input() currentUser: User = {
-    email: '',
-    password: '',
-    pentry : []
-  };
-
-  name! : String;
   mail! : String;
-  ingredientform!: FormGroup;
-  
-  message!: string;
+  ingredientform! : FormGroup;
+  pentry! : string[];
+  id! : any;
 
   constructor(
     private userService : UserService,
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private pentryService: PentryService,
   ){}
 
   ngOnInit() {
     this.ingredientform = this.formBuilder.group({
       ingredient: [null]
     });
+    this.id = this.userService.userId;
+    this.updateUser();
+  }
 
-  }
-  
   updateUser(){
-    console.log("methode updateUser not donne yet");
+    this.userService.getUser(this.id)
+          .subscribe({
+              next: (data :any) => {
+                this.mail = data.email;
+                this.pentry = data.pentry;
+              }    
+        })
   }
+
+  
 
   addIngredient(){
     const ingredient = this.ingredientform.get('ingredient')?.value;
-
-    this.userService.addIngredient(this.userService.userId, ingredient)
-      .then((data : any) => { this.message = data.message })
-      .catch((error : any) => { this.message =  error.message }); 
+    this.changeIngredients(ingredient);
   }
 
+  removeAllIngredients(){
+    const empty : string[] = []
+    this.changeIngredients(empty);
+  }
+
+  changeIngredients( ingredients : string[]){
+    this.pentryService.addIngredient(this.id, ingredients)
+    .then((data : any) => { 
+      console.log(data.message);
+      this.updateUser();})
+    .catch((error : any) => { console.error(error.message)});
+  }
+  
+  deleteElement(item : string){
+    console.log(item);
+    this.pentryService.removeOneIngredient(this.id, item)
+      .then((data : any) => { 
+        console.log(data.message);
+        this.updateUser();})
+      .catch((error : any) => { console.error(error.message)});
+  }
 }

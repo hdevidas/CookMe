@@ -51,32 +51,6 @@ exports.login = (req, res, next) => {
         .catch(error => {res.status(500).json({ error })});
 };
 
-exports.addingredients = (req,res) => {
-  const id = req.body.id;
-  User.findOne({id: req.body._id})
-    .then(user => {
-      if (user === null){
-        res.status(401).json({ message: 'Incorrect information (email and password)' });
-       }else {
-        
-        let pentry = user.pentry;
-        pentry.push(req.body.pentry);
-        user.updateOne({_id : id}, {$set: {pentry : pentry}})
-        .then(() => {
-          user.save()
-          .then( () => res.status(201).json({ message: 'pentry updated successfuly'}) )
-          .catch( error => res.status(400).json({ message: 'Already exists' }) );
-        })
-        .catch(err => {
-          res.status(500).send({
-            message: "Error updating User with id=" + id
-          });
-        });
-      }
-      
-    }).catch(error => {
-      res.status(500).json({ message: "user not found" })});
-}
 
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
