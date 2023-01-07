@@ -11,7 +11,7 @@ export class PantryService {
 
   constructor(private http: HttpClient) { }
 
-  addIngredient(id: any, ingredient : string[]) {
+  addIngredient(id: any, ingredient : string) {
     return new Promise((resolve,reject) => {
       this.http.put(baseUrl+'/pantry/add', {id : id, pantry: ingredient})
         .subscribe( 

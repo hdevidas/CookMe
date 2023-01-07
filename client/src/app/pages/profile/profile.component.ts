@@ -1,7 +1,9 @@
-import { Component, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component} from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { PantryService } from 'src/app/services/pantry.service';
+import { debounceTime, distinctUntilChanged, Observable, Subject, switchMap } from 'rxjs';
+import { RecipeService } from 'src/app/services/recipe.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,40 +13,53 @@ import { PantryService } from 'src/app/services/pantry.service';
 
 export class ProfileComponent {
   mail! : String;
-  ingredientform! : FormGroup;
   pantry! : string[];
   id! : any;
 
+  searchTerms = new Subject<string>();
+  ingredients$: Observable<string[]> | undefined ;
+
+
   constructor(
+    private recipeService: RecipeService,
     private userService : UserService,
-    private formBuilder: FormBuilder,
     private pantryService: PantryService,
   ){}
 
   ngOnInit() {
-    this.ingredientform = this.formBuilder.group({
-      ingredient: [null]
-    });
+    this.searchIngredients();
     this.updateUser();
   }
 
-  updateUser(){
-    this.id = this.userService.userId;
-    this.userService.getUser(this.id)
-          .subscribe({
-              next: (data :any) => {
-                this.mail = data.email;
-                this.pantry = data.pantry;
-              }    
-        })
+  search(term: string) {
+    this.searchTerms.next(term.toLowerCase());
+  }
+
+  searchIngredients() {
+    this.ingredients$ = this.searchTerms.pipe(
+      debounceTime(600),
+      distinctUntilChanged(),
+      switchMap((term) => this.recipeService.searchIngredientWithTerm(term))
+    );
+  }
+
+  changeEmail() :void{
+    //TODO
+  }
+
+  resetPassword() :void{
+    //TODO
   }
  
-  addIngredient(){
-    this.pantryService.addIngredient(this.id, this.ingredientform.get('ingredient')?.value)
+  addIngredient(ingredient: string){
+    this.pantryService.addIngredient(this.id, ingredient)
     .then((data : any) => { 
       console.log(data.message);
       this.updateUser();})
     .catch((error : any) => { console.error(error.message)});
+
+    this.updateUser();
+    this.searchIngredients();
   }
   
   removeIngredient(item : string){
@@ -62,6 +77,17 @@ export class ProfileComponent {
       console.log(data.message);
       this.updateUser();})
     .catch((error : any) => { console.error(error.message)});
+  }
+
+  updateUser(){
+    this.id = this.userService.userId;
+    this.userService.getUser(this.id)
+          .subscribe({
+              next: (data :any) => {
+                this.mail = data.email;
+                this.pantry = data.pantry;
+              }    
+        })
   }
 
 }

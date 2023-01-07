@@ -1,21 +1,35 @@
 <div class="profileWrapper">
-    <div class="profileContent1">
-        <h1>Informations</h1>
-        <button type="button" (click)="updateUser()"> Edit profile</button>
-        <p> Email adress : {{mail}} </p>
-    </div>
+    <h1>My Profile</h1>
+</div>
 
-    <div class="profileContent2">
-        <h1>My pentry</h1>
-    <form [formGroup]="ingredientform">
-        <input type="text" id="ingredient" placeholder="ingredient" formControlName="ingredient">
-        <button type="submit" (click)="addIngredient()"> add an ingredient</button>
-    </form>
-    <button type="submit" (click)="removeAllIngredients()"> remove all</button>
-    <ul> 
-        <li *ngFor="let item of pantry"> 
-            {{item}} <button type="button" (click)="removeIngredient(item)">X</button>
-        </li>
-    </ul>
-    </div>    
+<div class="profileWrapper">
+    <div>
+        <h1>Actions</h1>
+        <p><button type="button" (click)="changeEmail()">Change my email</button></p>
+        <p><button type="button" (click)="resetPassword()">Reset my password</button></p>
+        <p><button type="button" (click)="removeAllIngredients()">Remove all my ingredients</button></p>
+        <p>Add an ingredient to my Pantry:</p>
+        <input 
+            #searchBox 
+            (keyup)="search(searchBox.value)" 
+            placeholder="What ingredient do you want to prepare ?"
+        />
+        <a 
+            *ngFor="let ingredient of ingredients$ | async"
+            (click)="addIngredient(ingredient)"
+            class="collection-item"
+        >
+            {{ ingredient }}
+         </a>
+    </div>
+    <div>
+        <h1>My informations</h1>
+        <p>Email adress: {{mail}}</p>
+        <p>Pantry :</p>
+        <ul> 
+            <li *ngFor="let ingredient of pantry"> 
+                {{ingredient}} <button type="button" (click)="removeIngredient(ingredient)">X</button>
+            </li>
+        </ul>
+    </div>
 </div>

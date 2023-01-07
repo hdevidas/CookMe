@@ -28,13 +28,9 @@ export class SearchComponent implements OnInit {
 
   searchIngredients() {
     this.ingredients$ = this.searchTerms.pipe(
-      // {...."ab"..."abz"."ab"...."abc"......}
       debounceTime(600),
-      // {......"ab"...."ab"...."abc"......}
       distinctUntilChanged(),
-      // {......"ab"..........."abc"......}
       switchMap((term) => this.recipeService.searchIngredientWithTerm(term))
-      // {.....ingredientList(ab)............ingredientList(abc)......}
     );
   }
 
