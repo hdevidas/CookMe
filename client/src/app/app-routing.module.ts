@@ -15,8 +15,6 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'profile/add/:ingredient', component: ProfileComponent },
-  { path: 'profile/remove/:ingredient', component: ProfileComponent },
   { path: 'search', component: SearchComponent },
   { path: 'recipe/:name', component: RecipeComponent },
   { path: 'users', component: UsersListComponent },

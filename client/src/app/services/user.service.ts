@@ -19,7 +19,7 @@ export class UserService {
     /* Method to launch a request on the backend to create a user account  */
     signup(email: string, password: string) {
         return new Promise<void>((resolve, reject) => {
-            this.http.post(baseUrl + '/signup', { email: email, password: password, pentry: [] })
+            this.http.post(baseUrl + '/signup', { email: email, password: password, pantry: [] })
                 .subscribe(
                     (response: any) => { resolve(response) },
                     (error) => { reject(error); }

@@ -17,7 +17,7 @@ exports.signup = (req, res) => {
       const user = new User({
           email: req.body.email,
           password: hash,
-          pentry: req.body.pentry
+          pantry: req.body.pantry
       });
       user.save()
         .then(() => res.status(201).json({
@@ -75,7 +75,6 @@ exports.login = (req, res, next) => {
 exports.findAll = (req, res) => {
   const name = req.query.name;
   var condition = name ? { name: { $regex: new RegExp(name), $options: "i" } } : {};
-
   User.find(condition)
     .then(data => {
       res.send(data);
@@ -91,9 +90,6 @@ exports.findAll = (req, res) => {
 // Find a single User with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-
-  console.log(req.params.id);
-
   User.findById(id)
     .then(data => {
       if (!data)
@@ -114,9 +110,7 @@ exports.update = (req, res) => {
       message: "Data to update can not be empty!"
     });
   }
-
   const id = req.params.id;
-
   User.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
     .then(data => {
       if (!data) {
@@ -135,7 +129,6 @@ exports.update = (req, res) => {
 // Delete an User with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
-
   User.findByIdAndRemove(id, { useFindAndModify: false })
     .then(data => {
       if (!data) {

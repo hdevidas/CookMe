@@ -7,13 +7,13 @@ const baseUrl = 'http://localhost:8080/api/cookme';
 @Injectable({
   providedIn: 'root'
 })
-export class PentryService {
+export class PantryService {
 
   constructor(private http: HttpClient) { }
 
   addIngredient(id: any, ingredient : string[]) {
     return new Promise((resolve,reject) => {
-      this.http.post(baseUrl+'/ingredients/change', {id : id, pentry: ingredient})
+      this.http.put(baseUrl+'/pantry/add', {id : id, pantry: ingredient})
         .subscribe( 
           (data) => {resolve(data);},
           (error) => {reject(error);}
@@ -23,7 +23,7 @@ export class PentryService {
 
   removeAllIngredients(id: any){
     return new Promise((resolve,reject) => {
-      this.http.post(baseUrl+'/ingredients/change', {id : id, pentry: []})
+      this.http.put(baseUrl+'/pantry/removeall', {id : id})
         .subscribe( 
           (data) => {resolve(data);},
           (error) => { reject(error);}
@@ -31,9 +31,9 @@ export class PentryService {
     }) ;
   }
 
-  removeOneIngredient(id : any, ingredient :string){
+  removeIngredient(id : any, ingredient :string){
     return new Promise((resolve,reject) => {
-      this.http.post(baseUrl+'/ingredients/remove', {id : id, pentry: ingredient})
+      this.http.put(baseUrl+'/pantry/remove', {id : id, pantry: ingredient})
         .subscribe( 
           (data) => {resolve(data);},
           (error) => { reject(error);}
@@ -41,3 +41,4 @@ export class PentryService {
     }) ;
   }
 }
+

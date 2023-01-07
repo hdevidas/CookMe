@@ -13,8 +13,8 @@
     </form>
     <button type="submit" (click)="removeAllIngredients()"> remove all</button>
     <ul> 
-        <li *ngFor="let item of pentry"> 
-            {{item}} <button type="button" (click)="deleteElement(item)">X</button>
+        <li *ngFor="let item of pantry"> 
+            {{item}} <button type="button" (click)="removeIngredient(item)">X</button>
         </li>
     </ul>
     </div>    
