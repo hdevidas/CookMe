@@ -1,25 +1,37 @@
 /* Gestion de la logique metier concernant l'inscription et la connexion de l'utilisateur */
 const bcrypt = require('bcrypt'); /* Importation du package pour le hashage du mot de passe */
 const jwt = require('jsonwebtoken'); /* Importation du package pour la gestion des tokens */
+const { validationResult } = require('express-validator'); /* Pour la validation de l'email(schema d'une adresse mail) */
 
 const User = require('../models/User');
 
-
 // Create and Save a new User
 exports.signup = (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ message: errors.array()[0].msg });
+  }
+      
   bcrypt.hash(req.body.password, 10)
-        .then(hash => {
-            const user = new User({
-                email: req.body.email,
-                password: hash,
-                pentry: req.body.pentry
-            });
-            user.save()
-                .then( () => res.status(201).json({ message: 'Your account has been successfully created, you can now login using your email and password!'}) )
-              .catch( error => res.status(400).json({ message: 'Already exists' }) );
-        })
-    .catch(error => res.status(500).json({ message: "Some error occurred while creating the User."  }));
-  };
+    .then(hash => {
+      const user = new User({
+          email: req.body.email,
+          password: hash,
+          pentry: req.body.pentry
+      });
+      user.save()
+        .then(() => res.status(201).json({
+          message: 'Your account has been successfully created, you can now login using your email and password!'
+        }))
+        .catch(error => res.status(400).json({
+          message: 'E-mail already in use'
+        }));
+    })
+    .catch(error => res.status(500).json({
+      message: "Some error occurred while creating the User."
+    }));
+  
+};
 
 /* Pour la connexion d'un utilisateur
     -> Vérification de l'existance de l'utilisateur 
@@ -27,28 +39,35 @@ exports.signup = (req, res) => {
     -> Utilisation d'un token pour l'utilisateur
  */
 exports.login = (req, res, next) => {
-    User.findOne({ email: req.body.email })
-        .then(user => {
-            if (user === null)
-                res.status(401).json({ message: 'Incorrect email/password' });
-            else
-                bcrypt.compare(req.body.password, user.password)
-                    .then(valid => {
-                        if (!valid)
-                            res.status(401).json({ message: 'Incorrect email/password' });
-                        else
-                            res.status(200).json({
-                                userId: user._id,
-                                token: jwt.sign(
-                                    { userId: user._id },
-                                    'RANDOM_TOKEN_SECRET',
-                                    { expiresIn: '24h' }
-                                )
-                            })
-                    })
-                    .catch(error => {res.status(500).json({ message: 'Incorrect email/password' })});
-        })
-        .catch(error => {res.status(500).json({ error })});
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ message: 'It must be an email address, please use a correct email address!'});
+  }
+
+  const errorMessage = 'Your email or password is Incorrect. Please try again !';
+
+  User.findOne({ email: req.body.email })
+      .then(user => {
+          if (user === null)
+              res.status(401).json({ message: errorMessage });
+          else
+              bcrypt.compare(req.body.password, user.password)
+                  .then(valid => {
+                      if (!valid)
+                          res.status(401).json({ message: errorMessage });
+                      else
+                          res.status(200).json({
+                              userId: user._id,
+                              token: jwt.sign(
+                                  { userId: user._id },
+                                  'RANDOM_TOKEN_SECRET',
+                                  { expiresIn: '24h' }
+                              )
+                          })
+                  })
+                  .catch(error => {res.status(500).json({ message: errorMessage })});
+      })
+      .catch(error => {res.status(500).json({ message: errorMessage })});
 };
 
 
