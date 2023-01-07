@@ -1,0 +1,207 @@
+openapi: 3.0.3
+info:
+  title: Description de l'API Rest de notre application web(Cookme) 
+  description: API de gestion de session utilisateur
+  version: 1.0.0
+  
+servers:
+  - url: http://localhost:8080/api/cookme
+    description: Serveur de développement
+  
+tags:
+  - name: users
+    description: Gestion utilisateur
+
+paths:
+  /signup:
+    post:
+      summary: Inscription utilisateur
+      description: Créer un compte utilisateur avec un nom d'utilisateur et un mot de passe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        201:
+          description: Compte utilisateur créé avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Création réussie
+        400:
+          description: Erreur de validation des données
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Adresse email déjà utilisée ou adresse non valide
+        500:
+          description: Erreur serveur 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Erreur serveur
+
+  /login:
+    post:
+      summary: Connexion utilisateur
+      description: Permet à un utilisateur de se connecter à l'application.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        200:
+          description: Connexion réussie
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Connexion réussie et création d'un token pour l'utilisateur
+        401:
+          description: Demande non valide
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Adresse email ou mot de passe non valide
+
+  /login/{id}:
+    get:
+      summary: Récupère un utilisateur
+      description: Récupère les informations sur un utilisateur en particulier en fonction de son identifiant.
+      parameters:
+        - in: path
+          name: id
+          description: L'ID de l'utilisateur à récupérer
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Informations de l'utilisateur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: abcdef
+                  email:
+                    type: string
+                    format: email
+                    example: example@example.com
+        404:
+          description: Utilisateur non trouvé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Utilisateur non trouvé
+
+  # A modifier après pour l'adapter à la bonne route du backend
+  /user/{id}: 
+    put:
+      summary: Mise à jour de l'utilisateur avec l'ID spécifié
+      description: Mise à jour des informations d'un utilisateur en fournissant son identifiant.
+      parameters:
+        - in: path
+          name: id
+          description: L'ID de l'utilisateur à mettre à jour
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Utilisateur mis à jour avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  email:
+                    type: string
+                    format: email
+                    example: example@example.com
+        404:
+          description: Utilisateur non trouvé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Utilisateur non trouvé
+
+  /pantry/add:
+    post:
+      summary: Ajout ingrédient 
+      description: Ajoute un ingrédient à la liste des ingrédients de l'utilisateur.
+      parameters:
+        - in: path
+          name: ingredient
+          description: L'ingrédient à ajouter à la liste des ingrédients de l'utilisateur.
+          required: true
+          schema:
+            type: string
+            description: Le nom de l'ingrédient.
+            example: Salmon
+      responses:
+        201:
+          description: Ingredient ajouté avec succès.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: L'ingrédient a été ajouté à la liste des ingrédients de l'utilisateur.
+                    
+
