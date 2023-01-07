@@ -9,7 +9,6 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
 import { UsersListComponent } from './pages/users-list/users-list.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
-import { ProfileComponent } from './pages/profile/profile.component';
 import { SearchComponent } from './pages/search/search.component';
 import { RecipeComponent } from './components/recipe/recipe.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -20,6 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { PopUpComponent } from '../app/components/pop-up/pop-up.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 @NgModule({
   declarations: [

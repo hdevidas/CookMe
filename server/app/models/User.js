@@ -6,7 +6,7 @@ const uniqueValidator = require('mongoose-unique-validator'); /* Package permett
 const userSchema = mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    pentry : {type: [String], required : false}
+    pantry : {type: [String], required : false}
 });
 
 userSchema.plugin(uniqueValidator); /* Gestion de l'unicité du mail */
