@@ -1,3 +1,8 @@
+<!-- <p><button type="button" (click)="getTest('Thai Green Curry')">Test here</button></p> -->
+
+
+<!-- RECHERCHE -->
+
 <h3>Search a recipe with a specific ingredient</h3>
 <p>The application will check your profile and give you the best recipes</p>
 <div>
@@ -15,25 +20,21 @@
   </a>
 </div>
 
-<!--
-<div *ngIf="currentIngredient">
-  <app-list-recipes
-  [currentIngredient]="currentIngredient">
-  </app-list-recipes>
-</div>
--->
-
+<!-- AFFICHAGE DES RESULTATS -->
 
 <div *ngIf="currentIngredient">
     
   <p>Best recipes with <strong>{{ currentIngredient }}</strong> :</p>
   <div class="recipesWrapper">
     <div
-    *ngFor="let recipe of recipes" 
+    *ngFor="let recipe of recipesToDisplay" 
     class="recipeWrapper">
-      <img src="{{ recipe.strMealThumb }}">
-      <h3><a routerLink="/recipe/{{ recipe.strMeal }}">{{ recipe.strMeal }}</a></h3>
+      <img src="{{ recipe[0].strMealThumb }}">
+      <p>{{ recipe[1] }} %</p>
+      <div class="scoreRecipe" style="width: {{ recipe[1] }}% ;background-color: rgb({{ recipe[2][0] }}, {{ recipe[2][1] }}, {{ recipe[2][2] }});"></div>
+      <h3><a routerLink="/recipe/{{ recipe[0].strMeal }}">{{ recipe[0].strMeal }}</a></h3>
     </div>
   </div> 
 </div>
+
 
