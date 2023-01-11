@@ -10,7 +10,7 @@ router.get("/recipe", recipeCtrl.getRandomRecipe);
 router.get("/ingredients/:term", recipeCtrl.getIngredientList);
 
 // Retrieve list of recipes with a specific ingredient
-router.get("/recipes/:ingredient", recipeCtrl.getRecipeList);
+router.get("/recipes/:ingredient/:id", recipeCtrl.getRecipeList);
 
 // Retrieve a recipe by his name
 router.get("/recipe/:name", recipeCtrl.getRecipe);

@@ -1,4 +1,10 @@
 const fetch = require('node-fetch');
+const User = require('../models/User');
+
+NUMBER_RECIPE_MAX_TO_DISPLAY = 4;
+
+let recipeListWithScore = []
+let recipesToSend = []
 
 // Give a random recipe from the external api
 exports.getRandomRecipe = async (req, res) => {
@@ -38,7 +44,6 @@ exports.getIngredientList = async (req, res) => {
       for (let i = 0; i<574; i++){
         ingredient.push(data.meals[i].strIngredient.toLowerCase())
       }
-      //console.log(ingredient);
       ingredientSortedWithTerm(term,ingredient);
       res.send(ingredientSortedWithTerm(term,ingredient));
   } catch (error) {
@@ -57,31 +62,60 @@ function ingredientSortedWithTerm(term,ingredient) {
   return ingredientSorted;
 };
 
-//Retrieve all recipes with a specific ingredient from the external api
+//Retrieve a specific number of recipes (constant number) and sort them by scoring them with pantry user
 exports.getRecipeList = async (req, res) => {
-  let url = "https://www.themealdb.com/api/json/v1/1/filter.php?i=";
-  let ingredient = req.params.ingredient;
-  const newUrl = url.concat('', ingredient)
-  try {
-      const response = await fetch(newUrl);
-  
-      if (!response.ok) {
-        throw new Error(`HTTP error : ${response.status}`);
+  recipeListWithScore = []
+  recipesToSend = []
+  const ingr = req.params.ingredient;
+  const id = req.params.id;
+  User.findOne({_id: id})
+  .then(async user => {
+    if (user === null){
+        res.status(401).json({ message: 'Incorrect information (email and password)' });
+    } else {
+      MyPantry = user.pantry;
+      let url = "https://www.themealdb.com/api/json/v1/1/filter.php?i=";
+      let ingredient = req.params.ingredient;
+      const newUrl = url.concat('', ingredient)
+      try { 
+          const response = await fetch(newUrl);
+          if (!response.ok) {
+            throw new Error(`HTTP error : ${response.status}`);
+          }
+          const data = await response.json()
+          for (recipe in data.meals){
+            let url = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
+            let name = data.meals[recipe].strMeal;
+            const newUrl = url.concat('', name)
+            try {
+                const response = await fetch(newUrl);
+                if (!response.ok) {
+                  throw new Error(`HTTP error : ${response.status}`);
+                }
+                const data = await response.json();
+
+                let tuple = [data,getScore(data,MyPantry)]
+                recipeListWithScore.push(tuple);
+
+            } catch (error) {
+                console.error(`Could not get data: ${error}`);
+            }
+          }
+          recipeListWithScore.sort(functionComp);
+          recipesToSend = recipeListWithScore.slice(0, NUMBER_RECIPE_MAX_TO_DISPLAY);
+          res.send(recipesToSend);
+      } catch (error) {
+          console.error(`Could not get data: ${error}`);
       }
-      const data = await response.json();
-      //console.log(data);
-      res.send(data);
-  } catch (error) {
-      console.error(`Could not get data: ${error}`);
-  }
+    }
+  })
+  .catch(error => { res.status(500).json({ error })});
 };
 
 //Retrieve a recipe by his name from the external api
 exports.getRecipe = async (req, res) => {
-  //console.log("we are here");
   let url = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
   let name = req.params.name;
-  //let name = "Poutine";
   const newUrl = url.concat('', name)
   try {
       const response = await fetch(newUrl);
@@ -90,9 +124,35 @@ exports.getRecipe = async (req, res) => {
         throw new Error(`HTTP error : ${response.status}`);
       }
       const data = await response.json();
-      //console.log(data);
       res.send(data);
   } catch (error) {
       console.error(`Could not get data: ${error}`);
   }
+};
+
+//Auxiliary function : give a score to a recipe with user pantry
+function getScore(data,pantry){
+  numberIngredientsTotal=0
+  numberIngredientsFromUser =0
+
+  for (let i=1;i<=20;i++){
+    if (data.meals[0]["strIngredient"+i] != null && data.meals[0]["strIngredient"+i] != "" ){
+      numberIngredientsTotal++;
+      if (pantry.includes(data.meals[0]["strIngredient"+i].toLowerCase())){
+        numberIngredientsFromUser ++;
+      }
+    }
+  }
+  if (numberIngredientsFromUser==0){
+    numberIngredientsFromUser++;
+  }
+  score = Math.round(numberIngredientsFromUser/numberIngredientsTotal*100)
+  return score;
+};
+
+//Comparaiso function to sort recipe array by score
+function functionComp(a,b){
+  let scoreA = a[1];
+  let scoreB = b[1]; 
+  return scoreB - scoreA;
 };

@@ -10,17 +10,12 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class SearchComponent implements OnInit {
 
-  NUMBER_RECIPE_MAX_TO_DISPLAY = 4;
-
   idUser! : any;
-  pantryUser! : string[];
+  recipes: any[] = [];
 
   searchTerms = new Subject<string>();
   ingredients$: Observable<string[]> | undefined ;
   currentIngredient: string = "";
-
-  recipes: any[] = [];
-  recipesToDisplay: [any, number, [number,number,number]][] = [];
 
   constructor(
     private recipeService: RecipeService,
@@ -28,19 +23,20 @@ export class SearchComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.updateUser();
+    this.idUser = this.userService.userId;
     this.searchIngredients();
   }
 
   search(term: string) {
     this.searchTerms.next(term.toLowerCase());
+    this.recipes=[];
   }
 
   searchIngredients() {
     this.ingredients$ = this.searchTerms.pipe(
       debounceTime(600),
       distinctUntilChanged(),
-      switchMap((term) => this.recipeService.searchIngredientWithTerm(term))
+      switchMap((term) => this.recipeService.searchIngredientWithTerm(term)),
     );
   }
 
@@ -51,38 +47,13 @@ export class SearchComponent implements OnInit {
   }
 
   retrieveRecipes(): void {
-    this.recipeService.getRecipes(this.currentIngredient)
+    this.recipeService.getRecipes(this.currentIngredient,this.idUser)
       .subscribe({
         next: (data) => {
-          this.recipes = data.meals;
-          this.buildRecipesToDisplay();
+          this.recipes = data;
         },
         error: (e) => console.error(e)
       });
-  }
-
-  //To prepare new array
-  buildRecipesToDisplay(): void {
-    let recipesArrayTemp: [any, number, [number,number,number]][] = [];
-    for(let i= 0; i < this.recipes.length; i++)
-    {
-      recipesArrayTemp[i] = [this.recipes[i], this.getScore(this.recipes[i].strMeal), this.getColor([0,255,0],[255,0,0], 0)];
-      recipesArrayTemp[i][2] = this.getColor([0,255,0],[255,0,0], recipesArrayTemp[i][1]);
-
-    }
-    recipesArrayTemp.sort(this.functionComp).reverse();
-    this.recipesToDisplay = recipesArrayTemp.slice(0, this.NUMBER_RECIPE_MAX_TO_DISPLAY);
-  }
-
-  functionComp(a:[any, number, [number,number,number]],b:[any, number, [number,number,number]]){
-    let scoreA = a[1];
-    let scoreB = b[1]; 
-    return scoreA - scoreB;
-  }
-
-  //utile pour la fake function
-  getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
   }
 
   getColor(color1:[number, number, number], color2:[number, number, number], percent:number): [number, number, number]{
@@ -94,50 +65,19 @@ export class SearchComponent implements OnInit {
     return [rgb[0], rgb[1], rgb[2]];
   }
 
-  getScore(recipeName: string): number {
-    let recipe ;
-    let numberIngredientsTotal = 0;
-    let numberIngredientsFromUser = 0;
-
-    this.recipeService.getRecipeByName(recipeName)
-      .subscribe({
-        next: (data) => {
-          // console.log(data.meals[0])
-          recipe = data.meals[0]
-          for (let i=1;i<=20;i++){
-            if (recipe["strIngredient"+i] != null && recipe["strIngredient"+i] != "" ){
-              numberIngredientsTotal++;
-              if (this.pantryUser.includes(recipe["strIngredient"+i])){
-                numberIngredientsFromUser ++;
-              }
-            }
-          }
-          // console.log(numberIngredientsTotal);
-          // console.log(numberIngredientsFromUser);
-        },
-        error: (e) => {
-          console.error(e)
-        }
-      });
-
-    //Barrier to insert here
-
-    //Waitings real values (to remove when barrier is done)
-    numberIngredientsTotal = 12;
-    numberIngredientsFromUser = 7;
-    return this.getRandomInt(100);
-
-    return Math.round(numberIngredientsFromUser/numberIngredientsTotal*100);
+  getC1(score: number){
+    let color = this.getColor([0,255,0],[255,0,0], score);
+    return color[0];
   }
 
-  updateUser(){
-    this.idUser = this.userService.userId;
-    this.userService.getUser(this.idUser)
-          .subscribe({
-              next: (data :any) => {
-                this.pantryUser = data.pantry;
-              }    
-        })
+  getC2(score: number){
+    let color  = this.getColor([0,255,0],[255,0,0], score);
+    return color[1];
+  }
+
+  getC3(score: number){
+    let color  = this.getColor([0,255,0],[255,0,0], score);
+    return color[2];
   }
 
 }
