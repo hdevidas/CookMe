@@ -42,6 +42,9 @@ router.delete("/users", security, userCtrl.deleteAll);
 // Add an ingredient to the User logged
 router.put('/pantry/add', pantryCtrl.addIngredient);
 
+// Add random ingredients to the User logged
+router.put('/pantry/random', pantryCtrl.setRandomPantry);
+
 // Remove an ingredient to the User logged
 router.put('/pantry/remove', pantryCtrl.removeIngredient);
 

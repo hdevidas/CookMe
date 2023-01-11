@@ -54,7 +54,6 @@ export class ProfileComponent {
   addIngredient(ingredient: string){
     this.pantryService.addIngredient(this.id, ingredient)
     .then((data : any) => { 
-      console.log(data.message);
       this.updateUser();})
     .catch((error : any) => { console.error(error.message)});
 
@@ -63,10 +62,8 @@ export class ProfileComponent {
   }
   
   removeIngredient(item : string){
-    console.log(item);
     this.pantryService.removeIngredient(this.id, item)
       .then((data : any) => { 
-        console.log(data.message);
         this.updateUser();})
       .catch((error : any) => { console.error(error.message)});
   }
@@ -74,7 +71,6 @@ export class ProfileComponent {
   removeAllIngredients(){
     this.pantryService.removeAllIngredients(this.id)
     .then((data : any) => { 
-      console.log(data.message);
       this.updateUser();})
     .catch((error : any) => { console.error(error.message)});
   }
@@ -85,9 +81,25 @@ export class ProfileComponent {
           .subscribe({
               next: (data :any) => {
                 this.mail = data.email;
+                this.pantry = [];
                 this.pantry = data.pantry;
               }    
         })
   }
 
+
+  setupRandomPantry(){
+    this.pantryService.setupRandomPantry(this.id)
+    .then((data : any) => { 
+      this.updateUser();
+      // this.searchIngredients();
+    })
+    .catch((error : any) => { console.error(error.message)});
+
+    // this.updateUser();
+    
+  }
+
 }
+
+

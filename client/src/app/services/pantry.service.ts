@@ -21,6 +21,16 @@ export class PantryService {
     }) ;
   }
 
+  setupRandomPantry(id: any) {
+    return new Promise((resolve,reject) => {
+      this.http.put(baseUrl+'/pantry/random', {id : id})
+        .subscribe( 
+          (data) => {resolve(data);},
+          (error) => {reject(error);}
+        );
+    }) ;
+  }
+
   removeAllIngredients(id: any){
     return new Promise((resolve,reject) => {
       this.http.put(baseUrl+'/pantry/removeall', {id : id})
