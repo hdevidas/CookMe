@@ -23,7 +23,7 @@ router.post(
     userCtrl.signup
 );
 
-// Route for the user connection
+// Route for the user login
 router.post(
     '/login',
     body('email', 'It must be an email address, please use a correct email address!').isEmail(),

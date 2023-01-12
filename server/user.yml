@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.0.8
 info:
-  title: Description de l'API Rest de notre application web(Cookme) 
-  description: API de gestion de session utilisateur
+  title: Description de l'API Rest de notre application web(Cook me) 
+  description: API de gestion de recherche personnalisée de recettes à partir d'un profil utilisateur
   version: 1.0.0
   
 servers:
@@ -10,142 +10,130 @@ servers:
   
 tags:
   - name: users
-    description: Gestion utilisateur
+    description: Gestion utilisateur ( Inscription, connexion, garde-manger ...)
+  - name: recipes
+    description: Gestion des recettes 
 
+# Description of all the routes in our api
 paths:
-  /signup:
+  /: # Default route
+    get:
+      summary: Page par défaut
+      responses:
+        default:
+          description: Accès avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+
+
+  /signup: # Route for user registration
     post:
-      summary: Inscription utilisateur
-      description: Créer un compte utilisateur avec un nom d'utilisateur et un mot de passe
+      tags:
+        - users
+      summary: Création d'un compte utilisateur (inscription)
+      description: Permet de créer un compte utilisateur en fournissant une adresse mail et un mot de passe 
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - email
-                - password
-              properties:
-                email:
-                  type: string
-                  format: email
-                password:
-                  type: string
+              $ref: '#/components/schemas/User'
       responses:
         201:
           description: Compte utilisateur créé avec succès
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Création réussie
-        400:
-          description: Erreur de validation des données
+                $ref: '#/components/schemas/Message'
+        default:
+          description: Erreur, informations erronnées ou problème serveur
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Adresse email déjà utilisée ou adresse non valide
-        500:
-          description: Erreur serveur 
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Erreur serveur
+                $ref: '#/components/schemas/Message'
 
-  /login:
+
+  /login: # Route for user login
     post:
+      tags:
+        - users
       summary: Connexion utilisateur
-      description: Permet à un utilisateur de se connecter à l'application.
+      description: Permet à un utilisateur de se connecter en renseignant son adresse mail et son mot de passe.
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - email
-                - password
-              properties:
-                email:
-                  type: string
-                  format: email
-                password:
-                  type: string
+              $ref: '#/components/schemas/User'
       responses:
         200:
-          description: Connexion réussie
+          description: Connexion réussie et création d'un token pour l'utilisateur
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  message:
+                  userId:
                     type: string
-                    example: Connexion réussie et création d'un token pour l'utilisateur
-        401:
-          description: Demande non valide
+                  token:
+                    type: string
+        default:
+          description: Erreur, informations erronnées ou problème serveur
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Adresse email ou mot de passe non valide
+                $ref: '#/components/schemas/Message'
 
-  /login/{id}:
-    get:
-      summary: Récupère un utilisateur
+
+  /login/{userId}: # Route to retrieve, edit and delete user
+    get:  # To find a single User with an id
+      security: # Apply the security
+        - BearerAuth: [] 
+      tags:
+        - users
+      summary: Récupération d'un utilisateur
       description: Récupère les informations sur un utilisateur en particulier en fonction de son identifiant.
       parameters:
         - in: path
-          name: id
-          description: L'ID de l'utilisateur à récupérer
+          name: userId
+          description: L'identifiant de l'utilisateur à récupérer
           required: true
           schema:
             type: string
       responses:
         200:
-          description: Informations de l'utilisateur
+          description: Récupération de l'utilisateur avec succès
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  id:
-                    type: string
-                    example: abcdef
                   email:
                     type: string
                     format: email
-                    example: example@example.com
-        404:
-          description: Utilisateur non trouvé
+                    example: toto@example.com
+                  pantry:
+                    type: array
+                    items:
+                      type: string
+                    uniqueItems: true
+                    example: ["Chicken", "Avocado", "Salmon"]
+        default:
+          description: Utilisateur non trouvé ou problème serveur
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Utilisateur non trouvé
+                $ref: '#/components/schemas/Message'
 
-  # A modifier après pour l'adapter à la bonne route du backend
-  /user/{id}: 
-    put:
-      summary: Mise à jour de l'utilisateur avec l'ID spécifié
+
+    put:  # To edit user information
+      security: # Apply the security
+        - BearerAuth: []
+      tags:
+        - users
+      summary: Mise à jour d'un utilisateur
       description: Mise à jour des informations d'un utilisateur en fournissant son identifiant.
       parameters:
         - in: path
@@ -155,53 +143,164 @@ paths:
           schema:
             type: string
       responses:
-        200:
-          description: Utilisateur mis à jour avec succès
+        default:
+          description: Modification avec succès/erreur
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  email:
-                    type: string
-                    format: email
-                    example: example@example.com
-        404:
-          description: Utilisateur non trouvé
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Utilisateur non trouvé
+                $ref: '#/components/schemas/Message'
+    
 
-  /pantry/add:
-    post:
-      summary: Ajout ingrédient 
-      description: Ajoute un ingrédient à la liste des ingrédients de l'utilisateur.
+    delete: # To delete user
+      security: # Apply the security
+        - BearerAuth: []
+      tags:
+        - users
+      summary: Suppression d'un utilisateur
+      description: Suppression d'un compte utilisateur en fournissant son identifiant.
       parameters:
         - in: path
-          name: ingredient
-          description: L'ingrédient à ajouter à la liste des ingrédients de l'utilisateur.
+          name: id
+          description: L'identifiant de l'utilisateur
           required: true
           schema:
             type: string
-            description: Le nom de l'ingrédient.
-            example: Salmon
       responses:
-        201:
-          description: Ingredient ajouté avec succès.
+        default:
+          description: Suppression avec succès/erreur
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    description: L'ingrédient a été ajouté à la liste des ingrédients de l'utilisateur.
-                    
+                $ref: '#/components/schemas/Message'
+      
 
+  /pantry/add: # Route to add an ingredient to a user's pantry
+    put:
+      security: # Apply the security
+        - BearerAuth: []
+      tags:
+        - users
+      summary: Ajout ingrédient 
+      description: Permet d'ajouter un ingrédient dans le placard de l'utilisateur.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - pantry
+              properties:
+                id:
+                  type: string
+                pantry:
+                  type: string
+      responses:
+        default:
+          description: Ingredient ajouté avec succès ou erreur.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'   
+
+
+  /pantry/remove: # To remove an ingredient to a user's pantry
+    put:
+      security: # Apply the security
+        - BearerAuth: []
+      tags:
+        - users
+      summary: Suppression d'un ingrédient 
+      description: Permet de supprimer un ingrédient dans le placard de l'utilisateur.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - pantry
+              properties:
+                id:
+                  type: string
+                pantry:
+                  type: string
+      responses:
+        default:
+          description: Suppression avec succès ou erreur.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+
+
+  /pantry/removeall: # To remove all ingredients to a user's pantry
+    put:
+      security: # Apply the security
+        - BearerAuth: []
+      tags:
+        - users
+      summary: Suppression des ingrédients 
+      description: Permet de supprimer tous ingrédients dans le placard de l'utilisateur.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: string
+      responses:
+        default:
+          description: Suppression avec succès ou erreur.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'         
+
+
+
+#  Descriptions of common components
+components:
+  schemas:
+    User: # Schema for users
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: "toto@gmail.com"
+        password:
+          type: string 
+          format: password
+          example: "toto12345"
+
+    Message: # Schema for error response body
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Succès ou erreur"
+      required:
+        - message
+        
+  securitySchemes: # Schema for secure access to sensitive
+    BearerAuth:   
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    UnauthorizedError:
+      description: Acccess token is missing or invalid
+
+# Apply the security globally to all operations
+# security:
+#   - BearerAuth: [] 

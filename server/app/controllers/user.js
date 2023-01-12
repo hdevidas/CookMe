@@ -91,15 +91,18 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
   User.findById(id)
-    .then(data => {
-      if (!data)
+    .then(user => {
+      if (!user)
         res.status(404).send({ message: "Not found User with id " + id });
-      else res.send(data);
+      else {
+        res.status(200).send({
+          email: user.email,
+          pantry: user.pantry
+        });
+      }
     })
     .catch(err => {
-      res
-        .status(500)
-        .send({ message: "Error retrieving User with id=" + id });
+      res.status(500).send({ message: "Error retrieving User with id=" + id });
     });
 };
 
@@ -117,7 +120,8 @@ exports.update = (req, res) => {
         res.status(404).send({
           message: `Cannot update User with id=${id}. Maybe User was not found!`
         });
-      } else res.send({ message: "User was updated successfully." });
+      } else
+          res.status(200).send({ message: "User was updated successfully." });
     })
     .catch(err => {
       res.status(500).send({
@@ -136,7 +140,7 @@ exports.delete = (req, res) => {
           message: `Cannot delete User with id=${id}. Maybe User was not found!`
         });
       } else {
-        res.send({
+        res.status(200).send({
           message: "User was deleted successfully!"
         });
       }
