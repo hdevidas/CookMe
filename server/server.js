@@ -1,9 +1,9 @@
 const http = require('http');
 const app = require('./app');
-require('dotenv').config(); /* Pour l'utilisation des variables d'environnement */
+require('dotenv').config();
 
 
-/* Cette fonction permet de renvoyer un port valide qu'il soit fournit en entier ou en chaine */
+// This function allows to return a valid port whether it is provided in integer or in string
 const normalizePort = val => {
     const port = parseInt(val, 10);
 
@@ -20,7 +20,7 @@ const port = normalizePort(process.env.PORT || 3000);
 app.set('port', port);
 
 
-/* Fonction permettant de rechercher les différentes erreurs */
+// Function to search for different errors related to the connection to the server
 const errorHandler = error => {
     if (error.syscall !== 'listen')
         throw error;

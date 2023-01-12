@@ -1,14 +1,18 @@
 const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator'); 
 
-const uniqueValidator = require('mongoose-unique-validator'); /* Package permettant de gerer l'unicité d'un champ donné(objet unique) */
-
-/* Description des informations concernant un utilisateur(email, mdp...) */
+/* 
+    User data schema:
+    -> email: user's email address
+    -> password : user's password
+    -> pantry : the user's pantry (ingredients in his possession)
+*/
 const userSchema = mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     pantry : {type: [String], required : false}
 });
 
-userSchema.plugin(uniqueValidator); /* Gestion de l'unicité du mail */
+userSchema.plugin(uniqueValidator); // Management of mail uniqueness
 
 module.exports = mongoose.model('User', userSchema);

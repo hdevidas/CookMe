@@ -1,28 +1,34 @@
 const jwt = require('jsonwebtoken');
 
 /* 
-    Middleware pour la sécurité lié à l'accès aux ressources sensibles
+    Middleware for secure access to sensitive resources and returns:
+    -> The user's ID if the token is valid
+    -> otherwise handles the error case
 */
 module.exports = async (req, res, next) => {
-    let token = req.headers.authorization || req.headers['x-access-token']; /* On recupère l'ens du token depuis l'entête de la requête */
-
-    if(token && token.startsWith('Bearer '))
-        token = token.split(' ')[1]; /* On extrait le token */
+    let token = req.headers.authorization || req.headers.Authorization || req.headers['x-access-token']; 
     
-    if (!token) 
+    if (!token) {
         return res.status(401).json('token_required'); 
+    } else {
+        if(token.startsWith('Bearer '))
+            token = token.split(' ')[1]; // Extract the token 
+        else
+            return res.status(401).json('token_not_valid');
+        
+        // Checking the validity of the token
+        jwt.verify(token, 'RANDOM_TOKEN_SECRET', (err, decodedToken) => {
+            if (err) 
+                return res.status(41).json('token_not_valid');
     
-    /* On vérifie sa validité */
-    jwt.verify(token, 'RANDOM_TOKEN_SECRET', (err, decodedToken) => {
-        if (err) 
-            return res.status(41).json('token_not_valid');
-
-        req.decodedToken = decodedToken;
-
-        const userId = decodedToken.userId;
-        req.auth = {
-            userId: userId
-        };
-        next(); /* On passe à la requête suivante */
-    }); 
+            req.decodedToken = decodedToken;
+    
+            const userId = decodedToken.userId;
+            req.auth = {
+                userId: userId
+            };
+    
+            next(); /* Move to the next request */
+        }); 
+    }
 }

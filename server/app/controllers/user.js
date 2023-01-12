@@ -1,7 +1,6 @@
-/* Gestion de la logique metier concernant l'inscription et la connexion de l'utilisateur */
-const bcrypt = require('bcrypt'); /* Importation du package pour le hashage du mot de passe */
-const jwt = require('jsonwebtoken'); /* Importation du package pour la gestion des tokens */
-const { validationResult } = require('express-validator'); /* Pour la validation de l'email(schema d'une adresse mail) */
+const bcrypt = require('bcrypt'); 
+const jwt = require('jsonwebtoken'); // To manage tokens
+const { validationResult } = require('express-validator'); // For the validation of the user's data schema
 
 const User = require('../models/User');
 
@@ -28,16 +27,17 @@ exports.signup = (req, res) => {
         }));
     })
     .catch(error => res.status(500).json({
-      message: "Some error occurred while creating the User."
+      message: "Some error occurred. Please try again!"
     }));
   
 };
 
-/* Pour la connexion d'un utilisateur
-    -> Vérification de l'existance de l'utilisateur 
-    -> Vérification de la validité des informations renseingées
-    -> Utilisation d'un token pour l'utilisateur
- */
+/* 
+  For the user's connection
+  -> Verification of the existence of the user 
+  -> Verification of the validity of the information provided
+  -> Use of a token for the user
+*/
 exports.login = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -48,7 +48,7 @@ exports.login = (req, res, next) => {
 
   User.findOne({ email: req.body.email })
       .then(user => {
-          if (user === null)
+          if ( !user )
               res.status(401).json({ message: errorMessage });
           else
               bcrypt.compare(req.body.password, user.password)

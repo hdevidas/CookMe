@@ -1,8 +1,8 @@
 /* Configuration pour la connexion à la base de données */
 const mongoose = require('mongoose'); 
-require('dotenv').config(); /* Pour l'utilisation des variables d'environnement */
+require('dotenv').config(); 
 
-/* Fonction pour la connexion à la base de données */
+// Function for database connection
 async function connectDB() {
     try {
         console.log("Opening connection");

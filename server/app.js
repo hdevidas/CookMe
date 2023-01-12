@@ -8,13 +8,11 @@ const userRoutes = require('./app/routes/user');
 const recipeRoutes = require('./app/routes/recipe');
 
 
-connectDb(); /* Connexion à la BD */
+connectDb(); // Connect to the database 
 
 const app = express();
 
-/* Ajout des middlewares(fonctions) */
-
-// Permet d'autoriser l'accès aux ressources sinon on a la fammeuse ERRRUR DE CORS
+// Allows external access to resources otherwise we have the famous CORS ERROR
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -25,7 +23,8 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
-/* Utilisation des routes */
+
+// Calling the different routes of the api
 app.use('/api/cookme', adminRoutes); 
 app.use('/api/cookme', userRoutes); 
 app.use('/api/cookme', recipeRoutes); 

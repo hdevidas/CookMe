@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+  # Les services de Mongodb
+  mongo_db:
+    container_name: db_container
+    image: mongo:latest
+    restart: always
+    volumes:
+      - mongo_db:/data/db
+  
+  #Les services de l'API Node
+  api:
+    build: .
+    env_file: ./.env
+    ports:
+      - $PORT:$PORT
+    environment:
+      PORT: $PORT
+      MONGO_URL: mongodb://mongo_db:27017
+      DB_NAME: $DB_NAME
+    depends_on:
+      - mongo_db
+    stdin_open: true
+    tty: true
+
+volumes:
+  mongo_db: {}

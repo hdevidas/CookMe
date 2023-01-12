@@ -1,18 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const { body, check } = require('express-validator'); /* Pour la validation du mail avant de lancer la requête dans la bd */
+const { body, check } = require('express-validator'); // For the validation of the mail before launching the query in the database.
 
 const userCtrl = require("../controllers/user.js");
 const pantryCtrl = require("../controllers/pantry.js")
-const security = require('../middleware/security'); /* Pour l'application du middleware de Vérification de l'auth du user */
+const security = require('../middleware/security'); // For the application of the user authentication verification middleware
 
-// Create a new User
+
+// Route for user registration
 router.post(
     '/signup',
 
-    body('email', 'It must be an email address, please use a correct email address!').isEmail(), /* Pour la validation du mail */
+    body('email', 'It must be an email address, please use a correct email address!').isEmail(), 
 
-    check('password', 'The password must be 9+ chars long and contain a number') /* Pour la validation du mot de passe */
+    check('password', 'The password must be 8+ chars long and contain a number')
         .not()
         .isIn(['12345678', 'password'])
         .withMessage('Do not use a common word as the password')
@@ -22,7 +23,12 @@ router.post(
     userCtrl.signup
 );
 
-router.post('/login', body('email').isEmail(), userCtrl.login);
+// Route for the user connection
+router.post(
+    '/login',
+    body('email', 'It must be an email address, please use a correct email address!').isEmail(),
+    userCtrl.login
+);
 
 // Retrieve all Users
 router.get("/users", security, userCtrl.findAll);
@@ -36,7 +42,7 @@ router.put("/login/:id", security, userCtrl.update);
 // Delete an User with id
 router.delete("/login/:id", security, userCtrl.delete);
 
-// Create a new User
+// Remove all users
 router.delete("/users", security, userCtrl.deleteAll);
 
 // Add an ingredient to the User logged
