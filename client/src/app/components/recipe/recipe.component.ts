@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RecipeService } from 'src/app/services/recipe.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-recipe',
@@ -15,12 +16,15 @@ export class RecipeComponent implements OnInit{
 
   ingredients: string[] = [];
 
-  measures: string[] = [];
+  pantryIngredients: string[] = [];
 
-  sortedIngredients: String[] = [];
+  //sortedIngredients: String[] = [];
 
-  constructor(private recipeService: RecipeService,
-    private route: ActivatedRoute) { }
+  constructor(
+    private recipeService: RecipeService,
+    private route: ActivatedRoute,
+    private userService: UserService
+    ) { }
 
   ngOnInit(): void {
     this.name = this.route.snapshot.params["name"];
@@ -28,35 +32,25 @@ export class RecipeComponent implements OnInit{
   }
 
   getDatas(): void {
-    //console.log(this.name);
-    this.recipeService.getRecipeByName(this.name)
+    this.recipeService.getRecipeByNameAndId(this.name, this.userService.userId)
       .subscribe({
         next: (data) => {
-          //console.log(data.meals[0])
-          this.name = data.meals[0].strMeal;
-          this.instructions = data.meals[0].strInstructions;
-          this.img = data.meals[0].strMealThumb;
-
-          for (let i = 0; i<20;i++){
-            this.ingredients[i] = data.meals[0]["strIngredient"+(i+1)];
-            this.measures[i] = data.meals[0]["strMeasure"+(i+1)];
-          }
-      
-          this.getIngredientsSorted();
-
+          this.name = data.name;
+          this.img = data.img;
+          this.instructions = data.instructions;
+          this.ingredients = data.ingredients.split(',');
+          this.pantryIngredients = data.pantryIngredients.split(',');
+          
+          this.removeEmptyIngredients();
         },
         error: (e) => console.error(e)
       });
   }
 
-  getIngredientsSorted(): void {
-    for (let i = 0; i<20; i++){
-      if (this.ingredients[i] != '' && this.ingredients[i] != null){
-        let str = this.measures[i].concat(' ', this.ingredients[i])
-        this.sortedIngredients.push(str);
-      }
-    } 
-
+  removeEmptyIngredients(): void {
+    while (this.ingredients.at(this.ingredients.length-1) == ' '){
+      this.ingredients.pop();
+    }
   }
 
 }

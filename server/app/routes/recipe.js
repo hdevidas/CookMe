@@ -15,5 +15,7 @@ router.get("/recipes/:ingredient/:id", recipeCtrl.getRecipeList);
 // Retrieve a recipe by his name
 router.get("/recipe/:name", recipeCtrl.getRecipe);
 
+// Retrieve a recipe by his name and user id for personalized ingredient list
+router.get("/recipe/:name/:id", recipeCtrl.getRecipePersonaliedWithPantry);
 
 module.exports = router;

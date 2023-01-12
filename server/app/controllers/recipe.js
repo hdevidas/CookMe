@@ -64,8 +64,8 @@ function ingredientSortedWithTerm(term,ingredient) {
 
 //Retrieve a specific number of recipes (constant number) and sort them by scoring them with pantry user
 exports.getRecipeList = async (req, res) => {
-  recipeListWithScore = []
-  recipesToSend = []
+  let recipeListWithScore = []
+  let recipesToSend = []
   const ingr = req.params.ingredient;
   const id = req.params.id;
   User.findOne({_id: id})
@@ -73,7 +73,7 @@ exports.getRecipeList = async (req, res) => {
     if (user === null){
         res.status(401).json({ message: 'Incorrect information (email and password)' });
     } else {
-      MyPantry = user.pantry;
+      let MyPantry = user.pantry;
       let url = "https://www.themealdb.com/api/json/v1/1/filter.php?i=";
       let ingredient = req.params.ingredient;
       const newUrl = url.concat('', ingredient)
@@ -130,10 +130,80 @@ exports.getRecipe = async (req, res) => {
   }
 };
 
+exports.getRecipePersonaliedWithPantry = async (req, res) => {
+  let url = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
+  let name = req.params.name;
+  let id = req.params.id;
+  const newUrl = url.concat('', name)
+  try {
+      const response = await fetch(newUrl);
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error : ${response.status}`);
+      }
+      const data = await response.json();
+      let meal = await extractMealData(data,id)
+      res.send(meal);
+  } catch (error) {
+      console.error(`Could not get data: ${error}`);
+  }
+}
+
+async function extractMealData(data, id) {
+  let name = data.meals[0].strMeal;
+  let instructions = data.meals[0].strInstructions;
+  let img = data.meals[0].strMealThumb;
+
+  let pantry = await getPantry(id);
+  pantry = pantry.split(',');
+  let ingredients = [];
+  let pantryIngredients = [];
+
+  for (let i = 0; i<20;i++){
+    let ingredient = data.meals[0]["strIngredient"+(i+1)];
+    let measure = data.meals[0]["strMeasure"+(i+1)];
+    let mesuredIngredient = measure.concat(' ',ingredient);
+    //check if ingredient if already in the pantry
+    if (isIn(pantry,ingredient) < 0){ 
+      //ingredient is not in the pantry
+      ingredients.push(mesuredIngredient);
+    }
+    else {
+      //ingredient if in the user pantry
+      pantryIngredients.push(mesuredIngredient);
+    }
+  }
+  
+  let meal = {"name" : name, "instructions" : instructions, "img" : img, "ingredients" : ingredients.toString(), "pantryIngredients" : pantryIngredients.toString()};
+
+  return meal;
+}
+
+function isIn(pantry, ingredient){
+  for (let i = 0; i < pantry.length; ++i){
+    if (pantry.at(i).localeCompare(ingredient, 'en', { sensitivity: 'base' }) == 0)
+    return i;
+    
+  }
+  return -1;
+}
+
+function getPantry(id){
+  return User.findById(id)
+    .then(data => {
+      if (!data)
+        console.error( "Not found User with id " + id );
+      else return(data.pantry.toString());
+    })
+    .catch(err => {
+      console.error("Error retrieving User with id=" + id );
+    });
+}
+
 //Auxiliary function : give a score to a recipe with user pantry
 function getScore(data,pantry){
-  numberIngredientsTotal=0
-  numberIngredientsFromUser =0
+  let numberIngredientsTotal=0
+  let numberIngredientsFromUser =0
 
   for (let i=1;i<=20;i++){
     if (data.meals[0]["strIngredient"+i] != null && data.meals[0]["strIngredient"+i] != "" ){
@@ -146,7 +216,7 @@ function getScore(data,pantry){
   if (numberIngredientsFromUser==0){
     numberIngredientsFromUser++;
   }
-  score = Math.round(numberIngredientsFromUser/numberIngredientsTotal*100)
+  let score = Math.round(numberIngredientsFromUser/numberIngredientsTotal*100)
   return score;
 };
 

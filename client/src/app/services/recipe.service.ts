@@ -22,6 +22,11 @@ export class RecipeService {
         return this.http.get<any>(`${baseUrl}/recipe/${name}`);
     }
 
+    //GET A SPECIFIC MEAL BY NAME WITH INGREDIENTS SPLITED 
+    getRecipeByNameAndId(name: string, id : any): Observable<any> {
+        return this.http.get<any>(`${baseUrl}/recipe/${name}/${id}`);
+    }
+
     //GET A LIST OF RECIPES WICH CONTAIN A SPECIFIC INGREDIENT
     getRecipes(ingredient: string, userId: String): Observable<any> {
         return this.http.get<any>(`${baseUrl}/recipes/${ingredient}/${userId}`);
