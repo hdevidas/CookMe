@@ -152,6 +152,8 @@ exports.getRecipePersonaliedWithPantry = async (req, res) => {
 async function extractMealData(data, id) {
   let name = data.meals[0].strMeal;
   let instructions = data.meals[0].strInstructions;
+  //TODO unutile d'utiliser le formatage puisqu'il est vraiment moche, cela n'apporte rien. 
+  //let instructions = formatInstructions(data.meals[0].strInstructions);
   let img = data.meals[0].strMealThumb;
 
   let pantry = await getPantry(id);
@@ -177,6 +179,34 @@ async function extractMealData(data, id) {
   let meal = {"name" : name, "instructions" : instructions, "img" : img, "ingredients" : ingredients.toString(), "pantryIngredients" : pantryIngredients.toString()};
 
   return meal;
+}
+
+function formatInstructions(data){
+  let instructions = [];
+  if (data.startsWith('STEP')){
+    let tmpInstructions = data.split('STEP ');
+    for (let i = 0 ;  i < tmpInstructions.length ; ++i){
+      let text = tmpInstructions.at(i).toString();
+      // TODO enlever les lignes vides au debut. Ce qui est en dessus n'a aucun effet...
+      //if (text != "")
+      instructions.push(text.substring(2));
+    }
+  }
+  else 
+    instructions = data.split('.');
+
+  return instructions;
+
+  //TODO pour enlever les espaces au debut des lignes quand i y en a. Ce qui est en dessus n'a aucun effet..
+  /*let finalInstructions = []
+  for (let i = 0 ; i < instructions.length ; ++i){
+    let tmp = instructions.at(i);
+    while(tmp.startsWith(' ') || tmp.startsWith(" ") || tmp.startsWith("\n")){
+      tmp = tmp.substring(1);
+    }
+    finalInstructions.push(tmp);
+  }
+  return finalInstructions;*/
 }
 
 function isIn(pantry, ingredient){

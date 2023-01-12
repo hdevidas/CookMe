@@ -8,13 +8,20 @@
         {{ ingredient }}
     </li>
 </ul>
-
-<h2>Ingredients alredy in your pantry</h2>
+<div *ngIf="pantryIngredients.length != 0">
+    <h2>Ingredients alredy in your pantry</h2>
+    <ul>
+        <li *ngFor="let ingredient of pantryIngredients;">
+            {{ ingredient }}
+        </li>
+    </ul>
+</div>
+<div *ngIf="pantryIngredients.length == 0">
+    <h2> You dont have any ingredient for this recepe in your pantry</h2>
+</div>
+<h2>Instructions</h2>
 <ul>
-    <li *ngFor="let ingredient of pantryIngredients;">
-        {{ ingredient }}
+    <li *ngFor="let instruction of instructions;">
+        {{ instruction }}
     </li>
 </ul>
-
-<h2>Instructions</h2>
-<p>{{ instructions }}</p>

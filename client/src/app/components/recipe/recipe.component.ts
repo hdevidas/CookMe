@@ -11,7 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 export class RecipeComponent implements OnInit{
 
   name: string = '';
-  instructions = '';
+  instructions = [];
   img = '';
 
   ingredients: string[] = [];
@@ -48,8 +48,11 @@ export class RecipeComponent implements OnInit{
   }
 
   removeEmptyIngredients(): void {
-    while (this.ingredients.at(this.ingredients.length-1) == ' '){
+    while (this.ingredients.at(this.ingredients.length-1) == ' '|| this.ingredients.at(this.ingredients.length-1) =='  '){
       this.ingredients.pop();
+    }
+    if (this.pantryIngredients.at(0) == ""){
+      this.pantryIngredients = [];
     }
   }
 
