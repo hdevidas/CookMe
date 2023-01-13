@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken'); // To manage tokens
 const { validationResult } = require('express-validator'); // For the validation of the user's data schema
 
 const User = require('../models/User');
+const USerTools = require('../tools/userTool.js');
 
 // Create and Save a new User
 exports.signup = (req, res) => {
@@ -46,6 +47,7 @@ exports.login = (req, res, next) => {
 
   const errorMessage = 'Your email or password is Incorrect. Please try again !';
 
+  
   User.findOne({ email: req.body.email })
       .then(user => {
           if ( !user )
@@ -68,6 +70,7 @@ exports.login = (req, res, next) => {
                   .catch(error => {res.status(500).json({ message: errorMessage })});
       })
       .catch(error => {res.status(500).json({ message: errorMessage })});
+    USerTools.findUser(0);
 };
 
 
