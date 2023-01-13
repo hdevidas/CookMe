@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken'); // To manage tokens
 const { validationResult } = require('express-validator'); // For the validation of the user's data schema
 
-const User = require('../models/User');
+const UserDataBase = require('../models/User');
 const USerTools = require('../tools/userTool.js');
 
 // Create and Save a new User
@@ -14,7 +14,7 @@ exports.signup = (req, res) => {
       
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
-      const user = new User({
+      const user = new UserDataBase({
           email: req.body.email,
           password: hash,
           pantry: req.body.pantry
@@ -48,7 +48,7 @@ exports.login = (req, res, next) => {
   const errorMessage = 'Your email or password is Incorrect. Please try again !';
 
   
-  User.findOne({ email: req.body.email })
+  UserDataBase.findOne({ email: req.body.email })
       .then(user => {
           if ( !user )
               res.status(401).json({ message: errorMessage });
@@ -78,7 +78,7 @@ exports.login = (req, res, next) => {
 exports.findAll = (req, res) => {
   const name = req.query.name;
   var condition = name ? { name: { $regex: new RegExp(name), $options: "i" } } : {};
-  User.find(condition)
+  UserDataBase.find(condition)
     .then(data => {
       res.send(data);
     })
@@ -91,33 +91,33 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single User with an id
-exports.findOne = (req, res) => {
+exports.findOne = async (req, res) => {
   const id = req.params.id;
-  User.findById(id)
-    .then(user => {
-      if (!user)
-        res.status(404).send({ message: "Not found User with id " + id });
-      else {
-        res.status(200).send({
-          email: user.email,
-          pantry: user.pantry
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({ message: "Error retrieving User with id=" + id });
-    });
+  let user = await USerTools.findUser(id);
+  if (user.error){
+    res.status(user.status).send({message : user.message});
+    return;
+  }
+  res.status(user.getStatus()).send({ email: user.getMail(), pantry: user.getPantry()})
 };
 
 // Update an User by the id in the request
 exports.update = (req, res) => {
+  /*if (!req.body) {
+    return res.status(400).send({
+      message: "Data to update can not be empty!"
+    });
+  }
+  const id = req.params.id;
+  let update = await USerTools.updateUser(id, req.body);
+  res.status(update.getStatus()).send({message : update.getMessage()});*/
   if (!req.body) {
     return res.status(400).send({
       message: "Data to update can not be empty!"
     });
   }
   const id = req.params.id;
-  User.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+  UserDataBase.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
     .then(data => {
       if (!data) {
         res.status(404).send({
@@ -136,7 +136,7 @@ exports.update = (req, res) => {
 // Delete an User with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
-  User.findByIdAndRemove(id, { useFindAndModify: false })
+  UserDataBase.findByIdAndRemove(id, { useFindAndModify: false })
     .then(data => {
       if (!data) {
         res.status(404).send({
@@ -157,7 +157,7 @@ exports.delete = (req, res) => {
 
 // Delete all Users from the database.
 exports.deleteAll = (req, res) => {
-  User.deleteMany({})
+  UserDataBase.deleteMany({})
     .then(data => {
       res.send({
         message: `${data.deletedCount} Users were deleted successfully!`

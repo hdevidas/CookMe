@@ -1,4 +1,3 @@
-const User = require('../models/User');
 const USerTools = require('../tools/userTool.js');
 
 exports.addIngredient = async (req,res) => {

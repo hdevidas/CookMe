@@ -40,6 +40,10 @@ class UserData {
     addToPantry = (ingredient) => {
         this.#pantry.push(ingredient);
     }
+
+    getMail = () => {
+        return this.#mail;
+    }
     
 }
 
