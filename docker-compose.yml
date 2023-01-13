@@ -15,7 +15,7 @@ services:
     depends_on:
       - db
     environment:
-      - MONGO_URL=mongodb://db:27017
+      - MONGO_URL=mongodb://localhost:27017 #mettre db à la place de localhost pour docker
   db:
     image: mongo
     ports:
