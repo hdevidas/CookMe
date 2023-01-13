@@ -1,0 +1,22 @@
+version: '3'
+services:
+  client:
+    build: 
+      context: ./client # Le context est le répertoire où se trouve le fichier Dockerfile pour Angular
+    ports:
+      - "4200:4200"
+    depends_on:
+      - server
+  server:
+    build: 
+      context: ./server # Le context est le répertoire où se trouve le fichier Dockerfile pour Nodejs
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - MONGO_URL=mongodb://db:27017
+  db:
+    image: mongo
+    ports:
+      - "27017:27017"

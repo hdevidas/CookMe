@@ -1,16 +1,17 @@
-FROM node:alpine
+# Utilisation de l'image de Node.js 14 sur Alpine Linux
+FROM node:14-alpine
 
-# Définition de l'esapce de travail
-WORKDIR /usr/src/app/server
+# Définition du répertoire de travail sur /app
+WORKDIR /app
 
-# Copie des fichiers contenant les dépendances dans le repertoire de travail
-COPY package*.json ./
+# Copie des fichiers de l'application dans le conteneur
+COPY . /app/
 
-# Installation des dépendances avec npm
-RUN npm ci
+# Installation des dépendances de l'application
+RUN npm install
 
-# Copy des différents contenu dans l'espace de travail
-COPY . .
+# Exposition du port 3000 pour l'application Node.js
+EXPOSE 8080
 
-# La commande d'entrée pour l'exécution du programme
+# Démarrage de l'application avec la commande npm start
 CMD ["npm", "run", "dev"]

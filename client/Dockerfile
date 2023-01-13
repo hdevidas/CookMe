@@ -1,20 +1,26 @@
-FROM node:alpine as build-stage
+# Utilisation de l'image de Node.js 14 sur Alpine Linux
+FROM node:14-alpine
 
-# # Définition de l'esapce de travail
-WORKDIR /usr/src/app
+# Définition du répertoire de travail sur /app
+WORKDIR /app/client
 
-# # Copie des fichiers contenant les dépendances dans le repertoire de travail
-COPY package*.json ./
+ENV NG_CLI_VERSION=11.0.3
 
-# # Installation des dépendances
-RUN npm install
-
-# # Copie des différents repertoires dans l'espace de travail
+# Copie des fichiers de l'application dans le conteneur
 COPY . .
 
-# Création du build
+# Installation des dépendances de l'application
+RUN npm install
+
+# Génération des fichiers de production
 RUN npm run build
 
+RUN npm install -g @angular/cli
+
+ENV PATH="$PATH:/usr/local/lib/node_modules/@angular/cli/bin"
+
+# Exposition du port 4200 pour l'application Angular
 EXPOSE 4200
 
-CMD ["npm", "start"]
+# Démarrage de l'application avec la commande npm start
+CMD ["ng", "serve", "--host", "0.0.0.0"]
