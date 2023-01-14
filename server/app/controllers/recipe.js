@@ -1,42 +1,38 @@
 const fetch = require('node-fetch');
 
 const USerTools = require('../tools/userTool.js');
+const TheMealDbTool = require('../tools/TheMealDbTool');
 
-NUMBER_RECIPE_MAX_TO_DISPLAY = 4;
+const NUMBER_RECIPE_MAX_TO_DISPLAY = 4;
 
 let recipeListWithScore = []
 let recipesToSend = []
 
 // Give a random recipe from the external api
 exports.getRandomRecipe = async (req, res) => {
-  const url = "https://www.themealdb.com/api/json/v1/1/random.php";
-  const response = await fetch(url);
-  if (!response.ok) {
-    res.status(response.status).send({message : `HTTP error on external api at ${newUrl}`});
+  let apiResponce = await TheMealDbTool.getdataFromApi('random.php');
+  if (apiResponce.error) {
+    res.status(apiResponce.getStatus()).send({message : apiResponce.getMessage()});
     return;
   }
-  const data = await response.json();
-  //console.log(data); /* Affichage des données */
-  res.send(data);
+  
+  res.send(apiResponce.getData());
 };
 
 // Retrieve all ingredients with a term from the external api
 exports.getIngredientList = async (req, res) => {
-  const url = "https://www.themealdb.com/api/json/v1/1/list.php?i=list?";
-  const term = req.params.term;
-  const response = await fetch(url);
-  if (!response.ok) {
-    res.status(response.status).send({message : `HTTP error on external api at ${newUrl}`});
+  let apiResponce = await TheMealDbTool.getdataFromApi('list.php?i=list?');
+  if (apiResponce.error) {
+    res.status(apiResponce.getStatus()).send({message : apiResponce.getMessage()});
     return;
   }
-  const data = await response.json();
-  const ingredient=new Array(); 
-
-  for (let i = 0; i<574; i++){
-    ingredient.push(data.meals[i].strIngredient.toLowerCase())
+  let dbIngredients = apiResponce.getData().meals;
+  let ingredients = [];
+  for (let i = 0; i < dbIngredients.length; ++i){
+      ingredients.push(dbIngredients[i].strIngredient.toLowerCase());
   }
-  //ingredientSortedWithTerm(term,ingredient);
-  res.send(ingredientSortedWithTerm(term,ingredient));
+  const term = req.params.term;
+  res.send(ingredientSortedWithTerm(term,ingredients));
 };
 
 //Auxiliary function for "getIngredientList"
@@ -52,9 +48,8 @@ function ingredientSortedWithTerm(term,ingredient) {
 
 //Retrieve a specific number of recipes (constant number) and sort them by scoring them with pantry user
 exports.getRecipeList = async (req, res) => {
-  let recipeListWithScore = []
-  let recipesToSend = []
-  const ingr = req.params.ingredient;
+  let recipeListWithScore = [];
+  let recipesToSend = [];
   const id = req.params.id;
   let userDetails = await USerTools.findUser(id);
   if(userDetails.error){
@@ -64,28 +59,23 @@ exports.getRecipeList = async (req, res) => {
   let MyPantry = userDetails.getPantry();
   
   // recupères tous les menus avec l'ingrédient donné de l'api.
-  let url = "https://www.themealdb.com/api/json/v1/1/filter.php?i=";
   let ingredient = req.params.ingredient;
-  const newUrl = url.concat('', ingredient)
-  const response = await fetch(newUrl);
-  if (!response.ok) {
-    res.status(response.status).send({message : `HTTP error on external api at ${newUrl}`});
+  let apiResponce = await TheMealDbTool.getdataFromApi('filter.php?i='.concat('', ingredient));
+  if (apiResponce.error) {
+    res.status(apiResponce.getStatus()).send({message : apiResponce.getMessage()});
     return;
   }
-  const recipeList = await response.json()
- 
+  const recipeList = apiResponce.getData();
+
   for (index in recipeList.meals){
-    let url = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
     let name = recipeList.meals[index].strMeal;
-    const newUrl = url.concat('', name)
-    const response = await fetch(newUrl);
-    if (!response.ok) {
-      res.status(response.status).send({message : `HTTP error on external api at ${newUrl}`});
+    let apiResponce = await TheMealDbTool.getdataFromApi('search.php?s='.concat('', name));
+    if (apiResponce.error) {
+      res.status(apiResponce.getStatus()).send({message : apiResponce.getMessage()});
       return;
     }
-    const recipe = await response.json();
+    const recipe = apiResponce.getData();
     let recipeWithScore = [recipe,getScore(recipe,MyPantry)]
-    //console.log(recipeWithScore);
     recipeListWithScore.push(recipeWithScore);
   }
   recipeListWithScore.sort(functionComp);
@@ -95,35 +85,33 @@ exports.getRecipeList = async (req, res) => {
 
 //Retrieve a recipe by his name from the external api
 exports.getRecipe = async (req, res) => {
-  let url = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
   let name = req.params.name;
-  const newUrl = url.concat('', name)
-  const response = await fetch(newUrl);
-  if (!response.ok) {
-    res.status(response.status).send({message : `HTTP error on external api at ${newUrl}`});
-    return
+  let apiResponce = await TheMealDbTool.getdataFromApi('search.php?s='.concat('', name));
+  if (apiResponce.error) {
+    res.status(apiResponce.getStatus()).send({message : apiResponce.getMessage()});
+    return;
   }
-  const data = await response.json();
+  const data = apiResponce.getData();
   res.send(data);
 };
 
 exports.getRecipePersonaliedWithPantry = async (req, res) => {
-  let url = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
   let name = req.params.name;
-  let id = req.params.id;
-  const newUrl = url.concat('', name)
-  const response = await fetch(newUrl);
-  if (!response.ok) {
-    res.status(response.status).send({message : `HTTP error on external api at ${newUrl}`});
+  let apiResponce = await TheMealDbTool.getdataFromApi('search.php?s='.concat('', name));
+  if (apiResponce.error) {
+    res.status(apiResponce.getStatus()).send({message : apiResponce.getMessage()});
     return;
   }
-  const data = await response.json();
+  const data = apiResponce.getData();
+
+  let id = req.params.id;
   let userDetails = await USerTools.findUser(id);
   if(userDetails.error){
     res.status(userDetails.getStatus()).send({message : userDetails.getMessage()});
     return;
   }
   let meal = await extractMealData(data,userDetails.getPantry());
+  
   res.send(meal);
 }
 
