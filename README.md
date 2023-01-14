@@ -1,5 +1,6 @@
 # Projet de programmation web - Master 2 informatique(Génie logiciel) - Université de Bordeaux(22-23)
 
+
 ## Objectif
 
 Réalisation d'un projet(libre de choix) en groupe de 3 répondant au cahier des charges suivant :
@@ -12,23 +13,46 @@ Réalisation d'un projet(libre de choix) en groupe de 3 répondant au cahier des
 6. Gestion de l'authentification 
 7. Gestion du déploiement (Docker ou PaaS type Heroku)
 
+
 ## Présentation
+
 Étant un projet libre de choix, nous avons proposé de faire une application web permettant à un utilisateur de 
 trouver des recettes personnalisées grâce à son garde-manger. La personnalisation des recettes dépendra du 
-contenu de son placard.
+contenu de son placard
+
 
 ### Dénomination
-> **CookeMe**
+
+> **Cook Me**
+
 
 ### Téchnologies
-1. **Front** : Angular
-2. **Back** : Node js
-3. **Base de données** : Mongodb
-4. **Déploiement** : Docker
+
+1. **Angular** : Pour le frontend
+2. **Node js** : NPour le backend
+3. **Mongodb** : Pour la base de données
+4. **Docker** : Pour le déploiement
+
 
 ### Structure du projet
+
 Nous avons structuré ce projet en deux parties:
-- **Client** : Dossier contenant le code du frontend
-- **Server** : Dossier contenant le code du backend
+- **client** : Dossier contenant le code du frontend
+- **server** : Dossier contenant le code du backend
 
 
+## Configuration docker
+
+Après le clonnage du projet, il faut tout simplement se mettre dans le repertoire principal du projet en éxécutant la commande `cd Cookme`, vérifier que docker-compose est bien installé sur la machine avec la commande `docker-compose --version` et ensuite éxécuter les commandes suivantes pour accéder au projet :
+
+  > ` docker-compose build ` : pour la construction de l'image docker
+
+  > ` docker-compose up ` : pour l'éxécution de l'image
+  
+  > ` docker-compose down ` : pour arrêter l'éxécution
+
+## Auteurs
+
+- [@hdevidas](https://github.com/hdevidas)
+- [@agbarry](https://www.github.com/agbarry)
+- [@Kiiroyo](https://github.com/Kiiroyo)
