@@ -24,7 +24,7 @@
     <div
     *ngFor="let recipe of recipes" 
     class="recipeWrapper">
-      <img src="{{ recipe[0].meals[0].strMealThumb }}">
+      <img class="recipe-img" src="{{ recipe[0].meals[0].strMealThumb }}">
       <p>{{ recipe[1] }} %</p>
       <div class="scoreRecipe" style="width: {{ recipe[1] }}%;background-color: rgb({{ getC1(recipe[1]) }}, {{ getC2(recipe[1]) }}, {{ getC3(recipe[1]) }});"></div>
       <h3><a routerLink="/recipe/{{ recipe[0].meals[0].strMeal }}">{{ recipe[0].meals[0].strMeal }}</a></h3> 

@@ -1,33 +1,27 @@
-<nav class="headerWrapper">
+<nav>
+    <div class="header-logo">
+        <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><img src="../../../assets/cookmelogo.png"></a>
+    </div>
     <ul>
-        <li class="debugPannel">
+        <!-- <li class="debugPannel">
             <button (click)="swapDebugMode()" [ngClass]="{'green' : debug}">Debug</button>
-            <!--<a *ngIf="debug" routerLink="recipe/poutine" routerLinkActive="active">Recipe(poutine)</a>-->
-            <br><a *ngIf="debug" routerLink="users" routerLinkActive="active">Users list</a>
-        </li>
+            <a *ngIf="debug" routerLink="users" routerLinkActive="active">Users list</a>
+        </li> -->
         <li>
-            <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><img src="../../../assets/cookmelogo.png"></a>
+            <a routerLink="" routerLinkActive="active">Home</a>
         </li>
         <li *ngIf="isAuth">
             <a routerLink="search" routerLinkActive="active">Search</a>
         </li>
-
-        <div class="profileWrapper">
-            <li *ngIf="!isAuth" class="content1">
-                <a routerLink="signup" routerLinkActive="active">Sign up </a>
-                <a routerLink="login" routerLinkActive="active">Log in </a>
-            </li>
-
-            <div *ngIf="isAuth">
-                <button class="dropDownBtn" mat-button [matMenuTriggerFor]="menu">
-                    <span>User</span>
-                    <img src="../../../assets/expand_more.png">
-                </button>
-                <mat-menu #menu="matMenu">
-                    <a mat-menu-item routerLink="profile" *ngIf="isAuth">Profile</a>
-                    <a mat-menu-item (click)="onLogout()" *ngIf="isAuth">Log out</a>
-                </mat-menu>
-            </div>
-        </div>
+        <li *ngIf="isAuth">
+            <a routerLink="profile" *ngIf="isAuth">Profile</a>
+        </li>
+        <li *ngIf="!isAuth">
+            <a routerLink="login" routerLinkActive="active">Log in</a>
+        </li>
+        <li *ngIf="isAuth">
+            <a (click)="onLogout()" *ngIf="isAuth">Log out</a>
+        </li>
     </ul>
 </nav>
+

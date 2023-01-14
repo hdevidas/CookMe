@@ -1,7 +1,15 @@
-<div class="bodyWrapper">
-  <app-header></app-header>
-  <div class="extensibleWrapper">
-      <router-outlet></router-outlet>
+
+<div class="bloc-page">
+<div class="boxed-page">
+  <div class="header-wrapper">
+    <app-header></app-header>
   </div>
+  <div class="main-wrapper">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<div class="footer-wrapper">
   <app-footer></app-footer>
+</div>
+
 </div>

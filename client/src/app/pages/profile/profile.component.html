@@ -27,7 +27,7 @@
         <h1>My informations</h1>
         <p>Email adress: {{mail}}</p>
         <p>Pantry :</p>
-        <ul> 
+        <ul class="ingredients-profile"> 
             <li *ngFor="let ingredient of pantry"> 
                 {{ingredient}} <button type="button" (click)="removeIngredient(ingredient)">X</button>
             </li>
