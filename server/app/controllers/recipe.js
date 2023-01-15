@@ -3,11 +3,7 @@ const fetch = require('node-fetch');
 const USerTools = require('../tools/userTool.js');
 const TheMealDbTool = require('../tools/TheMealDbTool');
 
-<<<<<<< HEAD
-const NUMBER_RECIPE_MAX_TO_DISPLAY = 256;
-=======
-const NUMBER_RECIPE_MAX_TO_DISPLAY = 285;
->>>>>>> e3659f0 (séparation des vignettes de recettes de la page de recette)
+const NUMBER_RECIPE_MAX_TO_DISPLAY = 4;
 
 
 // Give a random recipe from the external api
@@ -18,6 +14,7 @@ exports.getRandomRecipe = async (req, res) => {
     return;
   }
   res.send(apiResponce.getData());
+  
   
 };
 
