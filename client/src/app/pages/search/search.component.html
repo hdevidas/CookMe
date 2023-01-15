@@ -26,37 +26,11 @@
 <div *ngIf="currentIngredient" class="display-recipes">
   <h1 class="medium-text">Best recipes with {{ currentIngredient }}</h1>
   <div class="recipesWrapper">
-    <div
-    *ngFor="let recipe of recipes" 
-    class="recipeWrapper">
-    <a routerLink="/recipe/{{ recipe[0].meals[0].strMeal }}">
-      <p>{{ recipe[0].meals[0].strMeal }}</p>
-      <img src="{{ recipe[0].meals[0].strMealThumb }}">
-      <div class="scoreRecipe" style="width: {{ recipe[1] }}%;background-color: rgb({{ getC1(recipe[1]) }}, {{ getC2(recipe[1]) }}, {{ getC3(recipe[1]) }});"></div>
-      <p>{{ recipe[1] }} %</p>
-    </a>
+    <div *ngFor="let recipe of recipes" class="recipeWrapper">
+      <div [app-recipe-short]="recipe"></div>
     </div>
   </div> 
 </div>
 <div class="vertical-blank">
 </div>
 
-
-
-<!-- 
-
-<div *ngIf="currentIngredient" class="display-recipes">
-  <h1 class="medium-text">Best recipes with {{ currentIngredient }}</h1>
-  <div class="recipesWrapper">
-    <div
-    *ngFor="let recipe of recipes" 
-    class="recipeWrapper">
-      <img class="recipe-img" src="{{ recipe[0].meals[0].strMealThumb }}">
-      <p>{{ recipe[1] }} %</p>
-      <div class="scoreRecipe" style="width: {{ recipe[1] }}%;background-color: rgb({{ getC1(recipe[1]) }}, {{ getC2(recipe[1]) }}, {{ getC3(recipe[1]) }});"></div>
-      <h3><a routerLink="/recipe/{{ recipe[0].meals[0].strMeal }}">{{ recipe[0].meals[0].strMeal }}</a></h3> 
-    </div>
-  </div> 
-</div>
-<div class="vertical-blank">
-</div> -->
