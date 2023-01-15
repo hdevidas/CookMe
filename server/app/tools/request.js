@@ -5,7 +5,7 @@ class Request {
     #message;
     error;
     
-    constructor(status, message){
+    constructor(status, message, pantry, mail){
         this.#status = status;
         this.#message = message;
         this.error = this.#status != 201;
