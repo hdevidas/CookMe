@@ -1,36 +1,44 @@
-<div class="profileWrapper">
-    <h1>My Profile</h1>
-</div>
-
-<div class="profileWrapper">
-    <div>
-        <h1>Actions</h1>
-        <p><button type="button" (click)="changeEmail()">Change my email</button></p>
-        <p><button type="button" (click)="resetPassword()">Reset my password</button></p>
-        <p><button type="button" (click)="setupRandomPantry()">Give me a Random Pantry (for trying app)</button></p>
-        <p><button type="button" (click)="removeAllIngredients()">Remove all my ingredients</button></p>
+<div class="profile-wrapper">
+    <h1 class="big-text">Profile</h1>
+    <p>Welcome to your profile page {{ mail }}</p>
+    <div class="profile-actions">
+        <button class="button-profile" type="button" (click)="changeEmail()">Change my email</button>
+        <button class="button-profile" type="button" (click)="resetPassword()">Reset my password</button>
+        <button class="button-profile" type="button" (click)="setupRandomPantry()">Give me a Random Pantry (for trying app)</button>
+        <button class="button-profile" type="button" (click)="removeAllIngredients()">Remove all my ingredients</button>
+    </div>
+    <div class="profile-image">
+        
+    </div>
+    <div class="adding-ingredient">
         <p>Add an ingredient to my Pantry:</p>
         <input 
             #searchBox 
             (keyup)="search(searchBox.value)" 
             placeholder="What ingredient do you want to prepare ?"
         />
+    </div>
+    <div class="ingredients-list">
         <a 
             *ngFor="let ingredient of ingredients$ | async"
             (click)="addIngredient(ingredient)"
             class="collection-item"
         >
             {{ ingredient }}
-         </a>
+        </a>
     </div>
-    <div>
-        <h1>My informations</h1>
-        <p>Email adress: {{mail}}</p>
-        <p>Pantry :</p>
+
+</div>
+
+
+<div class="pantry-wrapper">
+    <h1 class="big-text">Ingredients of my pantry</h1>
+    <p *ngIf="isPantryEmpty()">"It seems you don't have any ingredients, you can add more above"</p>
+    <p *ngIf="!isPantryEmpty()">You can click on the "X" to remove an ingredient if you don't have it anymore.</p>
         <ul class="ingredients-profile"> 
             <li *ngFor="let ingredient of pantry"> 
                 {{ingredient}} <button type="button" (click)="removeIngredient(ingredient)">X</button>
             </li>
         </ul>
-    </div>
 </div>
+

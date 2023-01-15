@@ -43,6 +43,10 @@ export class ProfileComponent {
     );
   }
 
+  isPantryEmpty() :boolean{
+    return !this.pantry || this.pantry.length === 0;
+  }
+
   changeEmail() :void{
     //TODO
   }

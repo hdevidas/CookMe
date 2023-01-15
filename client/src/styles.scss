@@ -68,9 +68,9 @@ p{
     font-family: "Open Sans";
     text-transform: uppercase;
     letter-spacing: 15px;
-    line-height: 100px;
+    line-height: 60px;
     font-weight: 600;
-    font-size: 60px;
+    font-size: 40px;
     text-align: center;
 }
 
@@ -167,7 +167,8 @@ nav a:hover {
     display:flex;
     justify-content: center;
     flex-direction: column;
-    border: 1px solid black;
+    // border: 1px solid black;
+    border: 8px double black;
     background-color: #e9e7e7;
 }
 
@@ -215,60 +216,171 @@ nav a:hover {
     height:10vh;
 }
 
-//Profile page
-.ingredients-profile{
-    display: flex;
-    flex-wrap: wrap;
-
-}
-
-.ingredients-profile li {
-    flex: 1 0 10%; /* flexible width, fixed height, and take up 33.33% of the available space */
-    margin: 6px;
-}
 
 
 
 
 //Search Page
-//TO AMELIORE -- BEGIN
-.collection-item{
+
+.search-wrapper{
+    border: 8px double black;
+    width:70%;
+    margin:auto;
+    padding: 30px;
+    text-align: center;
+}
+
+.search-bar .collection-item{
     display: block;
     line-height: 1.5rem;
     padding: 10px 20px;
     margin: 0;
     border-bottom: 1px solid #e0e0e0;
 }
-.recipe-img img{
-    height:150px;
+
+.search-bar .collection-item:last-child{
+    display: block;
+    line-height: 1.5rem;
+    padding: 10px 20px;
+    margin: 0;
+    border-bottom: none;
+    padding-bottom: 20px;
+}
+
+//Displaying Recipes on Search Page
+
+.recipeWrapper img{
+    width:100%;
+}
+
+.recipeWrapper:hover{
+    margin-top: -30px;
 }
 .recipesWrapper{
+    margin-top: 60px;
     display:flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
 }
 .recipeWrapper{
-    border:1px solid black;
-    width: 200px;
-    padding: 10px;
-    margin:10px;
+    padding:10px;
     text-align: center;
-    display:flex;
-    flex-direction:column;
-    border-radius: 10px;
+    width:25%;
 }
+.recipeWrapper p{
+    display: flex;
+    justify-content: center;
+    align-items:center ;
+    height:50px;
+    background-color: black;
+    color:white;
+}
+
 .scoreRecipe{
-    height:3px;
+    margin-top: -6px;
+    height:6px;
 }
-//TO AMELIORE -- END
 
 
 
+
+//Profile and Pantry Page -- begin
+.profile-wrapper{
+    color: white;
+    background-color: black;
+    padding-top:40px;
+    padding-bottom:20px;
+}
+
+.profile-wrapper button{
+    padding: 20px;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.profile-actions{
+    display:flex;
+    justify-content: space-around;
+}
+
+.profile-wrapper p{
+    text-align: center;
+}
+
+.profile-image{
+    background-image: url('assets/cookmebowl.jpg');
+    background-position: center;
+    height:200px;
+}
+
+.adding-ingredient{
+    padding-top:60px;
+    padding-bottom:10px;
+    display:flex;
+    justify-content: center;
+}
+
+.adding-ingredient input{
+    width:260px;
+    padding:10px;
+}
+
+.ingredients-list {
+    width:100%;
+    display: flex;
+    gap: 1rem;
+    flex-flow: row wrap;
+    text-align: center;
+    padding-top:20px;
+    padding-bottom: 20px;
+}
+
+.ingredients-list .collection-item{
+    margin:auto;
+    padding:0 30px 0 30px;
+    text-align: center;
+    align-items: center;
+    flex-basis: 10%;
+    height: 3rem;
+}
+
+.ingredients-list .collection-item:hover{
+    color:white;
+    text-decoration: underline;
+}
+
+.pantry-wrapper{
+    padding-top: 100px;
+    padding-bottom: 100px;
+    text-align: center;
+}
+
+.ingredients-profile {
+    width:100%;
+    display: flex;
+    gap: 1rem;
+    flex-flow: row wrap;
+    text-align: center;
+    padding-top:20px;
+    padding-bottom: 20px;
+}
+
+.ingredients-profile li{
+    margin:auto;
+    padding:0 30px 0 30px;
+    text-align: center;
+    align-items: center;
+    flex-basis: 10%;
+    height: 3rem;
+}
+
+//Profile and Pantry Page -- end
 
 
 
 
 //buttons --begin (to ameliore)
+//buton home
 .box-2{
     margin-top:30px;
     margin-left:120px;
@@ -328,4 +440,178 @@ nav a:hover {
     transform: rotate(45deg);
     background-color: rgba(255,255,255,0);
   }
+
+
+  //button profile
+.button-profile {
+    --b: 3px;   /* border thickness */
+    --s: .45em; /* size of the corner */
+    --color: #d3d3d3;
+    
+    padding: calc(.5em + var(--s)) calc(.9em + var(--s));
+    color: var(--color);
+    --_p: var(--s);
+    background:
+      conic-gradient(from 90deg at var(--b) var(--b),#0000 90deg,var(--color) 0)
+      var(--_p) var(--_p)/calc(100% - var(--b) - 2*var(--_p)) calc(100% - var(--b) - 2*var(--_p));
+    transition: .3s linear, color 0s, background-color 0s;
+    outline: var(--b) solid #0000;
+    outline-offset: .6em;
+    font-size: 16px;
+  
+    border: 0;
+  
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  
+  .button-profile:hover,
+  .button-profile:focus-visible{
+    --_p: 0px;
+    outline-color: var(--color);
+    outline-offset: .05em;
+  }
+  
+  .button-profile:active {
+    background: var(--color);
+    color: #fff;
+  }
+
   //buttons --end
+
+
+
+
+//Search BAR -begin
+.search-bar, .search-bar * {
+	border: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+:root {
+	--fg: #17181c;
+	--primary: #000000;
+	--dur: 1s;
+}
+.search-bar{
+	font-size: calc(16px + (24 - 16)*(100vw - 320px)/(1280 - 320));
+}
+.search-bar input {
+	color: #17181c;
+	font: 1em/1.5 Hind, sans-serif;
+}
+
+.search-bar form, .search-bar input, .search-bar .caret {
+	margin: auto;
+}
+.search-bar form {
+	position: relative;
+	width: 100%;
+	max-width: 17em;
+}
+.search-bar input, .search-bar .caret {
+	display: block;
+	transition: all calc(1s * 0.5) linear;
+}
+.search-bar input {
+	background: transparent;
+	border-radius: 50%;
+	box-shadow: 0 0 0 0.25em inset;
+	caret-color: #000000;
+	width: 2em;
+	height: 2em;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+.search-bar input:focus, .search-bar input:valid {
+	background: #ffffff;
+	border-radius: 0.25em;
+	box-shadow: none;
+	padding: 0.75em 1em;
+	transition-duration: calc(1s * 0.25);
+	transition-delay: calc(1s * 0.25);
+	width: 100%;
+	height: 3em;
+}
+.search-bar input:focus {
+	animation: showCaret 1s steps(1);
+	outline: transparent;
+}
+.search-bar input:focus + .caret, .search-bar input:valid + .caret {
+	animation: handleToCaret 1s linear;
+	background: transparent;
+	width: 1px;
+	height: 1.5em;
+	transform: translate(0,-1em) rotate(-180deg) translate(7.5em,-0.25em);
+}
+.search-bar input::-webkit-search-decoration {
+	-webkit-appearance: none;
+}
+.search-bar label {
+	color: #e3e4e8;
+	overflow: hidden;
+	position: absolute;
+	width: 0;
+	height: 0;
+}
+.search-bar .caret {
+	background: currentColor;
+	border-radius: 0 0 0.125em 0.125em;
+	margin-bottom: -0.6em;
+	width: 0.25em;
+	height: 1em;
+	transform: translate(0,-1em) rotate(-45deg) translate(0,0.875em);
+	transform-origin: 50% 0;
+}
+
+/* Animations */
+@keyframes showCaret {
+	from {
+		caret-color: transparent;
+	}
+	to {
+		caret-color: #000000;
+	}
+}
+@keyframes handleToCaret {
+	from {
+		background: currentColor;
+		width: 0.25em;
+		height: 1em;
+		transform: translate(0,-1em) rotate(-45deg) translate(0,0.875em);
+	}
+	25% {
+		background: currentColor;
+		width: 0.25em;
+		height: 1em;
+		transform: translate(0,-1em) rotate(-180deg) translate(0,0.875em);
+	}
+	50%, 62.5% {
+		background: #000000;
+		width: 1px;
+		height: 1.5em;
+		transform: translate(0,-1em) rotate(-180deg) translate(7.5em,2.5em);
+	}
+	75%, 99% {
+		background: #000000;
+		width: 1px;
+		height: 1.5em;
+		transform: translate(0,-1em) rotate(-180deg) translate(7.5em,-0.25em);
+	}
+	87.5% {
+		background: #000000;
+		width: 1px;
+		height: 1.5em;
+		transform: translate(0,-1em) rotate(-180deg) translate(7.5em,0.125em);
+	}
+	to {
+		background: transparent;
+		width: 1px;
+		height: 1.5em;
+		transform: translate(0,-1em) rotate(-180deg) translate(7.5em,-0.25em);
+	}
+}
+//Search BAR -end

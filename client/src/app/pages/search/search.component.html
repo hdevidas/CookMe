@@ -1,25 +1,52 @@
 <!-- RECHERCHE -->
-
-<h3>Search a recipe with a specific ingredient</h3>
-<p>The application will check your profile and give you the best recipes</p>
-<div>
-  <input 
-    #searchBox 
-    (keyup)="search(searchBox.value)" 
-    placeholder="What ingredient do you want to prepare ?"
-  />
-  <a 
-    *ngFor="let ingredient of ingredients$ | async"
-    (click)="setCurrentIngredient(ingredient)"
-    class="collection-item"
-  >
-    {{ ingredient }}
-  </a>
+<div class="search-wrapper">
+  <h1 class="big-text">Search recipes</h1>
+  <p>Tell us what ingredient you want to cook and we will give you the best recipe for you!</p>
+  <div>
+    <form class="search-bar">
+      <label for="search">Search</label>
+      <input
+      #searchBox
+      (keyup)="search(searchBox.value)"  type="search" pattern=".*\S.*" required>
+      <span class="caret"></span>
+      <a 
+      *ngFor="let ingredient of ingredients$ | async"
+      (click)="setCurrentIngredient(ingredient)"
+      class="collection-item"
+    >
+      {{ ingredient }}
+    </a>
+    </form>
+  </div>
+</div>
+<div class="vertical-blank">
 </div>
 
 <!-- AFFICHAGE DES RESULTATS -->
-<div *ngIf="currentIngredient">
-  <p>Best recipes with <strong>{{ currentIngredient }}</strong> :</p>
+<div *ngIf="currentIngredient" class="display-recipes">
+  <h1 class="medium-text">Best recipes with {{ currentIngredient }}</h1>
+  <div class="recipesWrapper">
+    <div
+    *ngFor="let recipe of recipes" 
+    class="recipeWrapper">
+    <a routerLink="/recipe/{{ recipe[0].meals[0].strMeal }}">
+      <p>{{ recipe[0].meals[0].strMeal }}</p>
+      <img src="{{ recipe[0].meals[0].strMealThumb }}">
+      <div class="scoreRecipe" style="width: {{ recipe[1] }}%;background-color: rgb({{ getC1(recipe[1]) }}, {{ getC2(recipe[1]) }}, {{ getC3(recipe[1]) }});"></div>
+      <p>{{ recipe[1] }} %</p>
+    </a>
+    </div>
+  </div> 
+</div>
+<div class="vertical-blank">
+</div>
+
+
+
+<!-- 
+
+<div *ngIf="currentIngredient" class="display-recipes">
+  <h1 class="medium-text">Best recipes with {{ currentIngredient }}</h1>
   <div class="recipesWrapper">
     <div
     *ngFor="let recipe of recipes" 
@@ -31,3 +58,5 @@
     </div>
   </div> 
 </div>
+<div class="vertical-blank">
+</div> -->
