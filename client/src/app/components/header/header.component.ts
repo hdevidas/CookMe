@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
   /* Méthode pour la déconnexion de l'utilisateur */
   onLogout() {
     this.userService.logout();
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/login');
   }
 
 

@@ -55,7 +55,6 @@ export class UserService {
                         this.token = authData.token;
                         this.userId = authData.userId;
                         this.isAuth$.next(true);
-                        console.log(this.token.expiresIn);
                 
                         resolve(authData);
                     },

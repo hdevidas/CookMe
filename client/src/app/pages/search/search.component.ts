@@ -31,7 +31,7 @@ export class SearchComponent implements OnInit {
     this.isAuthSub = this.userService.isAuth$.subscribe(
       (auth) => {
         if (!auth)
-          this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/login');
       }
     );
     this.idUser = this.userService.getUserId();
