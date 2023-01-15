@@ -3,23 +3,27 @@
 
   <form [formGroup]="signupForm">
     <div class="form-group">
-      <label for="email">Email address <span>*</span> </label>
-      <input type="email" id="email" placeholder="Email address" formControlName="email">
-    </div>
-
-    <div class="form-group">
-      <label for="password">Password <span>*</span> </label>
-      <input type="password" id="password" placeholder="Your password" formControlName="password">
-    </div>
+      <input type="email" id="email" placeholder="Your email address*" formControlName="email">
+      <input type="password" id="password" placeholder="Your password*" formControlName="password">
 
       <button (click)="onSignup()" [disabled]="signupForm.invalid">Sign up</button>
+    </div>
   </form>
 
-  <p class="errorMessage">{{ errorMessage }}</p>
-  <img src="../../../assets/cookmebowl.jpg" alt="Cuisine&moi_logo">
+  <div class="already-got-account-wrapper">
+    <div class="already-got-account">
+        <p>
+          You already got an acount? <a routerLink="/login" routerLinkActive="active">login</a>
+        </p>
+    </div>
+    </div>
+
+  <!-- <p class="errorMessage">{{ errorMessage }}</p> -->
+  <img src="../../../assets/soup.jpg" alt="Cuisine&moi_logo">
 
 </div>
 <div class="vertical-blank"></div>
 
 
 
+ 

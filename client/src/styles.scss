@@ -211,7 +211,7 @@ nav a:hover {
     flex-direction: column;
     // border: 1px solid black;
     border: 8px double black;
-    background-color: #e9e7e7;
+    background-color: #e9e7e7; 
 }
 
 .signup-wrapper img, .signup-wrapper .medium-text{
@@ -223,13 +223,21 @@ nav a:hover {
     margin:auto;
 }
 
-.form-group{
+.signup-wrapper .form-group{
+    display: flex;
+    justify-content: center;
 }
 
-.form-group .signup-wrapper{
-    padding:0px;
+.already-got-account{
+    padding: 0px;
+    text-align: center;
 }
 
+//POPUP
+
+.popup-wrapper{
+    padding:30px;
+}
 
 //Footer
 
@@ -238,13 +246,26 @@ nav a:hover {
     color:white;
     width:70%;
     margin:auto;
-    padding-left:30px;
-    padding-right:30px;
-    height:10vh;
+    padding:30px;
+    height:auto;
+    text-align: center;
+
 }
 
+.footer-container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    align-items: center;
+}
 
+.copyright, .credits, .university{
+    width:100%;
+}
 
+.copyright img{
+    width:80%;
+}
 
 
 //Search Page
@@ -285,14 +306,17 @@ nav a:hover {
 }
 .recipesWrapper{
     margin-top: 60px;
-    display:flex;
-    align-items: center;
-    justify-content: space-between;
+    // display:flex;
+    // align-items: center;
+    // justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
 }
 .recipeWrapper{
     padding:10px;
     text-align: center;
-    width:25%;
+    width:100%;
 }
 .recipeWrapper p{
     display: flex;
@@ -326,8 +350,11 @@ nav a:hover {
 }
 
 .profile-actions{
-    display:flex;
-    justify-content: space-around;
+    // display:flex;
+    // justify-content: space-around;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 30px;
 }
 
 .profile-wrapper p{
