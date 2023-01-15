@@ -3,10 +3,8 @@ const fetch = require('node-fetch');
 const USerTools = require('../tools/userTool.js');
 const TheMealDbTool = require('../tools/TheMealDbTool');
 
-const NUMBER_RECIPE_MAX_TO_DISPLAY = 4;
+const NUMBER_RECIPE_MAX_TO_DISPLAY = 256;
 
-let recipeListWithScore = []
-let recipesToSend = []
 
 // Give a random recipe from the external api
 exports.getRandomRecipe = async (req, res) => {

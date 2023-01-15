@@ -35,7 +35,7 @@
     <h1 class="big-text">Ingredients of my pantry</h1>
     <p *ngIf="isPantryEmpty()">"It seems you don't have any ingredients, you can add more above"</p>
     <p *ngIf="!isPantryEmpty()">You can click on the "X" to remove an ingredient if you don't have it anymore.</p>
-        <ul class="ingredients-profile"> 
+        <ul *ngIf="!isPantryEmpty()" class="ingredients-profile"> 
             <li *ngFor="let ingredient of pantry"> 
                 {{ingredient}} <button type="button" (click)="removeIngredient(ingredient)">X</button>
             </li>
