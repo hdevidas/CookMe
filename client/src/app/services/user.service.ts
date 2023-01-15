@@ -11,10 +11,29 @@ const baseUrl = 'http://localhost:8080/api/cookme';
 export class UserService {
 
     isAuth$ = new BehaviorSubject<boolean>(false);
-    token!: any;
-    userId!: string;
+    private token!: any;
+    private userId!: string;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { 
+        this.token = localStorage.getItem('token');
+    }
+
+    public setToken(token: string): void {
+        this.token = token;
+        localStorage.setItem('token', token);
+    }
+    
+    public getToken(): string {
+        return this.token;
+    }
+
+    public setUserId(userId: string): void {
+        this.userId = userId;
+    }
+    
+    public getUserId(): string {
+        return this.userId;
+    }
 
     /* Method to launch a request on the backend to create a user account  */
     signup(email: string, password: string) {
@@ -50,6 +69,7 @@ export class UserService {
         this.isAuth$.next(false);
         this.token = null;
         this.userId = '';
+        localStorage.removeItem('token');
     }
 
     /* Retrieves all registered users */

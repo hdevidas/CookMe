@@ -18,7 +18,7 @@ Réalisation d'un projet(libre de choix) en groupe de 3 répondant au cahier des
 
 Étant un projet libre de choix, nous avons proposé de faire une application web permettant à un utilisateur de 
 trouver des recettes personnalisées grâce à son garde-manger. La personnalisation des recettes dépendra du 
-contenu de son placard
+contenu de son placard.
 
 
 ### Dénomination
@@ -43,13 +43,23 @@ Nous avons structuré ce projet en deux parties:
 
 ## Configuration docker
 
-Après le clonnage du projet, il faut tout simplement se mettre dans le repertoire principal du projet en éxécutant la commande `cd Cookme`, vérifier que docker-compose est bien installé sur la machine avec la commande `docker-compose --version` et ensuite éxécuter les commandes suivantes pour accéder au projet :
+Après le clonage du projet, il faut tout simplement se mettre dans le repertoire principal du projet en exécutant la commande `cd Cookme`, vérifier que docker-compose est bien installé sur la machine avec la commande `docker-compose --version` et ensuite exécuter les commandes suivantes pour accéder au projet :
 
   > ` docker-compose build ` : pour la construction de l'image docker
 
   > ` docker-compose up ` : pour l'éxécution de l'image
   
   > ` docker-compose down ` : pour arrêter l'éxécution
+  
+## Documentation Openapi
+Pour accéder à la documentation (swagger) de nos routes, assurez-vous que l'image docker a été bien exécuter en utilisant la commande : ` docker ps ` qui affiche tous les conteneurs en cours d'exécution. Si c'est le cas, vous n'aurez pas besoin de suivre les étapes suivantes et vous pouvez directement accéder à la documentation via le lien ci-dessous sinon, il faut :
+
+> Accéder au répertoire du backend avec : ` cd server `
+
+> Installer les dépendances avec : ` npm install `
+
+Si tout se passe bien, la documentation sera accessible via le lien suivant : ` http://localhost:8080/api/cookme/api-docs/ `.
+
 
 ## Auteurs
 
