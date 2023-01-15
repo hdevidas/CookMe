@@ -108,12 +108,12 @@ exports.getRecipePersonaliedWithPantry = async (req, res) => {
     res.status(userDetails.getStatus()).send({message : userDetails.getMessage()});
     return;
   }
-  let meal = await extractMealData(data,userDetails.getPantry());
+  let meal = extractMealData(data,userDetails.getPantry());
   
   res.send(meal);
 }
 
-async function extractMealData(data, pantry) {
+function extractMealData(data, pantry) {
   let name = data.meals[0].strMeal;
   let instructions = data.meals[0].strInstructions;
   //TODO unutile d'utiliser le formatage puisqu'il est vraiment moche, cela n'apporte rien. 
@@ -175,7 +175,7 @@ function formatInstructions(data){
 
 function isIn(pantry, ingredient){
   for (let i = 0; i < pantry.length; ++i){
-    if (pantry.at(i).localeCompare(ingredient, 'en', { sensitivity: 'base' }) == 0)
+    if (pantry[i].localeCompare(ingredient, 'en', { sensitivity: 'base' }) == 0)
     return i;
     
   }
