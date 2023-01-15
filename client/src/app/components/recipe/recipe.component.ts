@@ -32,7 +32,7 @@ export class RecipeComponent implements OnInit{
   }
 
   getDatas(): void {
-    this.recipeService.getRecipeByNameAndId(this.name, this.userService.userId)
+    this.recipeService.getRecipeByNameAndId(this.name, this.userService.getUserId())
       .subscribe({
         next: (data) => {
           this.name = data.name;

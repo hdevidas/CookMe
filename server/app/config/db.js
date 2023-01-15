@@ -3,11 +3,12 @@ const mongoose = require('mongoose');
 require('dotenv').config(); 
 
 // Function for database connection
+// process.env.MONGO_URL + '/' + process.env.DB_NAME
 async function connectDB() {
     try {
         console.log("Opening connection");
         mongoose.set('strictQuery', false);
-        const conn = await mongoose.connect(process.env.MONGO_URL + '/' + process.env.DB_NAME, {
+        const conn = await mongoose.connect(process.env.MONGO_URL + "/?retryWrites=true&w=majority", {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });

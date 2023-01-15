@@ -208,7 +208,7 @@ paths:
   /pantry/remove: # To remove an ingredient to a user's pantry
     put:
       security: # Apply the security
-        - BearerAuth: []
+        - BearerAuth: [ 'user' ]
       tags:
         - users
       summary: Suppression d'un ingrédient 
@@ -264,6 +264,103 @@ paths:
                 $ref: '#/components/schemas/Message'         
 
 
+  /recipe: # Retrieve a recipe by his name from the external api
+    get: 
+      security: # Apply the security
+        - BearerAuth: [] 
+      tags:
+        - recipes
+      summary: Liste aléatoire d'ingrédients
+      description: Renvoie une liste aléatoire d'ingrédients depuis l'api externe
+      responses:
+        200:
+          description: Liste d'ingrédients trouvée avec succès 
+          content:
+            application/json:
+              schema:
+                type: array
+                properties:
+                  pantry:
+                    type: string
+        default:
+          description: Erreur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+
+  /recipe/{name}: # Retrieve a recipe by his name from the external api
+    get: 
+      security: # Apply the security
+        - BearerAuth: [] 
+      tags:
+        - recipes
+      summary: Récupère une recette
+      description: Récupère une recette donnée depuis l'api externe
+      parameters:
+        - in: path
+          name: name
+          description: L'ingrédient à récupérer
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ingrédient trouvé avec succès 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  img:
+                    type: object
+                  instructions:
+                    type: string
+                  ingredients:
+                    type: string
+                  pantryIngredients:
+                    type: string
+        default:
+          description: Ingrédient non trouvé ou problème serveur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+
+
+  /ingredients/{term}: # Retrieve list of ingredients with a specific term
+    get:  
+      security: # Apply the security
+        - BearerAuth: []
+      tags:
+        - recipes
+      summary: Liste d'ingrédients
+      description: Renvoie la liste d'ingrédients d'une recette donnée depuis l'api externe
+      parameters:
+        - in: path
+          name: term
+          description: La recette
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Liste d'ingrédients trouvée avec succès 
+          content:
+            application/json:
+              schema:
+                type: array
+                properties:
+                  element:
+                    type: string
+        default:
+          description: Liste non trouvée ou problème serveur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
 
 #  Descriptions of common components
 components:

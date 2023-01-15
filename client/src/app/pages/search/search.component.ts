@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { debounceTime, distinctUntilChanged, filter, Observable, reduce, Subject, switchMap } from 'rxjs';
+import { Router } from '@angular/router';
+import { debounceTime, distinctUntilChanged, filter, Observable, reduce, Subject, Subscription, switchMap } from 'rxjs';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -10,6 +11,8 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class SearchComponent implements OnInit {
 
+  private isAuthSub!: Subscription;
+  
   idUser! : any;
   recipes: any[] = [];
 
@@ -17,13 +20,21 @@ export class SearchComponent implements OnInit {
   ingredients$: Observable<string[]> | undefined ;
   currentIngredient: string = "";
 
+
   constructor(
     private recipeService: RecipeService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
     ) { }
 
   ngOnInit(): void {
-    this.idUser = this.userService.userId;
+    this.isAuthSub = this.userService.isAuth$.subscribe(
+      (auth) => {
+        if (!auth)
+          this.router.navigateByUrl('/');
+      }
+    );
+    this.idUser = this.userService.getUserId();
     this.searchIngredients();
   }
 

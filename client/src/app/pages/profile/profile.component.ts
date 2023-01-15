@@ -2,8 +2,9 @@ import { Component} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { PantryService } from 'src/app/services/pantry.service';
-import { debounceTime, distinctUntilChanged, Observable, Subject, switchMap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Observable, Subject, Subscription, switchMap } from 'rxjs';
 import { RecipeService } from 'src/app/services/recipe.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -17,16 +18,25 @@ export class ProfileComponent {
   id! : any;
 
   searchTerms = new Subject<string>();
-  ingredients$: Observable<string[]> | undefined ;
+  ingredients$: Observable<string[]> | undefined;
+  
+  private isAuthSub!: Subscription;
 
 
   constructor(
     private recipeService: RecipeService,
     private userService : UserService,
     private pantryService: PantryService,
+    private router: Router
   ){}
 
   ngOnInit() {
+    this.isAuthSub = this.userService.isAuth$.subscribe(
+      (auth) => {
+        if (!auth)
+          this.router.navigateByUrl('/');
+      }
+    );
     this.searchIngredients();
     this.updateUser();
   }
@@ -76,7 +86,7 @@ export class ProfileComponent {
   }
 
   updateUser(){
-    this.id = this.userService.userId;
+    this.id = this.userService.getUserId();
     this.userService.getUser(this.id)
           .subscribe({
               next: (data :any) => {
