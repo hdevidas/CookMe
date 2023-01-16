@@ -2,8 +2,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: '[app-recipe-short]',
-  templateUrl: './recipe-short.component.html',
-  styleUrls: ['./recipe-short.component.scss']
+  templateUrl: './recipe-short.component.html'
 })
 export class RecipeShortComponent {
   @Input('app-recipe-short') data : any;
