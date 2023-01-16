@@ -60,6 +60,8 @@ Pour accéder à la documentation (swagger) de nos routes, assurez-vous que l'im
 
 Si tout se passe bien, la documentation sera accessible via le lien suivant : ` http://localhost:8080/api/cookme/api-docs/ `.
 
+**NB** : Certaines routes nécessitent l'utilisation d'un token qui sera généré lors de la connexion `/login` donc il faudra au préalable se connecter et dans la réponse de cette route, il y aura le token à copier dans `Authorize` pour débloquer les autres routes.
+
 
 ## Auteurs
 
