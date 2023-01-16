@@ -5,8 +5,7 @@ import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-pop-up',
-  templateUrl: './pop-up.component.html',
-  styleUrls: ['./pop-up.component.scss']
+  templateUrl: './pop-up.component.html'
 })
 
  

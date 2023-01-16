@@ -6,8 +6,7 @@ import { PopUpComponent } from '../../components/pop-up/pop-up.component';
 
 @Component({
   selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  templateUrl: './signup.component.html'
 })
 export class SignupComponent implements OnInit {
 
