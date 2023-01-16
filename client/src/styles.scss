@@ -233,6 +233,18 @@ nav a:hover {
     text-align: center;
 }
 
+//both:
+
+.login-wrapper .small-text, .signup-wrapper .small-text{
+    text-align: center;
+    margin-top:-20px;
+    text-decoration: none;
+}
+
+.signup-wrapper .small-text{
+    margin-bottom: 30px;
+}
+
 //POPUP
 
 .popup-wrapper{
@@ -254,17 +266,36 @@ nav a:hover {
 
 .footer-container{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-gap: 10px;
     align-items: center;
 }
 
-.copyright, .credits, .university{
-    width:100%;
+.footer-container div{
+    padding: 20px;
 }
 
-.copyright img{
-    width:80%;
+.credits, .university, .logo-footer{
+    width:70%;
+    margin:auto;
+}
+
+.logo-footer{
+    padding-bottom: 20px;
+}
+
+.credits, .university{
+    padding:20px;
+}
+
+.logo-footer img{
+    width:40%;
+    padding:20px;
+    padding-bottom: 0px;
+}
+
+.footer-container p{
+    padding:0px;
 }
 
 
@@ -337,6 +368,8 @@ nav a:hover {
 
 //Profile and Pantry Page -- begin
 .profile-wrapper{
+    width:60%;
+    margin:auto;
     color: white;
     background-color: black;
     padding-top:40px;
@@ -353,8 +386,16 @@ nav a:hover {
     // display:flex;
     // justify-content: space-around;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 30px;
+    grid-template-columns: repeat(1, 1fr);
+    padding-bottom: 30px;
+    // grid-gap: 30px;
+}
+
+.profile-actions button{
+    width:30%;
+    margin:auto;
+    margin-top:20px;
+    margin-bottom: 20px;
 }
 
 .profile-wrapper p{
@@ -395,7 +436,7 @@ nav a:hover {
     text-align: center;
     align-items: center;
     flex-basis: 10%;
-    height: 3rem;
+    height: 4rem;
 }
 
 .ingredients-list .collection-item:hover{
@@ -429,6 +470,17 @@ nav a:hover {
     align-items: center;
     flex-basis: 14%;
     height: 4rem;
+}
+
+//email changer:
+.email-changer * {
+    padding:20px;
+    text-align: center;
+}
+
+.email-changer-form{
+    margin:auto;
+
 }
 
 //Profile and Pantry Page -- end

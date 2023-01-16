@@ -4,7 +4,7 @@
         <p>Welcome to your profile page {{ mail }}</p>
         <div class="profile-actions">
             <button class="button-profile" type="button" (click)="showProfile = false">Change my email</button>
-            <button class="button-profile" type="button" (click)="resetPassword()">Reset my password</button>
+            <!-- <button class="button-profile" type="button" (click)="resetPassword()">Reset my password</button> -->
             <button class="button-profile" type="button" (click)="setupRandomPantry()">Give me a Random Pantry (for trying app)</button>
             <button class="button-profile" type="button" (click)="removeAllIngredients()">Remove all my ingredients</button>
         </div>
@@ -45,16 +45,21 @@
 </div>
 
 <ng-template #editable>
+    <div class="email-changer">
+        <h1 class="big-text">Your email adress</h1>
     <form>
-        <div *ngIf="showEmail">
-            <label for="name">Email</label>
+        <div *ngIf="showEmail" class="email-changer-form">
+            <label for="name">Email adress :</label>
             <input type="text" id="mail" [(ngModel)]="mail" name="mail" />
+            <button type="submit" (click)="changeEmail()">
+                Update
+            </button>
         </div>
     </form>
 
-    <button type="submit" (click)="changeEmail()">
-        Update
-    </button>
+
 
     <p>{{ message }}</p>
+
+</div>
 </ng-template>
