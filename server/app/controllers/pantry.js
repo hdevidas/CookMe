@@ -7,7 +7,7 @@ exports.addIngredient = async (req,res) => {
     res.status(user.getStatus()).send({message : user.getMessage()});
     return;
   }   
-  user.addToPantry(req.body.pantry);
+  user.addToPantry(req.body.ingredient);
   let update = await USerTools.updateUser(req.body.id, { pantry: user.getPantry() })
   res.status(update.status).send({message : update.message});
 
@@ -42,7 +42,7 @@ exports.removeIngredient = async (req,res) => {
     res.status(user.getStatus()).send({message : user.getMessage()});
     return;
   }
-  let element = req.body.pantry.toString();
+  let element = req.body.ingredient.toString();
   let pantry = user.getPantry();
   let ingredients = [];
   for(let i = 0; i < pantry.length; ++i){

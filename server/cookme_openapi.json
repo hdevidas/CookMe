@@ -289,13 +289,13 @@
                 "type": "object",
                 "required": [
                   "id",
-                  "pantry"
+                  "ingredient"
                 ],
                 "properties": {
                   "id": {
                     "type": "string"
                   },
-                  "pantry": {
+                  "ingredient": {
                     "type": "string"
                   }
                 }
@@ -306,6 +306,50 @@
         "responses": {
           "default": {
             "description": "Ingredient ajouté avec succès ou erreur.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pantry/random": {
+      "put": {
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "tags": [
+          "pantry"
+        ],
+        "summary": "Ajout aléatoire d'ingrédients",
+        "description": "Permet d'ajouter aléatoirement des ingrédients dans le placard de l'utilisateur.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "Ajout avec succès ou erreur.",
             "content": {
               "application/json": {
                 "schema": {
@@ -339,13 +383,13 @@
                 "type": "object",
                 "required": [
                   "id",
-                  "pantry"
+                  "ingredient"
                 ],
                 "properties": {
                   "id": {
                     "type": "string"
                   },
-                  "pantry": {
+                  "ingredient": {
                     "type": "string"
                   }
                 }
@@ -421,11 +465,11 @@
         "tags": [
           "recipes"
         ],
-        "summary": "Liste aléatoire d'ingrédients",
-        "description": "Renvoie une liste aléatoire d'ingrédients depuis l'api externe",
+        "summary": "Une recette aléatoire",
+        "description": "Renvoie une recette tirée aléatoirement depuis l'api externe",
         "responses": {
           "200": {
-            "description": "Liste d'ingrédients trouvée avec succès",
+            "description": "Recette trouvée avec succès",
             "content": {
               "application/json": {
                 "schema": {
@@ -466,12 +510,12 @@
           "recipes"
         ],
         "summary": "Récupère une recette",
-        "description": "Récupère une recette donnée depuis l'api externe",
+        "description": "Récupère une recette donnée depuis l'api externe à partir de son nom",
         "parameters": [
           {
             "in": "path",
             "name": "name",
-            "description": "L'ingrédient à récupérer",
+            "description": "Le nom de la recette",
             "required": true,
             "schema": {
               "type": "string"
@@ -480,7 +524,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Ingrédient trouvé avec succès",
+            "description": "Recette trouvée avec succès",
             "content": {
               "application/json": {
                 "schema": {
@@ -507,7 +551,7 @@
             }
           },
           "default": {
-            "description": "Ingrédient non trouvé ou problème serveur",
+            "description": "Recette non trouvée ou problème serveur",
             "content": {
               "application/json": {
                 "schema": {
@@ -530,7 +574,7 @@
           "recipes"
         ],
         "summary": "Liste d'ingrédients",
-        "description": "Renvoie la liste d'ingrédients d'une recette donnée depuis l'api externe",
+        "description": "Renvoie la liste d'ingrédients de l'API externe qui contiennent le term saisi passé en paramètre de la requête",
         "parameters": [
           {
             "in": "path",
@@ -563,6 +607,134 @@
           },
           "default": {
             "description": "Liste non trouvée ou problème serveur",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipe/{name}/{id}": {
+      "get": {
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "tags": [
+          "recipes"
+        ],
+        "summary": "Récupère une recette personnalisée",
+        "description": "Renvoie une recette à partir de son nom avec une séparation des ingrédients en fonction du garde-manger l'utilisateur",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "description": "Le nom de la recette",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "L'id de l'utilisateur'",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recette trouvée avec succès",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "properties": {
+                    "element": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Recette non trouvée ou problème serveur",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipes/{ingredient}/{id}": {
+      "get": {
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "tags": [
+          "recipes"
+        ],
+        "summary": "Récupère une liste de couple de recettes et le score associé à la recette ",
+        "description": "Renvoie une une liste de recette à partir d'un ingrédient et le score associé (nombre d'ingrédients de la recette que l'utilisaction possède / le nombre total d'ingrédients de la recette).",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ingredient",
+            "description": "L'ingrédient qu'on recherche dans les recettes'",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "L'id de l'utilisateur'",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recettes trouvées avec succès",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "properties": {
+                    "element": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Recettes non trouvées ou problème serveur",
             "content": {
               "application/json": {
                 "schema": {

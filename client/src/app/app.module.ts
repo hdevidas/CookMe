@@ -6,7 +6,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
-import { UsersListComponent } from './pages/users-list/users-list.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { SearchComponent } from './pages/search/search.component';
@@ -26,7 +25,6 @@ import { RecipeShortComponent } from './components/recipe-short/recipe-short.com
   declarations: [
     AppComponent,
     UserDetailsComponent,
-    UsersListComponent,
     FooterComponent,
     HeaderComponent,
     ProfileComponent,

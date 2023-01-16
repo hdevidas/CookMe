@@ -8,3 +8,5 @@ Pour pouvoir lancer le serveur, il faut se mettre dans le repertoire 'server' et
 Une fois que toutes les dépendances sont installées avec succès, vous pouvez lancer le serveur en utilisant la commande suivante :
 
 - **npm run start** : Lancement du serveur
+
+Lien d'accès : ` http://localhost:8080/api/cookme/ `

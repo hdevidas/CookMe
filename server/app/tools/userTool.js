@@ -16,6 +16,6 @@ exports.findUser = async (id) => {
 
 exports.updateUser =async (id, update) => {
   return DataBase.findByIdAndUpdate(id,update, { useFindAndModify: false })
-    .then(() => { return{ status : 201, message: 'Success'}})
+    .then(() => { return{ status : 200, message: 'Success'}})
     .catch( error => {return {status : 400, message: 'Error' }} );
 }

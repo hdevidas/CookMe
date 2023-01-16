@@ -13,7 +13,7 @@ export class PantryService {
 
   addIngredient(id: any, ingredient : string) {
     return new Promise((resolve,reject) => {
-      this.http.put(baseUrl+'/pantry/add', {id : id, pantry: ingredient})
+      this.http.put(baseUrl+'/pantry/add', {id : id, ingredient: ingredient})
         .subscribe( 
           (data) => {resolve(data);},
           (error) => {reject(error);}
@@ -43,7 +43,7 @@ export class PantryService {
 
   removeIngredient(id : any, ingredient :string){
     return new Promise((resolve,reject) => {
-      this.http.put(baseUrl+'/pantry/remove', {id : id, pantry: ingredient})
+      this.http.put(baseUrl+'/pantry/remove', {id : id, ingredient: ingredient})
         .subscribe( 
           (data) => {resolve(data);},
           (error) => { reject(error);}
