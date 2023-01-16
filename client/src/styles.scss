@@ -1,27 +1,3 @@
-// body {
-//     margin: 0;
-//     padding: 0;
-// }
-
-// a {
-//     outline: none;
-//     text-decoration: none;
-// }
-
-// button {
-//     cursor: pointer;
-//     display: block;
-//     padding: 5px 15px;
-//     font-weight: bold;
-//     background: #2863bdd8;
-//     border: 1px solid #00000044;
-//     border-radius: 15px;
-// }
-// html, body { height: 100%; }
-// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-
-
 
 @import 'reset';
 
@@ -60,9 +36,6 @@ h1{
 }
 
 //standard texts
-p{
-
-}
 
 .big-text{
     font-family: "Open Sans";
@@ -78,11 +51,20 @@ p{
     font-family: "Open Sans";
     text-transform: uppercase;
     letter-spacing: 10px;
-    line-height: 10px;
+    line-height: 30px;
     font-weight: 600;
     font-size: 30px;
     text-align: center;
+}
 
+.small-text{
+    font-family: "Open Sans";
+    letter-spacing: 4px;
+    line-height: 20px;
+    font-weight: 600;
+    font-size: 20px;
+    text-align: left;
+    text-decoration: underline;
 }
 
 a{
@@ -152,10 +134,30 @@ nav a:hover {
     margin-bottom:30px;
 }
 
+.home-main{
+    padding-top:60px;
+    padding-bottom:90px;
+    display: flex;
+}
 
-.features{
-    padding:60px;
-    line-height: 1.5em;
+.home-main h1{
+    text-align: left;
+    padding: 20px;
+    line-height: 30px;
+    font-size: 18px;
+    letter-spacing: 6px;
+}
+
+.home-main-image{
+    background-image: url('assets/cookmehomepicture.jpg');
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width:33%;
+}
+
+.home-main-text{
+    width:66%;
 }
 
 //Login page
@@ -191,17 +193,50 @@ nav a:hover {
     text-align: center;
 }
 
-// .img-login img{
-//     height: auto;
-//     max-width: 100%;
-// }
-
 .login-wrapper > img{
     width:auto;
 }
 
 .vertical-blank{
     height:100px;
+}
+
+//Signup page
+.signup-wrapper{
+    margin-left:15%;
+    margin-right: 15%;
+    width:70%;
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+    // border: 1px solid black;
+    border: 8px double black;
+    background-color: #e9e7e7; 
+}
+
+.signup-wrapper img, .signup-wrapper .medium-text{
+    padding:30px;
+}
+
+
+.signup-wrapper form{
+    margin:auto;
+}
+
+.signup-wrapper .form-group{
+    display: flex;
+    justify-content: center;
+}
+
+.already-got-account{
+    padding: 0px;
+    text-align: center;
+}
+
+//POPUP
+
+.popup-wrapper{
+    padding:30px;
 }
 
 //Footer
@@ -211,13 +246,26 @@ nav a:hover {
     color:white;
     width:70%;
     margin:auto;
-    padding-left:30px;
-    padding-right:30px;
-    height:10vh;
+    padding:30px;
+    height:auto;
+    text-align: center;
+
 }
 
+.footer-container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    align-items: center;
+}
 
+.copyright, .credits, .university{
+    width:100%;
+}
 
+.copyright img{
+    width:80%;
+}
 
 
 //Search Page
@@ -254,18 +302,21 @@ nav a:hover {
 }
 
 .recipeWrapper:hover{
-    margin-top: -30px;
+    margin-top: -15px;
 }
 .recipesWrapper{
     margin-top: 60px;
-    display:flex;
-    align-items: center;
-    justify-content: space-between;
+    // display:flex;
+    // align-items: center;
+    // justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
 }
 .recipeWrapper{
     padding:10px;
     text-align: center;
-    width:25%;
+    width:100%;
 }
 .recipeWrapper p{
     display: flex;
@@ -299,8 +350,11 @@ nav a:hover {
 }
 
 .profile-actions{
-    display:flex;
-    justify-content: space-around;
+    // display:flex;
+    // justify-content: space-around;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 30px;
 }
 
 .profile-wrapper p{
@@ -356,13 +410,16 @@ nav a:hover {
 }
 
 .ingredients-profile {
-    width:100%;
+    margin-top: 20px;
+    margin-left: 60px;
+    margin-right: 60px;
     display: flex;
     gap: 1rem;
     flex-flow: row wrap;
     text-align: center;
-    padding-top:20px;
-    padding-bottom: 20px;
+    padding-top:30px;
+    padding-bottom: 10px;
+    border: 8px double black;
 }
 
 .ingredients-profile li{
@@ -370,13 +427,62 @@ nav a:hover {
     padding:0 30px 0 30px;
     text-align: center;
     align-items: center;
-    flex-basis: 10%;
-    height: 3rem;
+    flex-basis: 14%;
+    height: 4rem;
 }
 
 //Profile and Pantry Page -- end
 
+//Recipe Page
+.recipe-wrapper{
+    margin-top: 30px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: row wrap;
+}
 
+.recipe-wrapper .medium-text{
+    text-align: left;
+    letter-spacing: 2px;
+}
+
+.recipe-wrapper p{
+    padding:20px;
+}
+
+.recipe-ingredients h1{
+    padding-bottom: 24px;
+    padding-top: 24px;
+
+}
+
+.recipe-ingredients h2{
+    padding-bottom: 16px;
+    padding-top: 16px;
+}
+
+.recipe-img{
+    width:40%;
+    padding:30px;
+}
+.recipe-img img{
+    width:100%;
+}
+
+.recipe-ingredients{
+    padding: 30px;
+    width:40%;
+}
+.recipe-ingredients p{
+    line-height: 20px;
+    padding: 6px;
+}
+
+.recipe-instructions{
+    padding: 30px 70px 70px 70px;
+    width:100%;
+}
 
 
 //buttons --begin (to ameliore)

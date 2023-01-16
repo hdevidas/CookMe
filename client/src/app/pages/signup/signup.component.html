@@ -1,29 +1,29 @@
-<div class="signupWrapper">
-    <div class="signupTitle">
-      <img src="../../../assets/cookmelogo.png" alt="Cuisine&moi_logo">
-  
-      <h4 class="title">Create your account to find customized recipes</h4>
-    </div>
-  
-    <form [formGroup]="signupForm">
-      <div class="form-group">
-        <label for="email">Email address <span>*</span> </label>
-        <input type="email" id="email" placeholder="Email address" formControlName="email">
-      </div>
-  
-      <div class="form-group">
-        <label for="password">Password <span>*</span> </label>
-        <input type="password" id="password" placeholder="Your password" formControlName="password">
-      </div>
-  
-      <!-- <div class="form-group">
-        <label for="confirmPassword">Confirm password <span>*</span> </label>
-        <input type="password" id="confirmPassword" placeholder="Confirm password" formControlName="confirmPassword">
-      </div> -->
-  
+<div class="signup-wrapper">
+  <p class="medium-text">Create your account to find customized recipes</p>
+
+  <form [formGroup]="signupForm">
+    <div class="form-group">
+      <input type="email" id="email" placeholder="Your email address*" formControlName="email">
+      <input type="password" id="password" placeholder="Your password*" formControlName="password">
+
       <button (click)="onSignup()" [disabled]="signupForm.invalid">Sign up</button>
-    </form>
-  
-    <p class="errorMessage">{{ errorMessage }}</p>
-  
+    </div>
+  </form>
+
+  <div class="already-got-account-wrapper">
+    <div class="already-got-account">
+        <p>
+          You already got an acount? <a routerLink="/login" routerLinkActive="active">login</a>
+        </p>
+    </div>
+    </div>
+
+  <!-- <p class="errorMessage">{{ errorMessage }}</p> -->
+  <img src="../../../assets/soup.jpg" alt="Cuisine&moi_logo">
+
 </div>
+<div class="vertical-blank"></div>
+
+
+
+ 

@@ -8,7 +8,7 @@ async function connectDB() {
     try {
         console.log("Opening connection");
         mongoose.set('strictQuery', false);
-        const conn = await mongoose.connect(process.env.MONGO_URL + "/?retryWrites=true&w=majority", {
+        const conn = await mongoose.connect(process.env.MONGO_URL, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });

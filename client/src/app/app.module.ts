@@ -20,6 +20,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { PopUpComponent } from '../app/components/pop-up/pop-up.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { RecipeShortComponent } from './components/recipe-short/recipe-short.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
     SignupComponent,
     LoginComponent,
     PopUpComponent,
+    RecipeShortComponent,
   ],
   imports: [
     BrowserModule,

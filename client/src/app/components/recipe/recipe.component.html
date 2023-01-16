@@ -1,6 +1,41 @@
-<h1>{{ name }}</h1>
+<h1 class="big-text">{{ name }}</h1>
+<div class="recipe-wrapper">
+    <div class="recipe-img">
+        <img src={{img}}>
+    </div>
+    
+    <div class="recipe-ingredients">
+        <h2 class="medium-text">Ingredients</h2>
+        <h2 *ngIf="pantryIngredients.length != 0" class="small-text">To buy:</h2>
+        <ul>
+            <li *ngFor="let ingredient of ingredients;">
+                <p>{{ ingredient }}</p>
+            </li>
+        </ul>
+        <div *ngIf="pantryIngredients.length != 0">
+            <h2 class="small-text">In your pantry:</h2>
+            <ul>
+                <li *ngFor="let ingredient of pantryIngredients;">
+                    <p>{{ ingredient }}</p>
+                </li>
+            </ul>
+        </div>
+        <div *ngIf="pantryIngredients.length == 0">
+            <h2 class="small-text"> You dont have any ingredients for this recipe in your pantry.</h2>
+        </div>
+    </div>
+    
+    <div class="recipe-instructions">
+        <h2 class="medium-text">Instructions</h2>
+        <p>{{ instructions }}</p>
+    </div>
+</div>
 
-<img src={{img}}>
+
+
+
+
+<!--
 
 <h2>Ingredients</h2>
 <ul>
@@ -20,7 +55,12 @@
     <h2> You dont have any ingredient for this recepe in your pantry</h2>
 </div>
 <h2>Instructions</h2>
-{{ instructions }}
+{{ instructions }} -->
+
+
+
+
+
 <!--<ul>
     <li *ngFor="let instruction of instructions;">
         {{ instruction }}

@@ -3,10 +3,8 @@ const fetch = require('node-fetch');
 const USerTools = require('../tools/userTool.js');
 const TheMealDbTool = require('../tools/TheMealDbTool');
 
-const NUMBER_RECIPE_MAX_TO_DISPLAY = 4;
+const NUMBER_RECIPE_MAX_TO_DISPLAY = 16;
 
-let recipeListWithScore = []
-let recipesToSend = []
 
 // Give a random recipe from the external api
 exports.getRandomRecipe = async (req, res) => {
@@ -15,8 +13,9 @@ exports.getRandomRecipe = async (req, res) => {
     res.status(apiResponce.getStatus()).send({message : apiResponce.getMessage()});
     return;
   }
-  
   res.send(apiResponce.getData());
+  
+  
 };
 
 // Retrieve all ingredients with a term from the external api
@@ -110,12 +109,12 @@ exports.getRecipePersonaliedWithPantry = async (req, res) => {
     res.status(userDetails.getStatus()).send({message : userDetails.getMessage()});
     return;
   }
-  let meal = await extractMealData(data,userDetails.getPantry());
+  let meal = extractMealData(data,userDetails.getPantry());
   
   res.send(meal);
 }
 
-async function extractMealData(data, pantry) {
+function extractMealData(data, pantry) {
   let name = data.meals[0].strMeal;
   let instructions = data.meals[0].strInstructions;
   //TODO unutile d'utiliser le formatage puisqu'il est vraiment moche, cela n'apporte rien. 
@@ -177,7 +176,7 @@ function formatInstructions(data){
 
 function isIn(pantry, ingredient){
   for (let i = 0; i < pantry.length; ++i){
-    if (pantry.at(i).localeCompare(ingredient, 'en', { sensitivity: 'base' }) == 0)
+    if (pantry[i].localeCompare(ingredient, 'en', { sensitivity: 'base' }) == 0)
     return i;
     
   }
