@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-pop-up',
@@ -13,8 +14,10 @@ export class PopUpComponent implements OnInit {
 
   message!: string;
 
-  constructor(private router: Router,
-              private popUp: MatDialog,
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private popUp: MatDialog,
     @Inject(MAT_DIALOG_DATA) private data: any) {
     this.message = data.message;
   }
@@ -25,6 +28,7 @@ export class PopUpComponent implements OnInit {
   onClose() {
     this.router.navigateByUrl('login');
     this.popUp.closeAll();
+    this.userService.logout();
   }
 
 }

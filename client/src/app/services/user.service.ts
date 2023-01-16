@@ -87,6 +87,17 @@ export class UserService {
         return this.http.put(`${baseUrl}/login/${id}`, data);
     }
 
+
+    editUserData(id: any, data: string) {
+        return new Promise<void>((resolve, reject) => {
+            this.http.put(baseUrl + '/login/'+`${id}`, { data: data })
+                .subscribe(
+                    (response: any) => { resolve(response) },
+                    (error) => { reject(error); }
+                );
+        });
+    }
+
     /* Allows to delete a user */
     deleteUser(id: any): Observable<any> {
         return this.http.delete(`${baseUrl}/login/${id}`);

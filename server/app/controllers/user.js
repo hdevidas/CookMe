@@ -102,35 +102,23 @@ exports.findOne = async (req, res) => {
 };
 
 // Update an User by the id in the request
-exports.update = (req, res) => {
-  /*if (!req.body) {
+exports.update = async (req, res) => {  
+  const errors = validationResult(req);
+
+  if (!req.body || !req.params.id || !req.body.data) {
     return res.status(400).send({
       message: "Data to update can not be empty!"
     });
   }
-  const id = req.params.id;
-  let update = await USerTools.updateUser(id, req.body);
-  res.status(update.getStatus()).send({message : update.getMessage()});*/
-  if (!req.body) {
-    return res.status(400).send({
-      message: "Data to update can not be empty!"
-    });
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ message: 'It must be an email address, please use a correct email address!'});
   }
+  
   const id = req.params.id;
-  UserDataBase.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
-    .then(data => {
-      if (!data) {
-        res.status(404).send({
-          message: `Cannot update User with id=${id}. Maybe User was not found!`
-        });
-      } else
-          res.status(200).send({ message: "User was updated successfully." });
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Error updating User with id=" + id
-      });
-    });
+  let update = await USerTools.updateUser(id, { email: req.body.data });
+  res.status(update.status).send({ message: update.message });
+
 };
 
 // Delete an User with the specified id in the request

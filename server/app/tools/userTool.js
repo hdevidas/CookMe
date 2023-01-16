@@ -8,7 +8,7 @@ exports.findUser = async (id) => {
       if (user === null){
         return new UserData(401,'Incorrect id, can not find user');
       } else {
-        return new UserData(201, 'User successfuly find', user.pantry, user.mail);
+        return new UserData(201, 'User successfuly find', user.pantry, user.email);
       }
     })
     .catch(error => {return new UserData(500, "error")} );
@@ -16,6 +16,6 @@ exports.findUser = async (id) => {
 
 exports.updateUser =async (id, update) => {
   return DataBase.findByIdAndUpdate(id,update, { useFindAndModify: false })
-    .then( () => {return{ status : 201, message: 'remove successfuly'}})
-    .catch( error => {return {status : 400, message: 'Already exists' }} );
+    .then(() => { return{ status : 201, message: 'Success'}})
+    .catch( error => {return {status : 400, message: 'Error' }} );
 }

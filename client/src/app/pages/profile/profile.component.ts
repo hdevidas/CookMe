@@ -1,10 +1,12 @@
-import { Component} from '@angular/core';
+import { Component, Input} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { PantryService } from 'src/app/services/pantry.service';
 import { debounceTime, distinctUntilChanged, Observable, Subject, Subscription, switchMap } from 'rxjs';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { Router } from '@angular/router';
+import { PopUpComponent } from '../../components/pop-up/pop-up.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-profile',
@@ -13,17 +15,24 @@ import { Router } from '@angular/router';
 })
 
 export class ProfileComponent {
-  mail! : String;
+
+  showProfile = true;
+  showEmail = true;
+
+  mail! : string;
   pantry! : string[];
   id! : any;
 
   searchTerms = new Subject<string>();
   ingredients$: Observable<string[]> | undefined;
+
+  message!: string;
   
   private isAuthSub!: Subscription;
 
 
   constructor(
+    private popUp: MatDialog,
     private recipeService: RecipeService,
     private userService : UserService,
     private pantryService: PantryService,
@@ -39,6 +48,10 @@ export class ProfileComponent {
     );
     this.searchIngredients();
     this.updateUser();
+  }
+
+  openPopUp(data: any) {
+    this.popUp.open(PopUpComponent, { data });
   }
 
   search(term: string) {
@@ -58,7 +71,15 @@ export class ProfileComponent {
   }
 
   changeEmail() :void{
-    //TODO
+    this.userService.editUserData(this.userService.getUserId(), this.mail)
+      .then((response: any) => {
+        response.message = "Your email has been successfully changed, you can now reconnect using this new email!"
+        this.openPopUp(response);
+      })
+      .catch((error) => {
+        this.message = error.error ? error.error.message : error.message;
+      }
+    );
   }
 
   resetPassword() :void{

@@ -37,7 +37,11 @@ router.get("/users", security, userCtrl.findAll);
 router.get("/login/:id", security, userCtrl.findOne);
 
 // Update an User with id
-router.put("/login/:id", security, userCtrl.update);
+router.put("/login/:id",
+    security,
+    body('data', 'It must be an email address, please use a correct email address!').isEmail(),
+    userCtrl.update
+);
 
 // Delete an User with id
 router.delete("/login/:id", security, userCtrl.delete);
