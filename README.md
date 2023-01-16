@@ -82,7 +82,7 @@ Si tout fonctionne correctement, vous pouvez accéder au serveur via : ` http://
 
 Pour faciliter le lancement de l'app sur http://localhost:4200 à l'aide de scripts executés à la racine du projet :
 
-  > ` sh run.sh ` : démarre l'app en mode dev (patienter quelques secondes)
+  > ` sh run.sh ` : démarre l'app (patienter quelques secondes)
 
   > ` sh stop.sh ` : stoppe l'app lancé précédement
   
