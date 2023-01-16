@@ -41,7 +41,15 @@ Nous avons structuré ce projet en deux parties:
 - **server** : Dossier contenant le code du backend
 
 
-## Configuration docker
+## Execution en mode Dev
+
+Pour executer l'application en mode dev, nous avons besoin d'éxecuter ces deux commandes suivantes:
+
+  > ` npm install && npm run dev ` : dans le dossier server
+
+  > ` npm install && ng serve ` : dans le dossier client
+
+  ## Configuration docker
 
 Après le clonage du projet, il faut tout simplement se mettre dans le repertoire principal du projet en exécutant la commande `cd Cookme`, vérifier que docker-compose est bien installé sur la machine avec la commande `docker-compose --version` et ensuite exécuter les commandes suivantes pour accéder au projet :
 
@@ -50,6 +58,16 @@ Après le clonage du projet, il faut tout simplement se mettre dans le repertoir
   > ` docker-compose up ` : pour l'éxécution de l'image
   
   > ` docker-compose down ` : pour arrêter l'éxécution
+
+## Scripts d'execution
+
+Pour faciliter le lancement de l'app sur http://localhost:4200 à l'aide de scripts bash:
+
+  > ` sh run.sh ` : démarre l'app en mode dev (patienter quelques secondes)
+
+  > ` sh stop.sh ` : stoppe l'app lancé précédement
+  
+  > ` sh docker.sh ` : démarre l'app sur docker, ctrl+C pour l'arreter
   
 ## Documentation Openapi
 Pour accéder à la documentation (swagger) de nos routes, assurez-vous que l'image docker a été bien exécuter en utilisant la commande : ` docker ps ` qui affiche tous les conteneurs en cours d'exécution. Si c'est le cas, vous n'aurez pas besoin de suivre les étapes suivantes et vous pouvez directement accéder à la documentation via le lien ci-dessous sinon, il faut :
