@@ -40,6 +40,23 @@ Nous avons structuré ce projet en deux parties:
 - **client** : Dossier contenant le code du frontend
 - **server** : Dossier contenant le code du backend
 
+### Installation des dépendances et exécution
+#### Frontend
+Pour le frontend, il faut se mettre sur le dossier **client** depuis la racine du projet avec `cd client` et lancer les commandes suivantes :
+
+> ` npm install ` : pour installer les dépendances
+
+> ` npm start ` ou ` ng serve ` : pour exécuter le projet
+
+#### Backend
+Pour celui-ci, il faut se rendre sur le dossier **server** avec ` cd client ` et faire la suite des commandes suivantes :
+
+> ` npm install ` : pour l'installation des dépendances
+
+> ` npm start ` : pour l'exécution le serveur
+
+Pour plus de détails, veuillez vous reporter au README des deux dossiers...
+
 
 ## Configuration docker
 
