@@ -80,7 +80,7 @@ Si tout fonctionne correctement, vous pouvez accéder au serveur via : ` http://
 
 #### Avec le script shell
 
-Pour faciliter le lancement de l'app sur http://localhost:4200 à l'aide de scripts bash:
+Pour faciliter le lancement de l'app sur http://localhost:4200 à l'aide de scripts :
 
   > ` sh run.sh ` : démarre l'app en mode dev (patienter quelques secondes)
 
