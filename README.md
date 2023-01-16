@@ -1,6 +1,8 @@
 # Projet de programmation web - Master 2 informatique(Génie logiciel) - Université de Bordeaux(22-23)
 
 
+
+
 ## Objectif
 
 Réalisation d'un projet(libre de choix) en groupe de 3 répondant au cahier des charges suivant :
@@ -14,6 +16,8 @@ Réalisation d'un projet(libre de choix) en groupe de 3 répondant au cahier des
 7. Gestion du déploiement (Docker ou PaaS type Heroku)
 
 
+
+
 ## Présentation
 
 Étant un projet libre de choix, nous avons proposé de faire une application web permettant à un utilisateur de 
@@ -21,9 +25,13 @@ trouver des recettes personnalisées grâce à son garde-manger. La personnalisa
 contenu de son placard.
 
 
+
+
 ### Dénomination
 
 > **Cook Me**
+
+
 
 
 ### Téchnologies
@@ -34,28 +42,50 @@ contenu de son placard.
 4. **Docker** : Pour le déploiement
 
 
+
+
 ### Structure du projet
 
 Nous avons structuré ce projet en deux parties:
 - **client** : Dossier contenant le code du frontend
 - **server** : Dossier contenant le code du backend
 
+
+
+
 ### Installation des dépendances et exécution
-#### Frontend
+
+#### Manuellement
+
+##### Frontend
+
 Pour le frontend, il faut se mettre sur le dossier **client** depuis la racine du projet avec `cd client` et lancer les commandes suivantes :
 
 > ` npm install ` : pour installer les dépendances
 
 > ` npm start ` ou ` ng serve ` : pour exécuter le projet
 
-#### Backend
+Si tout se passe bien, le projet sera accessible avec ` http://localhost:4200/ `
+
+
+
+##### Backend
+
 Pour celui-ci, il faut se rendre sur le dossier **server** avec ` cd client ` et faire la suite des commandes suivantes :
 
 > ` npm install ` : pour l'installation des dépendances
 
 > ` npm start ` : pour l'exécution le serveur
 
+Si tout fonctionne correctement, vous pouvez accéder au serveur via : ` http://localhost:8080/api/cookme/ `
+
+
+#### Avec le script shell
+
 Pour plus de détails, veuillez vous reporter au README des deux dossiers...
+
+
+
 
 
 ## Configuration docker
@@ -68,7 +98,10 @@ Après le clonage du projet, il faut tout simplement se mettre dans le repertoir
   
   > ` docker-compose down ` : pour arrêter l'éxécution
   
+  
+  
 ## Documentation Openapi
+
 Pour accéder à la documentation (swagger) de nos routes, assurez-vous que l'image docker a été bien exécuter en utilisant la commande : ` docker ps ` qui affiche tous les conteneurs en cours d'exécution. Si c'est le cas, vous n'aurez pas besoin de suivre les étapes suivantes et vous pouvez directement accéder à la documentation via le lien ci-dessous sinon, il faut :
 
 > Accéder au répertoire du backend avec : ` cd server `
@@ -78,6 +111,8 @@ Pour accéder à la documentation (swagger) de nos routes, assurez-vous que l'im
 Si tout se passe bien, la documentation sera accessible via le lien suivant : ` http://localhost:8080/api/cookme/api-docs/ `.
 
 **NB** : Certaines routes nécessitent l'utilisation d'un token qui sera généré lors de la connexion `/login` donc il faudra au préalable se connecter et dans la réponse de cette route, il y aura le token à copier dans `Authorize` pour débloquer les autres routes.
+
+
 
 
 ## Auteurs
