@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { UserService } from '../../services/user.service';
 import { PopUpComponent } from '../../components/pop-up/pop-up.component';
 
@@ -39,7 +39,10 @@ export class SignupComponent implements OnInit {
   }
 
   openPopUp(data: any) {
-    this.popUp.open(PopUpComponent, { data });
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.data = { message: data.message };
+    this.popUp.open(PopUpComponent, dialogConfig);
   }
 
 }

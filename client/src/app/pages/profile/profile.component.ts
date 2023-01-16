@@ -6,7 +6,7 @@ import { debounceTime, distinctUntilChanged, Observable, Subject, Subscription, 
 import { RecipeService } from 'src/app/services/recipe.service';
 import { Router } from '@angular/router';
 import { PopUpComponent } from '../../components/pop-up/pop-up.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-profile',
@@ -51,7 +51,10 @@ export class ProfileComponent {
   }
 
   openPopUp(data: any) {
-    this.popUp.open(PopUpComponent, { data });
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.data = { message: data.message };
+    this.popUp.open(PopUpComponent, dialogConfig);
   }
 
   search(term: string) {

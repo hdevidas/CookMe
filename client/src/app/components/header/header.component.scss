@@ -1,47 +1,38 @@
-// .headerWrapper{
-//     background: linear-gradient(180deg, #188da733 0%, #72279533 96.35%);
-//     padding:30px;
-// }
+.header-wrapper{
+    margin-bottom: 20px;
+    padding-bottom:20px;
+}
 
-// ul{
-//     display: flex;
-//     flex-flow: row nowrap;
-//     justify-content: space-around;
-//     align-items: center;
-// }
+.header-wrapper img{
+    width:200px;
+}
 
-// li {
-//     list-style-type: none;
-// }
+.header-logo{
+    display: flex;
+    justify-content: center;
+}
 
-// .debugPannel button{
-//     margin:4px;
-// }
+nav ul { 
+    width:50%;
+    margin:auto;
+    display: flex;
+    justify-content: center;
+    padding: 10px 20px;
+    font-size: 16px;
+    line-height: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
 
-// .green{
-//     background:rgb(55, 167, 11);
-//     border: 2px solid rgba(0, 0, 0, 0.2666666667);
-// }
+nav ul li{
+    padding: 10px 20px;
+}
 
-// img{
-//     height:50px;
-// }
+nav a{
+    text-decoration: none;
+}
 
-// .content1 {
-//     display: flex;
-//     gap: 2rem;
-//     flex-flow: row nowrap;
-// }
-
-// .dropDownBtn {
-//     background-color: transparent;
-//     box-shadow: #c7a1a1 4px 4px 20px;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     text-align: center;
-    
-//     span {
-//         font-size: 1.2rem;
-//     }
-// }
+nav a:hover {
+    color: #a1a1a1;
+}
