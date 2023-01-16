@@ -36,7 +36,7 @@ router.get("/users", security, userCtrl.findAll);
 // Retrieve a single User with id
 router.get("/login/:id", security, userCtrl.findOne);
 
-// Update an User with id
+// Update an User email with id
 router.put("/login/:id",
     security,
     body('data', 'It must be an email address, please use a correct email address!').isEmail(),

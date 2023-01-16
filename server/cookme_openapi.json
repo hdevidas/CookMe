@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.8",
   "info": {
-    "title": "Description de l'API Rest de notre application web(Cook me)",
-    "description": "API de gestion de recherche personnalisée de recettes à partir d'un profil utilisateur",
+    "title": "Description des routes de l'API de notre projet (Cook Me) dans le cadre de l'UE 'Programmation Web' du Master 2 Génie Logiciel (université de Bordeaux).",
+    "description": "API de gestion de recherche de recettes personnalisées à partir d'un profil utilisateur.\nCette API comporte trois catégories principales : \n -> 'users' : toutes les routes concernant la gestion utilisateur\n -> 'pantry' : les routes concernant le garde-manger de l'utilisateur\n et\n -> 'recipes' : les routes de la gestion des recettes",
     "version": "1.0.0"
   },
   "servers": [
@@ -15,6 +15,10 @@
     {
       "name": "users",
       "description": "Gestion utilisateur ( Inscription, connexion, garde-manger ...)"
+    },
+    {
+      "name": "pantry",
+      "description": "Gestion du garde-manger utilisateur"
     },
     {
       "name": "recipes",
@@ -129,7 +133,7 @@
         }
       }
     },
-    "/login/{userId}": {
+    "/login/{id}": {
       "get": {
         "security": [
           {
@@ -144,7 +148,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "userId",
+            "name": "id",
             "description": "L'identifiant de l'utilisateur à récupérer",
             "required": true,
             "schema": {
@@ -203,13 +207,13 @@
         "tags": [
           "users"
         ],
-        "summary": "Mise à jour d'un utilisateur",
-        "description": "Mise à jour des informations d'un utilisateur en fournissant son identifiant.",
+        "summary": "Modification du mail utilisateur",
+        "description": "Permet de modifier le mail d'un utilisateur en fournissant son identifiant.",
         "parameters": [
           {
             "in": "path",
             "name": "id",
-            "description": "L'ID de l'utilisateur à mettre à jour",
+            "description": "L'ID de l'utilisateur",
             "required": true,
             "schema": {
               "type": "string"
@@ -273,7 +277,7 @@
           }
         ],
         "tags": [
-          "users"
+          "pantry"
         ],
         "summary": "Ajout ingrédient",
         "description": "Permet d'ajouter un ingrédient dans le placard de l'utilisateur.",
@@ -323,7 +327,7 @@
           }
         ],
         "tags": [
-          "users"
+          "pantry"
         ],
         "summary": "Suppression d'un ingrédient",
         "description": "Permet de supprimer un ingrédient dans le placard de l'utilisateur.",
@@ -371,9 +375,9 @@
           }
         ],
         "tags": [
-          "users"
+          "pantry"
         ],
-        "summary": "Suppression des ingrédients",
+        "summary": "Suppression de tous les ingrédients",
         "description": "Permet de supprimer tous ingrédients dans le placard de l'utilisateur.",
         "requestBody": {
           "required": true,
@@ -426,6 +430,9 @@
               "application/json": {
                 "schema": {
                   "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
                   "properties": {
                     "pantry": {
                       "type": "string"
@@ -542,6 +549,9 @@
               "application/json": {
                 "schema": {
                   "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
                   "properties": {
                     "element": {
                       "type": "string"
@@ -603,7 +613,8 @@
       "BearerAuth": {
         "type": "http",
         "scheme": "bearer",
-        "bearerFormat": "JWT"
+        "bearerFormat": "JWT",
+        "description": "Veuillez copier le token généré par la route '/login' ici pour acceder aux autres routes "
       }
     },
     "responses": {
