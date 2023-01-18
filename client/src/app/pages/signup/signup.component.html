@@ -2,6 +2,8 @@
   <p class="medium-text">Create your account</p>
   <p class="small-text">to find customized recipes...</p>
 
+  <p class="errorMessage">{{ errorMessage }}</p>
+  
   <form [formGroup]="signupForm">
     <div class="form-group">
       <input type="email" id="email" placeholder="Your email address*" formControlName="email">
@@ -17,9 +19,8 @@
           You already got an acount? <a routerLink="/login" routerLinkActive="active">login</a>
         </p>
     </div>
-    </div>
+  </div>
 
-  <!-- <p class="errorMessage">{{ errorMessage }}</p> -->
   <img src="../../../assets/soup.jpg" alt="Cuisine&moi_logo">
 
 </div>
